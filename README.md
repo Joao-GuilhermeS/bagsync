@@ -34,3 +34,7 @@ Configuração atual do ambiente e limitações de validação em [implantação
 ## Banco de catálogos
 
 Facções/costureiras, unidades de medida, materiais, modelos de bolsa e composição opcional implementados no banco com RLS. [Dicionário, permissões, testes e checkpoint](docs/catalogos-producao.md). Telas de cadastro, pedidos e movimentações de estoque ainda pendentes.
+
+## Pedidos e estoque
+
+Banco implementado com pedidos de um modelo por operação de produção, entregas/recebimentos em várias facções, entradas de materiais, estornos e saldos derivados do histórico. [RPCs, permissões, testes e checkpoint](docs/pedidos-estoque.md). Telas operacionais e login com senha ainda pendentes; consultas/gravações do banco já têm contrato disponível.

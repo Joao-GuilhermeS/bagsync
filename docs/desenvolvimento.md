@@ -83,3 +83,7 @@ Checkpoint: revisar next.config.ts, postcss.config.mjs, package.json, package-lo
 ## Banco: facções, materiais e bolsas
 
 Concluído incremento de banco solicitado, incluindo composição opcional e unidades por empresa. Migração nova 20261025202641_catalogos_producao; suíte transacional supabase/tests/catalogos.sql. Resultado e checkpoint detalhados em [catálogos de produção](catalogos-producao.md). Testes SQL antes/depois passaram, oito testes Node passaram, lint/build aprovados. Sem frontend adicional, sem pedidos/estoque implementados e sem commit/push.
+
+## Incremento 2 — pedidos e movimentos
+
+Base Git limpa no commit f28a677. Regras complementares confirmadas pelo responsável; banco implementado e migração 20261025204641 aplicada no BagSync. Suíte SQL antes/depois passou; 8 testes Node, lint e build aprovados. Contrato e checkpoint em [pedidos e estoque](pedidos-estoque.md). Não foram implementados endpoints Next.js ou telas de catálogos neste turno; priorizado o fluxo de banco após as respostas. Nenhum commit/push.

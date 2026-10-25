@@ -31,3 +31,7 @@ Rotas: /login (e-mail/senha), /painel (sessão validada no servidor e vínculo c
 ## Migração dos catálogos
 
 20261025202641_catalogos_producao aplicada exclusivamente no BagSync em 25/10/2026. Testada antes em transação revertida e depois de aplicada. Sem dados operacionais persistentes. Consulte catalogos-producao.md para testes/alertas e procedimento de revisão. Migração antiga preservada; nenhuma configuração de Auth ou credencial alterada.
+
+## Pedidos e movimentos
+
+Migração 20261025204641_pedidos_movimentacoes aplicada somente no BagSync. Testada antes/depois com rollback. RPCs create_production_order e register_inventory_operation requerem sessão autenticada, sem chave administrativa no cliente. Views de estoque/progresso sob RLS. [Contrato, alertas e limitações](pedidos-estoque.md). Nenhuma mudança em senha/credenciais/vínculo ou no projeto antigo.

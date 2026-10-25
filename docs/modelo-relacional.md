@@ -31,3 +31,7 @@ companies e company_users criadas no BagSync pela migração 20261025200948_comp
 ## Catálogos implementados — 25/10/2026
 
 Migração 20261025202641 adiciona workshops, measurement_units, materials, bags e bag_materials, com empresa proprietária, FKs compostas, índices, RLS e permissões. Dicionário, cardinalidades, restrições e evidências em [catálogos de produção](catalogos-producao.md). Pedidos e movimentações permanecem pendentes; trechos anteriores descrevem o histórico.
+
+## Pedidos e estoque implementados
+
+production_orders (um modelo por pedido); inventory_operations (entradas, entregas, recebimentos e estornos); stock_movements (razão assinado). Views de saldos/progresso com security_invoker. Escrita apenas por RPCs com autorização derivada da sessão. Migração 20261025204641; [dicionário, relacionamentos, permissões e testes](pedidos-estoque.md).

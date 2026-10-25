@@ -23,3 +23,11 @@ Ainda não definido: pedido com vários modelos de bolsa, recebimento acima do p
 ## Catálogos — incremento autorizado
 
 Facções, materiais e modelos de bolsas com cadastro mínimo por nome; material exige unidade de medida da mesma empresa. Composição opcional liga modelo a material da mesma empresa com quantidade positiva por bolsa, sem consumo automático. Apenas gerente escreve nos catálogos; demais perfis consultam. Isso implementa o escopo de banco solicitado; campos adicionais e movimentos serão detalhados no próximo incremento. Dicionário e decisões técnicas em catalogos-producao.md.
+
+## Pedidos e correções — confirmação do responsável em 25/10/2026
+
+- RN-11: um modelo de bolsa por pedido, com várias facções.
+- RN-12: recebimento acima da previsão permitido com aviso.
+- RN-13: corrigir entregas/recebimentos por estorno e novo lançamento, preservando original.
+
+Banco implementado conforme [contrato de pedidos/estoque](pedidos-estoque.md). Não há baixa por composição nem encerramento automático. Papéis e avisos conforme contrato. As pendências anteriores sobre modelos, excesso e correção estão resolvidas; cancelamento/edição da previsão e distribuição prévia por facção ainda não foram implementados.

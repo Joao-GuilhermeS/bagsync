@@ -64,3 +64,9 @@ módulos operacionais antes da definição dos requisitos.
 - Incremento de banco autorizado: workshops, measurement_units, materials, bags e bag_materials; detalhes em docs/catalogos-producao.md.
 - Não modificar migrations aplicadas. Gerar novas via CLI. Testes SQL de integração usam BEGIN/ROLLBACK e não podem deixar fixtures ou mudanças de perfil persistentes.
 - Composição não implica consumo automático de estoque. Pedidos/movimentos precisam de transações e idempotência quando forem implementados.
+
+## Pedidos e estoque implementados
+- Pedidos com um modelo, várias facções; excedente permitido com aviso; correções por estorno e novo lançamento. Contrato em docs/pedidos-estoque.md.
+- Usar RPCs create_production_order/register_inventory_operation com sessão real, chave de idempotência e corpo preservados no retry.
+- Não liberar escrita direta no histórico; funções SECURITY DEFINER exigem validação de identidade/empresa/perfil, search_path vazio e grants explícitos.
+- Avisos de saldo negativo e excedente devem aparecer na futura interface. Não consumir material pela composição automaticamente.
