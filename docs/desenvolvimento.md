@@ -95,3 +95,7 @@ Commit 335b1e5 confirmado; autenticação validada pelo responsável. Implementa
 ## Incremento 4 — pedidos e movimentos na interface
 
 Commit cb380b8 verificado e árvore inicialmente limpa. Implementadas telas/Server Action de pedidos, estoque de materiais/bolsas, entregas, recebimentos, histórico e estorno. 17 testes, lint, TypeScript, build, teste HTTP de dez rotas e regressão SQL com rollback aprovados. Sem alteração estrutural no banco. [Contrato, limites de teste e checkpoint](telas-operacoes.md). Nenhum commit/push.
+
+## Incremento 5 — composição
+
+Base 051fc54 confirmada. Consulta e manutenção de composição por modelo implementadas, sem consumo automático. 20 testes, suíte SQL com rollback, lint, TypeScript, build e teste HTTP de onze rotas passaram. Sem mudanças no esquema. [Arquivos e checkpoint](composicao-bolsas.md). Exportações PDF/CSV aprovadas pelo responsável para o próximo incremento; visual/navegação e medição de lentidão adiados conforme orientação.

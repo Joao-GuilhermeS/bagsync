@@ -80,3 +80,8 @@ módulos operacionais antes da definição dos requisitos.
 - Rotas e limites em docs/telas-operacoes.md; não converter numeric para Number/parseFloat.
 - Manter chave e payload originais em retry de resultado incerto; somente nova intenção deve gerar chave nova. Snapshot atual não é persistente após recarregamento; não prometer operação offline.
 - Revalidar painel após sucesso; nunca esconder avisos de saldo negativo/excedente.
+
+## Prioridade e composição
+- Responsável orientou adiar refinamento visual/navegação e relatou lentidão sem medição: não afirmar otimização ou diagnóstico de desempenho inexistente.
+- Composição integrada: docs/composicao-bolsas.md. Não cria baixa/reserva automática nem snapshot histórico por pedido.
+- Exportações aprovadas para próximo incremento: PDF por operação e extratos CSV com período/pedido/facção; docs/exportacoes.md.

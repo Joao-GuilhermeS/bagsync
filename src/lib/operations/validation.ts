@@ -52,3 +52,11 @@ export function operationError(code?:string):string {
  if(["22023","22P02","23514","22003"].includes(code??""))return "Dados inválidos ou chave já usada com outros dados. Revise o formulário e o histórico.";
  return "Não foi possível registrar. Confira os dados e tente novamente.";
 }
+
+export function parseComposition(form:FormData) {
+ const operation=text(form,"operation");
+ if(!["insert","update","delete"].includes(operation))throw new Error("Ação de composição inválida.");
+ const bag_id=uuid(text(form,"bag_id")),material_id=uuid(text(form,"material_id"));
+ if(operation==="delete"&&form.get("confirm")!=="sim")throw new Error("Confirme a remoção do material da composição.");
+ return {operation,bag_id,material_id,quantity:operation==="delete"?null:positiveQuantity(form.get("quantity"))};
+}

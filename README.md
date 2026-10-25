@@ -1,48 +1,58 @@
-# BagSync
+# BagSync — RL Bolsas
 
-SaaS para gestão de empresa de bolsas, em levantamento de requisitos. Login Supabase e base de empresas/perfis implementados; módulos operacionais ainda não integrados.
+Aplicação SaaS para fabricação e logística de bolsas. Desenvolvimento incremental, com isolamento por empresa e documentação em pt-BR.
 
-## Estado em 25/10/2026
+## Estado atual — 25/10/2026
 
-A raiz Git é `Projeto_RL/bagsync`. Remoto: https://github.com/Joao-GuilhermeS/bagsync.
-Base Next.js App Router em src/app/, com página de demonstração.
-Stack definida: TypeScript, Next.js, React, Tailwind CSS, shadcn/ui, PostgreSQL, Supabase Auth/backend, npm, Git/GitHub e Markdown.
-Declarados: Next.js 16.4.3, React/React DOM 19.3.0, Tailwind 4, TypeScript 5 e ESLint 9. Estabilidade e compatibilidade ainda não verificadas. Supabase SSR integrado; shadcn/ui ainda não instalado.
+- Supabase Auth integrado; autenticação com senha validada pelo responsável.
+- Empresas independentes; usuário vinculado a uma empresa. Perfis: Gerente Logístico, Motorista/Entregador e Gestor.
+- Cadastros de facções, unidades, materiais e modelos de bolsas; composição opcional por modelo integrada.
+- Pedidos simultâneos de um modelo, atendidos por várias facções, usando estoque compartilhado da empresa.
+- Entradas/entregas de materiais, recebimentos parciais de bolsas, histórico e estornos via RPCs transacionais/idempotentes.
+- Saldo negativo e recebimento excedente permitidos com aviso. Composição não reserva nem baixa estoque.
+- Interface funcional básica; refinamento visual/navegação e investigação de lentidão foram adiados pelo responsável.
+- Exportações PDF/CSV aprovadas, ainda não implementadas. Saída para clientes, cancelamento/encerramento de pedidos e retomada offline não implementados.
 
-## Ambiente e execução
+## Stack e ambiente
 
-Observados Node.js 24.19.0 e npm 11.17.0; versões mínimas suportadas pendentes. package-lock.json e node_modules presentes.
-Após validar versões e autorizar instalação em novo ambiente, executar `npm ci` na raiz bagsync/. Para desenvolvimento: `npm run dev`, acesso http://localhost:3000.
-Scripts existentes: `npm run lint`, `npm run build` e `npm start` (após build). Teste da autorização: `node --test tests/authorization.test.mjs` (Node 24 observado). Fontes Google via next/font podem exigir rede durante build.
-Nunca versionar segredos ou expor chaves privilegiadas no navegador.
+TypeScript, Next.js App Router, React, Tailwind, PostgreSQL e Supabase Auth/backend; npm, Git/GitHub e Markdown. shadcn/ui faz parte da stack definida, mas ainda não foi instalado. Versões exatas em package.json/lockfile. Ambiente observado: Node.js 24.19.0 e npm 11.17.0; versão mínima suportada ainda não estabelecida.
+
+Raiz local confirmada: C:/Users/joaog/Projeto_RL/bagsync. Remoto: https://github.com/Joao-GuilhermeS/bagsync.
+Projeto Supabase dedicado: BagSync, região São Paulo. Não alterar o projeto antigo.
+
+## Executar
+
+Em novo ambiente, após revisar dependências/configuração:
+
+```powershell
+npm ci
+Copy-Item .env.example .env.local
+# Preencher a chave publicável do BagSync em .env.local.
+npm run dev
+```
+
+Não sobrescrever .env.local existente. Acesso em http://localhost:3000; usuários/empresas provisionados administrativamente conforme docs/implantacao.md. Nunca enviar senha no chat nem versionar segredos. Não usar chave administrativa no navegador.
+
+## Verificar
+
+```powershell
+node --test tests/*.test.mjs
+npm run lint
+npm run build
+node tests/http-access.mjs
+```
+
+Build pode exigir rede para fontes Google. Teste HTTP usa servidor temporário em 127.0.0.1:3101. Suites SQL em supabase/tests/ são administrativas e transacionais com rollback; ler instruções antes de executar, sem concorrer com provisionamento. Nesta etapa: 20 testes Node, lint, TypeScript, build, suíte SQL de composição e proteção HTTP de onze rotas passaram. Testes visuais, fluxo completo dos formulários autenticados, carga e latência permanecem pendentes. Não confundir autenticação relatada pelo responsável com testes completos feitos pelo agente.
 
 ## Documentação
 
-- [Requisitos e levantamento](docs/requisitos.md)
-- [Regras de negócio](docs/regras-de-negocio.md)
-- [Arquitetura](docs/arquitetura.md)
-- [Modelo relacional](docs/modelo-relacional.md)
-- [Sequência de desenvolvimento](docs/desenvolvimento.md)
-- [Decisões técnicas](docs/decisoes-tecnicas.md)
-- [Implantação](docs/implantacao.md)
-- [Diagnóstico e checkpoint](docs/diagnostico-inicial.md)
+- [Requisitos](docs/requisitos.md) e [regras de negócio](docs/regras-de-negocio.md)
+- [Arquitetura](docs/arquitetura.md) e [modelo relacional](docs/modelo-relacional.md)
+- [Catálogos](docs/catalogos-producao.md) e [telas de cadastro](docs/telas-cadastros.md)
+- [Pedidos/estoque](docs/pedidos-estoque.md) e [telas operacionais](docs/telas-operacoes.md)
+- [Composição de bolsas e checkpoint atual](docs/composicao-bolsas.md)
+- [Exportações aprovadas](docs/exportacoes.md)
+- [Desenvolvimento](docs/desenvolvimento.md), [decisões técnicas](docs/decisoes-tecnicas.md) e [implantação](docs/implantacao.md)
 - [Instruções do Codex](AGENTS.md)
 
-Configuração atual do ambiente e limitações de validação em [implantação](docs/implantacao.md) e [desenvolvimento](docs/desenvolvimento.md). /login permite acesso de usuários provisionados; /painel exige sessão e consulta o vínculo real. Build de produção validado após configuração PostCSS; login com senha e validação visual ainda pendentes.
-
-
-## Banco de catálogos
-
-Facções/costureiras, unidades de medida, materiais, modelos de bolsa e composição opcional implementados no banco com RLS. [Dicionário, permissões, testes e checkpoint](docs/catalogos-producao.md). Telas de cadastro, pedidos e movimentações de estoque ainda pendentes.
-
-## Pedidos e estoque
-
-Banco implementado com pedidos de um modelo por operação de produção, entregas/recebimentos em várias facções, entradas de materiais, estornos e saldos derivados do histórico. [RPCs, permissões, testes e checkpoint](docs/pedidos-estoque.md). Telas operacionais e login com senha ainda pendentes; consultas/gravações do banco já têm contrato disponível.
-
-## Cadastros na aplicação
-
-Após login, o painel oferece facções, unidades, materiais e modelos de bolsas. Gerente Logístico cadastra/edita/exclui; Motorista e Gestor consultam. [Telas, validação e checkpoint](docs/telas-cadastros.md). Autenticação confirmada pelo responsável; teste completo das novas telas ainda pendente. Composição, pedidos e movimentos ainda não têm interface.
-
-## Produção e estoque na aplicação
-
-Painel agora oferece pedidos, detalhe com entregas/recebimentos, estoque de materiais, estoque de bolsas e histórico com estorno autorizado. [Fluxos, testes e checkpoint](docs/telas-operacoes.md). Avisos de saldo negativo/excedente são exibidos; repetição em resultado incerto preserva a mesma tentativa enquanto o formulário permanecer aberto. Fluxo autenticado e validação visual das novas telas ainda pendentes; composição e exportações ainda sem interface.
+Migrações aplicadas são preservadas. Validar incrementos e apresentar checkpoint antes de commit/push; não executar versionamento automaticamente.

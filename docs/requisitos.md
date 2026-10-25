@@ -25,3 +25,7 @@ Unidades e precisão das quantidades; saldo negativo; vínculo entre remessas e 
 
 Unidades diversas (metro, unidade, kg etc.); saldo negativo autorizado com aviso. Recebimentos de bolsas vinculados a pedido específico, com abatimento e retornos parciais. Criar projeto Supabase BagSync separado; preservar integralmente Management-System-Project.
 As pendências anteriores de saldo negativo e recebimento parcial estão resolvidas. Precisão/conversões, múltiplos modelos por pedido e excesso de recebimento continuam pendentes.
+
+## Confirmação de exportações e prioridade — 25/10/2026
+
+Responsável aprovou romaneio PDF por operação (pedido, facção, data, itens) e extratos CSV filtrados por período/pedido/facção. [Escopo](exportacoes.md). Pediu adiar refinamento visual/navegação, relatando lentidão ainda não medida; seguir primeiro com funcionalidades. Composição de modelos agora integrada na aplicação; não gera baixa automática.

@@ -34,3 +34,7 @@ Sessão Supabase SSR por cookies, renovação em src/proxy.ts, getUser no servid
 ## Interface de produção/estoque
 
 Server Components consultam views/tabelas sob sessão/RLS; numeric é selecionado como texto para preservar precisão. Server Action valida por perfil e envia RPC transacional, sem empresa/autor do formulário. Snapshot em memória e chave por intenção preservam retry enquanto o componente permanecer aberto. [Detalhes e limitações](telas-operacoes.md).
+
+## Composição integrada
+
+Nova rota /painel/cadastros/bolsas/[id]/composicao e Server Action usam a tabela bag_materials existente sob RLS. Chave completa em edição/exclusão, quantidade decimal em texto e perfil validado no servidor. Sem alteração estrutural, consumo automático ou snapshot por pedido. [Validação](composicao-bolsas.md).
