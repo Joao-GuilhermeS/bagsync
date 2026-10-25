@@ -30,3 +30,7 @@ Sessão Supabase SSR por cookies, renovação em src/proxy.ts, getUser no servid
 ## Telas de catálogos
 
 /painel usa layout autenticado e navegação. /painel/cadastros/[catalog] permite somente quatro recursos conhecidos, com consultas SSR e paginação. Server Action aplica validação por campos permitidos, perfil e empresa da sessão antes de gravar sob RLS. Não há API privilegiada ou chave administrativa. [Contrato e verificações](telas-cadastros.md).
+
+## Interface de produção/estoque
+
+Server Components consultam views/tabelas sob sessão/RLS; numeric é selecionado como texto para preservar precisão. Server Action valida por perfil e envia RPC transacional, sem empresa/autor do formulário. Snapshot em memória e chave por intenção preservam retry enquanto o componente permanecer aberto. [Detalhes e limitações](telas-operacoes.md).

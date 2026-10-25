@@ -42,3 +42,7 @@ Banco implementado com pedidos de um modelo por operação de produção, entreg
 ## Cadastros na aplicação
 
 Após login, o painel oferece facções, unidades, materiais e modelos de bolsas. Gerente Logístico cadastra/edita/exclui; Motorista e Gestor consultam. [Telas, validação e checkpoint](docs/telas-cadastros.md). Autenticação confirmada pelo responsável; teste completo das novas telas ainda pendente. Composição, pedidos e movimentos ainda não têm interface.
+
+## Produção e estoque na aplicação
+
+Painel agora oferece pedidos, detalhe com entregas/recebimentos, estoque de materiais, estoque de bolsas e histórico com estorno autorizado. [Fluxos, testes e checkpoint](docs/telas-operacoes.md). Avisos de saldo negativo/excedente são exibidos; repetição em resultado incerto preserva a mesma tentativa enquanto o formulário permanecer aberto. Fluxo autenticado e validação visual das novas telas ainda pendentes; composição e exportações ainda sem interface.

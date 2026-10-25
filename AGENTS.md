@@ -75,3 +75,8 @@ módulos operacionais antes da definição dos requisitos.
 - Autenticação com senha foi validada pelo responsável em 25/10/2026; não pedir nem registrar senha.
 - Rotas de catálogos em /painel/cadastros/[catalog], com ações no servidor e RLS. Não confiar somente na proteção do layout ou ocultação de controles.
 - Apresentar checkpoint Git com mensagem sugerida ao concluir incrementos validados, conforme pedido do responsável. Distinguir testes executados pelo agente de validação relatada pelo usuário.
+
+## Interface de pedidos/estoque
+- Rotas e limites em docs/telas-operacoes.md; não converter numeric para Number/parseFloat.
+- Manter chave e payload originais em retry de resultado incerto; somente nova intenção deve gerar chave nova. Snapshot atual não é persistente após recarregamento; não prometer operação offline.
+- Revalidar painel após sucesso; nunca esconder avisos de saldo negativo/excedente.

@@ -91,3 +91,7 @@ Base Git limpa no commit f28a677. Regras complementares confirmadas pelo respons
 ## Incremento 3 — telas de cadastros
 
 Commit 335b1e5 confirmado; autenticação validada pelo responsável. Implementadas telas/Server Action de facções, unidades, materiais e modelos, com autorização no servidor. 12 testes, lint, TypeScript, build e bloqueio HTTP sem sessão aprovados. Sem banco/dependências alterados. [Arquivos, limites de validação e checkpoint](telas-cadastros.md).
+
+## Incremento 4 — pedidos e movimentos na interface
+
+Commit cb380b8 verificado e árvore inicialmente limpa. Implementadas telas/Server Action de pedidos, estoque de materiais/bolsas, entregas, recebimentos, histórico e estorno. 17 testes, lint, TypeScript, build, teste HTTP de dez rotas e regressão SQL com rollback aprovados. Sem alteração estrutural no banco. [Contrato, limites de teste e checkpoint](telas-operacoes.md). Nenhum commit/push.
