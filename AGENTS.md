@@ -1,9 +1,40 @@
-<!-- BEGIN:nextjs-agent-rules -->
 
-## This is NOT the Next.js you know
+# Instruções do projeto
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+## Stack
+- TypeScript, Next.js App Router e React.
+- Tailwind CSS e shadcn/ui.
+- PostgreSQL e Supabase.
+- Git e GitHub.
+- Documentação em Markdown.
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+## Regras de desenvolvimento
+- Ler a documentação e inspecionar o código antes de alterar arquivos.
+- Não presumir requisitos ou regras de negócio.
+- Não implementar funcionalidades sem escopo e critérios de aceite.
+- Preferir soluções simples, tipadas e reutilizáveis.
+- Evitar dependências desnecessárias.
+- Projetar a interface para desktop, tablet e celular.
+- Validar entradas e permissões no servidor.
+- Nunca expor segredos ou chaves privadas no frontend.
+- Versionar alterações do banco por migrações SQL.
+- Não executar operações destrutivas sem autorização.
 
-<!-- END:nextjs-agent-rules -->
+## Processo
+- Trabalhar com backlog priorizado e sprints.
+- Definir objetivo, escopo, critérios de aceite e Definition of Done.
+- Executar verificações técnicas antes de concluir cada tarefa.
+- Atualizar a documentação afetada.
+- Informar arquivos alterados, testes executados e pendências.
+- Não afirmar que testes passaram sem executá-los.
+- Solicitar aprovação antes de decisões de negócio não definidas.
+- Sinalizar checkpoints de Git ao concluir marcos relevantes.
+
+## Documentação
+Manter atualizados README.md e os documentos de requisitos,
+regras de negócio, arquitetura, modelo relacional e backlog
+em docs/, conforme o projeto evoluir.
+
+## Escopo inicial
+Preparar a estrutura e a documentação. Não desenvolver
+módulos operacionais antes da definição dos requisitos.
