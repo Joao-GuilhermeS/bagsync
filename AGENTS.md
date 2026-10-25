@@ -21,7 +21,7 @@
 - Não executar operações destrutivas sem autorização.
 
 ## Processo
-- Trabalhar com backlog priorizado e sprints.
+- Trabalhar em incrementos verificáveis, sem gerar backlog ou sprints, conforme orientação atual do responsável.
 - Definir objetivo, escopo, critérios de aceite e Definition of Done.
 - Executar verificações técnicas antes de concluir cada tarefa.
 - Atualizar a documentação afetada.
@@ -32,9 +32,35 @@
 
 ## Documentação
 Manter atualizados README.md e os documentos de requisitos,
-regras de negócio, arquitetura, modelo relacional e backlog
+regras de negócio, arquitetura, modelo relacional e desenvolvimento
 em docs/, conforme o projeto evoluir.
 
 ## Escopo inicial
 Preparar a estrutura e a documentação. Não desenvolver
 módulos operacionais antes da definição dos requisitos.
+
+## Continuidade e aprovações
+- A raiz Git é bagsync/. Separar fatos observados, requisitos confirmados e propostas.
+- O responsável autorizou iniciar desenvolvimento com os requisitos confirmados; esclarecer somente regras ainda indefinidas.
+- Avaliar impacto e obter autorização quando necessária antes de instalar dependências, executar migrações destrutivas ou publicar alterações externas.
+- Não alterar regras aprovadas sem autorização e não criar dados fictícios.
+- Agrupar mudanças coerentes; apresentar comandos de revisão, commit e push nos checkpoints, sem executá-los automaticamente.
+- Verificar versões estáveis/compatíveis em fontes oficiais antes de mudar dependências; preservar lockfile.
+- Multi-tenancy confirmado: empresas independentes sem filiais; usuário em uma única empresa. Perfis e permissões em docs/regras-de-negocio.md.
+- Aplicar RLS nas tabelas expostas com políticas baseadas nas regras aprovadas; testar acesso indevido e isolamento quando aplicável.
+- Nunca expor chaves secretas/service_role no frontend; validar dados e autorização no servidor.
+- Versionar SQL em supabase/migrations/ após aprovação do modelo; não executar migrações remotas automaticamente.
+- Cada incremento deve registrar escopo, aceite, validação real e arquivos/resultados.
+
+## Supabase e movimentos — confirmação atual
+- Criar ambiente dedicado BagSync; nunca alterar o projeto Management-System-Project (eedbrqevettzscrjnexx).
+- Materiais admitem unidades diversas; saldo negativo é permitido com aviso.
+- Bolsas recebidas abatem um pedido específico; recebimentos parciais são permitidos.
+
+- Projeto Supabase dedicado criado: BagSync, ref ppgeveafuhgoymtvvrya, região sa-east-1. Usar somente esse destino em operações do BagSync; projeto antigo permanece proibido.
+
+## Catálogos implementados
+- Caminho confirmado pelo responsável: C:/Users/joaog/Projeto_RL/bagsync; não migrar/copiar para o caminho inexistente sem solicitação.
+- Incremento de banco autorizado: workshops, measurement_units, materials, bags e bag_materials; detalhes em docs/catalogos-producao.md.
+- Não modificar migrations aplicadas. Gerar novas via CLI. Testes SQL de integração usam BEGIN/ROLLBACK e não podem deixar fixtures ou mudanças de perfil persistentes.
+- Composição não implica consumo automático de estoque. Pedidos/movimentos precisam de transações e idempotência quando forem implementados.

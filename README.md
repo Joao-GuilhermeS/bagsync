@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BagSync
 
-## Getting Started
+SaaS para gestão de empresa de bolsas, em levantamento de requisitos. Login Supabase e base de empresas/perfis implementados; módulos operacionais ainda não integrados.
 
-First, run the development server:
+## Estado em 25/10/2026
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A raiz Git é `Projeto_RL/bagsync`. Remoto: https://github.com/Joao-GuilhermeS/bagsync.
+Base Next.js App Router em src/app/, com página de demonstração.
+Stack definida: TypeScript, Next.js, React, Tailwind CSS, shadcn/ui, PostgreSQL, Supabase Auth/backend, npm, Git/GitHub e Markdown.
+Declarados: Next.js 16.4.3, React/React DOM 19.3.0, Tailwind 4, TypeScript 5 e ESLint 9. Estabilidade e compatibilidade ainda não verificadas. Supabase SSR integrado; shadcn/ui ainda não instalado.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Ambiente e execução
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Observados Node.js 24.19.0 e npm 11.17.0; versões mínimas suportadas pendentes. package-lock.json e node_modules presentes.
+Após validar versões e autorizar instalação em novo ambiente, executar `npm ci` na raiz bagsync/. Para desenvolvimento: `npm run dev`, acesso http://localhost:3000.
+Scripts existentes: `npm run lint`, `npm run build` e `npm start` (após build). Teste da autorização: `node --test tests/authorization.test.mjs` (Node 24 observado). Fontes Google via next/font podem exigir rede durante build.
+Nunca versionar segredos ou expor chaves privilegiadas no navegador.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Documentação
 
-## Learn More
+- [Requisitos e levantamento](docs/requisitos.md)
+- [Regras de negócio](docs/regras-de-negocio.md)
+- [Arquitetura](docs/arquitetura.md)
+- [Modelo relacional](docs/modelo-relacional.md)
+- [Sequência de desenvolvimento](docs/desenvolvimento.md)
+- [Decisões técnicas](docs/decisoes-tecnicas.md)
+- [Implantação](docs/implantacao.md)
+- [Diagnóstico e checkpoint](docs/diagnostico-inicial.md)
+- [Instruções do Codex](AGENTS.md)
 
-To learn more about Next.js, take a look at the following resources:
+Configuração atual do ambiente e limitações de validação em [implantação](docs/implantacao.md) e [desenvolvimento](docs/desenvolvimento.md). /login permite acesso de usuários provisionados; /painel exige sessão e consulta o vínculo real. Build de produção validado após configuração PostCSS; login com senha e validação visual ainda pendentes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Banco de catálogos
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Facções/costureiras, unidades de medida, materiais, modelos de bolsa e composição opcional implementados no banco com RLS. [Dicionário, permissões, testes e checkpoint](docs/catalogos-producao.md). Telas de cadastro, pedidos e movimentações de estoque ainda pendentes.
