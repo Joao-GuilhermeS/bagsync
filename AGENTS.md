@@ -70,3 +70,8 @@ módulos operacionais antes da definição dos requisitos.
 - Usar RPCs create_production_order/register_inventory_operation com sessão real, chave de idempotência e corpo preservados no retry.
 - Não liberar escrita direta no histórico; funções SECURITY DEFINER exigem validação de identidade/empresa/perfil, search_path vazio e grants explícitos.
 - Avisos de saldo negativo e excedente devem aparecer na futura interface. Não consumir material pela composição automaticamente.
+
+## Interface dos cadastros
+- Autenticação com senha foi validada pelo responsável em 25/10/2026; não pedir nem registrar senha.
+- Rotas de catálogos em /painel/cadastros/[catalog], com ações no servidor e RLS. Não confiar somente na proteção do layout ou ocultação de controles.
+- Apresentar checkpoint Git com mensagem sugerida ao concluir incrementos validados, conforme pedido do responsável. Distinguir testes executados pelo agente de validação relatada pelo usuário.

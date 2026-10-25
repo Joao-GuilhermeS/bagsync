@@ -87,3 +87,7 @@ Concluído incremento de banco solicitado, incluindo composição opcional e uni
 ## Incremento 2 — pedidos e movimentos
 
 Base Git limpa no commit f28a677. Regras complementares confirmadas pelo responsável; banco implementado e migração 20261025204641 aplicada no BagSync. Suíte SQL antes/depois passou; 8 testes Node, lint e build aprovados. Contrato e checkpoint em [pedidos e estoque](pedidos-estoque.md). Não foram implementados endpoints Next.js ou telas de catálogos neste turno; priorizado o fluxo de banco após as respostas. Nenhum commit/push.
+
+## Incremento 3 — telas de cadastros
+
+Commit 335b1e5 confirmado; autenticação validada pelo responsável. Implementadas telas/Server Action de facções, unidades, materiais e modelos, com autorização no servidor. 12 testes, lint, TypeScript, build e bloqueio HTTP sem sessão aprovados. Sem banco/dependências alterados. [Arquivos, limites de validação e checkpoint](telas-cadastros.md).

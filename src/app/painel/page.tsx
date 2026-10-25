@@ -1,9 +1,3 @@
-import {Suspense} from "react";
-import {requireAccess} from "@/lib/auth/context";
-import {logout} from "@/app/login/actions";
-const labels = {gerente_logistico:"Gerente logístico",motorista:"Motorista / Entregador",gestor:"Gestor"};
-async function Account() {
- const access = await requireAccess();
- return <section className="mx-auto max-w-4xl p-5 sm:p-10"><header className="mb-12 flex items-center justify-between gap-4"><span className="text-2xl font-bold text-teal-800">BagSync</span><form action={logout}><button className="min-h-11 rounded-lg border px-5">Sair</button></form></header><h1 className="mb-4 text-3xl font-semibold">{access ? "Acesso autorizado" : "Acesso pendente"}</h1><p className="text-slate-600">{access ? `Perfil: ${labels[access.role]}. Seu acesso está vinculado à sua empresa.` : "Seu usuário ainda não possui vínculo com uma empresa. Solicite a configuração ao responsável."}</p>{access && <p className="mt-6 text-slate-600">Os módulos operacionais estão em desenvolvimento.</p>}</section>;
-}
-export default function Panel() {return <main className="min-h-screen bg-slate-50 text-slate-900"><Suspense fallback={<p className="p-8">Verificando acesso…</p>}><Account /></Suspense></main>;}
+import Link from "next/link";
+import {catalogs} from "@/lib/catalogs/validation";
+export default function Panel() {return <section><p className="mb-2 text-sm font-medium uppercase tracking-wider text-teal-800">Organização da produção</p><h1 className="text-3xl font-semibold tracking-tight">Cadastros da empresa</h1><p className="mt-3 max-w-2xl text-slate-600">Mantenha facções, unidades, materiais e modelos de bolsas organizados para usar nos pedidos de produção.</p><div className="mt-8 grid gap-4 sm:grid-cols-2">{Object.entries(catalogs).map(([key,c])=><Link key={key} href={`/painel/cadastros/${key}`} className="rounded-xl border bg-white p-6 hover:border-teal-700"><h2 className="text-xl font-semibold">{c.title}</h2><p className="mt-3 text-sm text-teal-800">Consultar cadastro →</p></Link>)}</div></section>;}

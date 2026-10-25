@@ -38,3 +38,7 @@ Facções/costureiras, unidades de medida, materiais, modelos de bolsa e composi
 ## Pedidos e estoque
 
 Banco implementado com pedidos de um modelo por operação de produção, entregas/recebimentos em várias facções, entradas de materiais, estornos e saldos derivados do histórico. [RPCs, permissões, testes e checkpoint](docs/pedidos-estoque.md). Telas operacionais e login com senha ainda pendentes; consultas/gravações do banco já têm contrato disponível.
+
+## Cadastros na aplicação
+
+Após login, o painel oferece facções, unidades, materiais e modelos de bolsas. Gerente Logístico cadastra/edita/exclui; Motorista e Gestor consultam. [Telas, validação e checkpoint](docs/telas-cadastros.md). Autenticação confirmada pelo responsável; teste completo das novas telas ainda pendente. Composição, pedidos e movimentos ainda não têm interface.

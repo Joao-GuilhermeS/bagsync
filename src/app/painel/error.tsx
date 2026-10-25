@@ -1,0 +1,2 @@
+"use client";
+export default function PanelError({reset}:{reset:()=>void}) {return <section role="alert" className="rounded-xl border bg-white p-6 text-slate-900"><h2 className="text-xl font-semibold">Não foi possível carregar os dados</h2><p className="my-4">Confira sua conexão e tente novamente.</p><button onClick={reset} className="min-h-11 rounded-lg bg-teal-800 px-5 text-white">Tentar novamente</button></section>;}

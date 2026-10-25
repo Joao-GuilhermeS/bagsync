@@ -26,3 +26,7 @@ Multi-tenancy confirmado, sem filiais, usuário em uma empresa. Três perfis con
 ## Integração de autenticação implementada
 
 Sessão Supabase SSR por cookies, renovação em src/proxy.ts, getUser no servidor e vínculo em company_users sob RLS. /painel impede acesso sem sessão; usuário sem vínculo vê acesso pendente. Bibliotecas oficiais fixadas em package.json. Interface PT-BR com Tailwind; shadcn/ui ainda não instalado. Sem cache compartilhado dos dados autenticados. Referência: https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs.
+
+## Telas de catálogos
+
+/painel usa layout autenticado e navegação. /painel/cadastros/[catalog] permite somente quatro recursos conhecidos, com consultas SSR e paginação. Server Action aplica validação por campos permitidos, perfil e empresa da sessão antes de gravar sob RLS. Não há API privilegiada ou chave administrativa. [Contrato e verificações](telas-cadastros.md).
