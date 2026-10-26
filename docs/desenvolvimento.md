@@ -99,3 +99,7 @@ Commit cb380b8 verificado e árvore inicialmente limpa. Implementadas telas/Serv
 ## Incremento 5 — composição
 
 Base 051fc54 confirmada. Consulta e manutenção de composição por modelo implementadas, sem consumo automático. 20 testes, suíte SQL com rollback, lint, TypeScript, build e teste HTTP de onze rotas passaram. Sem mudanças no esquema. [Arquivos e checkpoint](composicao-bolsas.md). Exportações PDF/CSV aprovadas pelo responsável para o próximo incremento; visual/navegação e medição de lentidão adiados conforme orientação.
+
+## Incremento 6 — exportações
+
+Base e978213 verificada. Implementados romaneios PDF e extratos CSV sob sessão/RLS; migração aditiva 20261025233431 com RPC SECURITY INVOKER para snapshot consistente. 24 testes Node, SQL antes/depois, lint/TypeScript/build e HTTP sem sessão passaram. PDF de 8 páginas revisado visualmente; sem dados de teste persistentes. [Arquivos, limitações e checkpoint](exportacoes.md).

@@ -38,3 +38,7 @@ Server Components consultam views/tabelas sob sessão/RLS; numeric é selecionad
 ## Composição integrada
 
 Nova rota /painel/cadastros/bolsas/[id]/composicao e Server Action usam a tabela bag_materials existente sob RLS. Chave completa em edição/exclusão, quantidade decimal em texto e perfil validado no servidor. Sem alteração estrutural, consumo automático ou snapshot por pedido. [Validação](composicao-bolsas.md).
+
+## Exportações integradas
+
+Downloads Node via Route Handlers com Auth/vínculo validados, sem cache compartilhado e sem service_role. RPC SECURITY INVOKER reúne um snapshot sob RLS; quantidade textual e CSV protegido contra fórmulas. PDFKit com fontes locais licenciadas e tracing explícito. Limites técnicos evitam truncamento silencioso. [Contrato e QA](exportacoes.md).

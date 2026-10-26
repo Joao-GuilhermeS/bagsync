@@ -35,3 +35,7 @@ Rotas: /login (e-mail/senha), /painel (sessão validada no servidor e vínculo c
 ## Pedidos e movimentos
 
 Migração 20261025204641_pedidos_movimentacoes aplicada somente no BagSync. Testada antes/depois com rollback. RPCs create_production_order e register_inventory_operation requerem sessão autenticada, sem chave administrativa no cliente. Views de estoque/progresso sob RLS. [Contrato, alertas e limitações](pedidos-estoque.md). Nenhuma mudança em senha/credenciais/vínculo ou no projeto antigo.
+
+## Exportações
+
+20261025233431_exportacoes_consulta aplicada somente no BagSync; migrações anteriores intactas. Deploy precisa de runtime Node e fontes src/assets/fonts incluídas no tracing (verificado no build). Não depende de Python/Poppler em produção. Dependências: npm ci com lockfile; seguir exportacoes.md para validação dos downloads e limites. Não houve publicação/deploy neste incremento.

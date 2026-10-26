@@ -11,7 +11,7 @@ Aplicação SaaS para fabricação e logística de bolsas. Desenvolvimento incre
 - Entradas/entregas de materiais, recebimentos parciais de bolsas, histórico e estornos via RPCs transacionais/idempotentes.
 - Saldo negativo e recebimento excedente permitidos com aviso. Composição não reserva nem baixa estoque.
 - Interface funcional básica; refinamento visual/navegação e investigação de lentidão foram adiados pelo responsável.
-- Exportações PDF/CSV aprovadas, ainda não implementadas. Saída para clientes, cancelamento/encerramento de pedidos e retomada offline não implementados.
+- Romaneios PDF e extratos CSV implementados sob sessão/RLS; download autenticado real ainda precisa de homologação. Saída para clientes, cancelamento/encerramento de pedidos e retomada offline não implementados.
 
 ## Stack e ambiente
 
@@ -42,7 +42,7 @@ npm run build
 node tests/http-access.mjs
 ```
 
-Build pode exigir rede para fontes Google. Teste HTTP usa servidor temporário em 127.0.0.1:3101. Suites SQL em supabase/tests/ são administrativas e transacionais com rollback; ler instruções antes de executar, sem concorrer com provisionamento. Nesta etapa: 20 testes Node, lint, TypeScript, build, suíte SQL de composição e proteção HTTP de onze rotas passaram. Testes visuais, fluxo completo dos formulários autenticados, carga e latência permanecem pendentes. Não confundir autenticação relatada pelo responsável com testes completos feitos pelo agente.
+Build pode exigir rede para fontes Google. Teste HTTP usa servidor temporário em 127.0.0.1:3101. Suites SQL em supabase/tests/ são administrativas e transacionais com rollback; ler instruções antes de executar, sem concorrer com provisionamento. Nesta etapa: 24 testes Node, lint, TypeScript, build, suítes SQL e proteção HTTP de 12 páginas/dois downloads passaram. PDF de QA multipágina renderizado e revisado. Testes visuais, fluxo completo dos formulários autenticados, carga e latência permanecem pendentes. Não confundir autenticação relatada pelo responsável com testes completos feitos pelo agente.
 
 ## Documentação
 
@@ -51,7 +51,7 @@ Build pode exigir rede para fontes Google. Teste HTTP usa servidor temporário e
 - [Catálogos](docs/catalogos-producao.md) e [telas de cadastro](docs/telas-cadastros.md)
 - [Pedidos/estoque](docs/pedidos-estoque.md) e [telas operacionais](docs/telas-operacoes.md)
 - [Composição de bolsas e checkpoint atual](docs/composicao-bolsas.md)
-- [Exportações aprovadas](docs/exportacoes.md)
+- [Exportações e checkpoint atual](docs/exportacoes.md)
 - [Desenvolvimento](docs/desenvolvimento.md), [decisões técnicas](docs/decisoes-tecnicas.md) e [implantação](docs/implantacao.md)
 - [Instruções do Codex](AGENTS.md)
 

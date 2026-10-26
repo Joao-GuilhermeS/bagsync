@@ -85,3 +85,9 @@ módulos operacionais antes da definição dos requisitos.
 - Responsável orientou adiar refinamento visual/navegação e relatou lentidão sem medição: não afirmar otimização ou diagnóstico de desempenho inexistente.
 - Composição integrada: docs/composicao-bolsas.md. Não cria baixa/reserva automática nem snapshot histórico por pedido.
 - Exportações aprovadas para próximo incremento: PDF por operação e extratos CSV com período/pedido/facção; docs/exportacoes.md.
+
+## Exportações implementadas
+- PDF por operação e extrato CSV em /painel/exportacoes; contrato e limites em docs/exportacoes.md.
+- export_inventory_operations é somente leitura/SECURITY INVOKER; preservar RLS e snapshot único.
+- Não remover proteção contra fórmulas CSV, precisão textual, validação de filtros nem headers no-store.
+- Assets Noto Sans e licença são versionados; PDFs de QA em tmp/pdfs/ são ignorados, sem dados reais.
