@@ -1,5 +1,9 @@
 # Requisitos confirmados — 25/10/2026
 
+## Complemento — acompanhamento da produção (26/10/2026)
+
+Aba de acompanhamento com cards para selecionar o município atendido pelo pedido antes de consultar a tabela dinâmica. Exibir facção/costureiro, quantidade distribuída para fabricação, data de distribuição, quantidades e datas dos recolhimentos e observações. Município confirmado como destino atendido pelo pedido, separado da cidade da facção. Origem das quantidades, apresentação dos recolhimentos e permissão de observações estão em esclarecimento no [levantamento de acompanhamento](acompanhamento-producao.md). Implementação ainda pendente; preservar pedidos simultâneos, recebimentos parciais e estornos.
+
 Fonte: respostas fornecidas pelo responsável neste chat. Aprovação de regras e aceite: desenvolvedor.
 
 - Fabricação têxtil de bolsas. Substituir registros em caderno e controlar perdas/faltas de materiais.

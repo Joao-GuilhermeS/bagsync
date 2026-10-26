@@ -97,3 +97,8 @@ módulos operacionais antes da definição dos requisitos.
 - Não criar entidade de lotes nem acesso para facções. Gestor pode atribuir rotas como exceção específica, sem CRUD geral.
 - Checklist predefinido por modelo, previstos manuais por remessa e PDF imprimível. Não calcular automaticamente composição vezes quantidade.
 - Traço na ficha significa material não enviado e pendente, mantendo o kit incompleto (confirmado em 26/10/2026). Não cadastrar dados manuscritos da fotografia como registros reais.
+
+## Checklist de modelos
+- Tela /painel/cadastros/bolsas/[id]/checklist; contrato em docs/tela-checklist.md. Alteração somente pelo gerente, com autorização no servidor e RLS.
+- Configuração do checklist não movimenta estoque nem reescreve snapshots de remessas existentes. Não confundir com composição quantitativa.
+- Responsável solicita questionário agrupado quando surgirem dúvidas de funcionamento ou relacionamentos; não presumir regras ainda indefinidas.

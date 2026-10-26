@@ -17,8 +17,8 @@ declare
  t1 uuid; t2 uuid; oid uuid; kid uuid; i1 uuid; i2 uuid; op uuid;
  k uuid:=gen_random_uuid(); dk uuid:=gen_random_uuid(); items jsonb; delivery jsonb; r jsonb; n bigint;
 begin
- insert into public.bag_checklist_items(company_id,bag_id,material_id,label) values(cid,b,m,'Item A') returning id into t1;
- insert into public.bag_checklist_items(company_id,bag_id,material_id,label,position) values(cid,b,m,'Item B',1) returning id into t2;
+ insert into public.bag_checklist_items(company_id,bag_id,material_id,label,input_type) values(cid,b,m,'Item A','checkbox') returning id into t1;
+ insert into public.bag_checklist_items(company_id,bag_id,material_id,label,position,input_type) values(cid,b,m,'Item B',1,'text') returning id into t2;
  oid:=(public.create_production_order(gen_random_uuid(),'__kit__',b,10)->>'order_id')::uuid;
  items:=jsonb_build_array(jsonb_build_object('template_item_id',t1,'expected_quantity','100'),jsonb_build_object('template_item_id',t2,'expected_quantity','25'));
  r:=public.create_shipment_kit(k,oid,w,10,items); kid:=(r->>'kit_id')::uuid;
@@ -38,6 +38,16 @@ begin
  exception when foreign_key_violation then null;end;
  select id into i1 from public.shipment_kit_items where kit_id=kid and template_item_id=t1;
  select id into i2 from public.shipment_kit_items where kit_id=kid and template_item_id=t2;
+ if (select input_type from public.shipment_kit_items where id=i1) is distinct from 'checkbox' or (select input_type from public.shipment_kit_items where id=i2) is distinct from 'text' then raise exception 'Tipo não capturado na remessa';end if;
+ begin
+  update public.bag_checklist_items set input_type='number' where id=t1;raise exception 'Tipo inválido aceito';
+ exception when check_violation then null;end;
+ update public.bag_checklist_items set input_type=null where id=t1;
+ begin
+  perform public.create_shipment_kit(gen_random_uuid(),oid,w,10,items);raise exception 'Nova remessa com tipo não configurado';
+ exception when invalid_parameter_value then null;end;
+ update public.bag_checklist_items set input_type='text' where id=t1;
+ if (select input_type from public.shipment_kit_items where id=i1) is distinct from 'checkbox' then raise exception 'Mudança do modelo alterou tipo histórico';end if;
  perform set_config('test.item',i1::text,true);
  delivery:=jsonb_build_array(jsonb_build_object('kit_item_id',i1,'mode','partial','quantity','50'));
  r:=public.record_kit_delivery(dk,kid,delivery);op:=(r->>'operation_id')::uuid;

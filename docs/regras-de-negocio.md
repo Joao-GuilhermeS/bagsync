@@ -40,4 +40,8 @@ Banco implementado conforme [contrato de pedidos/estoque](pedidos-estoque.md). N
 - RN-17: checklist predefinido por modelo; previstos informados manualmente por remessa, sem multiplicação automática pela composição.
 - RN-18: confirmação OK para envio completo, valor numérico para parcial, pendências explícitas e PDF físico do checklist. Traço significa material não enviado e pendente, mantendo o kit incompleto (confirmado pelo responsável em 26/10/2026).
 
+- RN-19 (26/10/2026): cada item do checklist do modelo possui tipo escolhido pelo usuário: caixa de conferência ou texto livre. A escolha é preservada na remessa; texto não deve ser interpretado como quantidade.
+- RN-20: marcação confirma e baixa a quantidade prevista manualmente para aquela remessa; quantidade parcial pode ser informada mesmo em item de conferência. Item de texto livre possui campo numérico separado para o envio/estoque.
+- RN-21: emissão da saída seleciona uma facção/costureiro cadastrado e inclui anotações gerais. PDF imprimível após conclusão com nome do destinatário e quantidade à esquerda, data e município à direita. A impressão utiliza o diálogo do navegador/leitor PDF, sem prometer seleção automática de impressora.
+
 Estas regras complementam/substituem os trechos históricos correspondentes; não implicam que kits, rotas ou novo PDF já estejam implementados. Referência: adaptacao-kits-rotas.md.

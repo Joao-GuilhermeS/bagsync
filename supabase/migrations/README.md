@@ -9,3 +9,5 @@
 20261026074225_checklists_remessas.sql: aplicada permanentemente no BagSync após autorização. Checklist por modelo, remessa com previsão manual, entregas vinculadas ao estoque e pendências após estorno. Testes ../tests/checklists_remessas.sql aprovados antes e depois da aplicação, com rollback das fixtures. Contrato em docs/kits-remessas.md.
 
 20261026074334_kit_delivery_reference_index.sql: aplicada no BagSync; índice composto de apoio à FK dos itens para a entrega. Aviso de FK sem índice resolvido.
+
+20261026181154_checklist_response_types.sql: preparada e validada em transação revertida; aplicação permanente pendente. Tipo checkbox/text por item do modelo e snapshot imutável nas remessas; legado sem tipo arbitrário. A nova versão da tela de cadastro depende desta migração.
