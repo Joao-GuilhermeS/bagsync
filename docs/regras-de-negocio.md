@@ -31,3 +31,13 @@ Facções, materiais e modelos de bolsas com cadastro mínimo por nome; material
 - RN-13: corrigir entregas/recebimentos por estorno e novo lançamento, preservando original.
 
 Banco implementado conforme [contrato de pedidos/estoque](pedidos-estoque.md). Não há baixa por composição nem encerramento automático. Papéis e avisos conforme contrato. As pendências anteriores sobre modelos, excesso e correção estão resolvidas; cancelamento/edição da previsão e distribuição prévia por facção ainda não foram implementados.
+
+## Alterações autorizadas — 26/10/2026
+
+- RN-14: facções/costureiros não acessam a aplicação; envios e recebimentos são registrados pelos usuários da empresa.
+- RN-15: lote significa recebimento parcial; não haverá entidade de lote independente.
+- RN-16: Gerente Logístico e Gestor podem atribuir rotas; Gestor continua sem escrita nas demais operações/cadastros. Permissão de rotas ainda não implementada.
+- RN-17: checklist predefinido por modelo; previstos informados manualmente por remessa, sem multiplicação automática pela composição.
+- RN-18: confirmação OK para envio completo, valor numérico para parcial, pendências explícitas e PDF físico do checklist. Traço significa material não enviado e pendente, mantendo o kit incompleto (confirmado pelo responsável em 26/10/2026).
+
+Estas regras complementam/substituem os trechos históricos correspondentes; não implicam que kits, rotas ou novo PDF já estejam implementados. Referência: adaptacao-kits-rotas.md.

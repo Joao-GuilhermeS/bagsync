@@ -35,3 +35,7 @@ Migração 20261025202641 adiciona workshops, measurement_units, materials, bags
 ## Pedidos e estoque implementados
 
 production_orders (um modelo por pedido); inventory_operations (entradas, entregas, recebimentos e estornos); stock_movements (razão assinado). Views de saldos/progresso com security_invoker. Escrita apenas por RPCs com autorização derivada da sessão. Migração 20261025204641; [dicionário, relacionamentos, permissões e testes](pedidos-estoque.md).
+
+## Checklists e remessas — aplicados em 26/10/2026
+
+Migração 20261026074225: bag_checklist_items, shipment_kits, shipment_kit_items, kit_deliveries e kit_delivery_items; duas views de progresso/status e duas RPCs transacionais. Quantidades previstas manuais, vínculo com estoque existente, histórico preservado e RLS. Migração 20261026074334 adiciona índice de apoio à FK da entrega. [Contrato e evidências](kits-remessas.md). Aplicadas somente no BagSync após autorização, com testes transacionais aprovados.

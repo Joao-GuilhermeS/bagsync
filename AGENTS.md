@@ -91,3 +91,9 @@ módulos operacionais antes da definição dos requisitos.
 - export_inventory_operations é somente leitura/SECURITY INVOKER; preservar RLS e snapshot único.
 - Não remover proteção contra fórmulas CSV, precisão textual, validação de filtros nem headers no-store.
 - Assets Noto Sans e licença são versionados; PDFs de QA em tmp/pdfs/ são ignorados, sem dados reais.
+
+## Feedback do cliente em 26/10/2026
+- Ler docs/adaptacao-kits-rotas.md antes de adaptar kits/rotas.
+- Não criar entidade de lotes nem acesso para facções. Gestor pode atribuir rotas como exceção específica, sem CRUD geral.
+- Checklist predefinido por modelo, previstos manuais por remessa e PDF imprimível. Não calcular automaticamente composição vezes quantidade.
+- Traço na ficha significa material não enviado e pendente, mantendo o kit incompleto (confirmado em 26/10/2026). Não cadastrar dados manuscritos da fotografia como registros reais.

@@ -29,3 +29,7 @@ As pendências anteriores de saldo negativo e recebimento parcial estão resolvi
 ## Confirmação de exportações e prioridade — 25/10/2026
 
 Responsável aprovou romaneio PDF por operação (pedido, facção, data, itens) e extratos CSV filtrados por período/pedido/facção. [Escopo](exportacoes.md). Pediu adiar refinamento visual/navegação, relatando lentidão ainda não medida; seguir primeiro com funcionalidades. Composição de modelos agora integrada na aplicação; não gera baixa automática.
+
+## Feedback do cliente — 26/10/2026
+
+Novos requisitos e esclarecimentos consolidados em [adaptação de kits e rotas](adaptacao-kits-rotas.md): checklist predefinido por modelo, quantidades previstas manuais, remessa incompleta com pendências, PDF imprimível, contato/endereço da facção e rotas móveis. Não criar cadastro de lotes; facção sem acesso. Gerente Logístico e Gestor poderão atribuir rotas, sem ampliar as demais permissões do Gestor. Traço na ficha significa material não enviado e pendente, mantendo o kit incompleto (confirmado pelo responsável em 26/10/2026).
