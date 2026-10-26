@@ -1,0 +1,9 @@
+import Link from "next/link";
+import type {SupabaseClient} from "@supabase/supabase-js";
+import {Pagination} from "../operacoes/pagination";
+export async function SubmissionHistory({client,company,kit,page=1,preview=false}:{client:SupabaseClient;company:string;kit:string;page?:number;preview?:boolean}) {
+ const size=preview?5:25;
+ const result=await client.from("kit_checklist_submissions").select("id,note,created_at,operation_id",{count:"exact"}).eq("company_id",company).eq("kit_id",kit).order("created_at",{ascending:false}).order("id").range((page-1)*size,page*size-1);
+ if(result.error)throw new Error("Não foi possível consultar os preenchimentos.");
+ return <section className="mt-8"><h2 className="mb-4 text-xl font-semibold">Controles de saída registrados</h2><div className="space-y-3">{!result.data.length&&<p className="rounded-xl border bg-white p-4">Nenhum preenchimento registrado.</p>}{result.data.map(submission=><article key={submission.id} className="rounded-xl border bg-white p-4"><p className="font-medium">{new Date(submission.created_at).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"})}</p><p className="mt-2 text-sm">{submission.operation_id?"Envio de materiais registrado; consulte o histórico para eventuais estornos.":"Sem novo envio de materiais neste preenchimento."}</p>{submission.note&&<p className="mt-2 whitespace-pre-wrap break-words text-sm">{submission.note}</p>}<Link target="_blank" rel="noreferrer" href={`/painel/remessas/${kit}/preenchimentos/${submission.id}/pdf`} className="mt-2 inline-block min-h-11 py-3 text-teal-800 underline">Abrir checklist PDF / imprimir</Link></article>)}</div>{preview?<Link href={`/painel/remessas/${kit}/preenchimentos`} className="inline-block py-3 text-teal-800 underline">Consultar todos os preenchimentos</Link>:<Pagination page={page} count={result.count??0}/>}</section>;
+}

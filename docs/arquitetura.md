@@ -1,5 +1,9 @@
 # Arquitetura
 
+## Controle de saída — atualização em 26/10/2026
+
+O preenchimento de checklist usa ação de servidor autenticada → RPC submit_shipment_checklist → validação do snapshot/empresa/perfil → operação de entrega existente → respostas e movimento na mesma transação. Preenchimentos sem envio são registros independentes, sem operação de estoque fictícia. Históricos imutáveis separados de template e previsão. PDF gerado no servidor com fonte local, consulta sujeita a RLS e resposta privada/no-store. [Contrato e limites](controle-saida.md).
+
 ## Observada
 
 - src/app/page.tsx: demonstração do scaffold.

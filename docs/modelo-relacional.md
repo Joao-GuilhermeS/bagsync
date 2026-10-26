@@ -39,3 +39,7 @@ production_orders (um modelo por pedido); inventory_operations (entradas, entreg
 ## Checklists e remessas — aplicados em 26/10/2026
 
 Migração 20261026074225: bag_checklist_items, shipment_kits, shipment_kit_items, kit_deliveries e kit_delivery_items; duas views de progresso/status e duas RPCs transacionais. Quantidades previstas manuais, vínculo com estoque existente, histórico preservado e RLS. Migração 20261026074334 adiciona índice de apoio à FK da entrega. [Contrato e evidências](kits-remessas.md). Aplicadas somente no BagSync após autorização, com testes transacionais aprovados.
+
+## Respostas e controle de saída — aplicados em 26/10/2026
+
+Migração 20261026191246 acrescenta input_type ao modelo e ao snapshot. Migração 20261026191312 cria kit_checklist_submissions (preenchimento, operação opcional, chave, nota, autor/data) e kit_checklist_answers (item, modo, texto livre, quantidade). FKs compostas da mesma empresa/kit, RLS e histórico sem escrita direta. submit_shipment_checklist grava respostas e baixa na mesma transação, ou somente respostas quando não houver envio. [Dicionário, permissões e testes](controle-saida.md).

@@ -2,8 +2,9 @@
 import {revalidatePath} from "next/cache";
 import {requireAccess} from "@/lib/auth/context";
 import {createClient} from "@/lib/supabase/server";
-import {parseShipment} from "@/lib/checklists/shipment-validation";
+import {parseShipment,parseShipmentChecklist} from "@/lib/checklists/shipment-validation";
 import {operationError} from "@/lib/operations/validation";
+import {operationWarnings} from "@/lib/operations/data";
 import type {TransactionState} from "@/lib/operations/types";
 
 export async function createShipment(_previous:TransactionState,form:FormData):Promise<TransactionState> {
@@ -22,4 +23,21 @@ export async function createShipment(_previous:TransactionState,form:FormData):P
   revalidatePath("/painel","layout");
   return {success:true,uncertain:false,id:data.kit_id,message:"Remessa criada com previsões manuais. Nenhum material foi baixado nesta etapa.",warnings:[]};
  }catch{return fail("A conexão não confirmou o resultado. Confira as remessas antes de iniciar outro lançamento ou repita a mesma tentativa.",true);}
+}
+
+export async function submitChecklist(_previous:TransactionState,form:FormData):Promise<TransactionState> {
+ const fail=(message:string,uncertain=false):TransactionState=>({success:false,uncertain,message,warnings:[]});
+ const access=await requireAccess();if(!access||!["gerente_logistico","motorista"].includes(access.role))return fail("Seu perfil não permite registrar saída de materiais.");
+ let input:ReturnType<typeof parseShipmentChecklist>;
+ try{input=parseShipmentChecklist(form);}catch(error){return fail(error instanceof Error?error.message:"Dados inválidos.");}
+ try{
+  const client=await createClient();const {data,error}=await client.rpc("submit_shipment_checklist",input);
+  if(error){
+   const definitive=["22023","22P02","23503","23505","23514","42501","22003"].includes(error.code);
+   return fail(definitive?operationError(error.code):"Resultado não confirmado. Repita a mesma tentativa sem alterar os dados.",!definitive);
+  }
+  if(typeof data?.submission_id!=="string")return fail("Resultado não confirmado. Repita a mesma tentativa.",true);
+  revalidatePath("/painel","layout");
+  return {success:true,uncertain:false,id:data.submission_id,warnings:operationWarnings(data),message:data.operation_id?"Controle de saída registrado. As quantidades enviadas foram baixadas do estoque.":"Checklist salvo sem novo envio de materiais. O estoque não foi movimentado."};
+ }catch{return fail("Resultado não confirmado. Repita a mesma tentativa ou confira o histórico antes de iniciar outra saída.",true);}
 }

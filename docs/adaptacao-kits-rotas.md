@@ -46,4 +46,4 @@ Este documento consolida requisitos; não representa implementação concluída.
 
 ## Incremento de banco aplicado
 
-Após a consolidação inicial, as migrações de checklists/remessas foram aplicadas permanentemente no BagSync com autorização explícita em 26/10/2026. Testes transacionais aprovados antes e depois da aplicação, com rollback das fixtures. Estado e contrato atuais em [kits e remessas](kits-remessas.md). As diferenças listadas acima descrevem a base anterior à aplicação dessas migrações. Interface, novo PDF, contatos/endereço e rotas continuam pendentes.
+Após a consolidação inicial, as migrações de checklists/remessas foram aplicadas permanentemente no BagSync em 26/10/2026. Testes transacionais aprovados antes e depois da aplicação, com rollback das fixtures. Estado e contrato atuais em [kits e remessas](kits-remessas.md) e [controle de saída com respostas e PDF](controle-saida.md). As diferenças listadas acima descrevem a base anterior à aplicação dessas migrações. Contatos/endereço, rotas e tabela consolidada permanecem pendentes.

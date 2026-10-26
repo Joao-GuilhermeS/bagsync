@@ -42,7 +42,7 @@ npm run build
 node tests/http-access.mjs
 ```
 
-Build pode exigir rede para fontes Google. Teste HTTP usa servidor temporário em 127.0.0.1:3101. Suites SQL em supabase/tests/ são administrativas e transacionais com rollback; ler instruções antes de executar, sem concorrer com provisionamento. Nesta etapa: 24 testes Node, lint, TypeScript, build, suítes SQL e proteção HTTP de 12 páginas/dois downloads passaram. PDF de QA multipágina renderizado e revisado. Testes visuais, fluxo completo dos formulários autenticados, carga e latência permanecem pendentes. Não confundir autenticação relatada pelo responsável com testes completos feitos pelo agente.
+Build pode exigir rede para fontes Google. Teste HTTP usa servidor temporário em 127.0.0.1:3101. Suites SQL em supabase/tests/ são administrativas e transacionais com rollback; ler instruções antes de executar, sem concorrer com provisionamento. Estado atual: 39 testes Node, lint, TypeScript/build e suítes SQL de saída/remessas aprovados; 21 páginas protegidas e três arquivos negados sem sessão. PDFs de QA de uma e 11 páginas renderizados e revisados. Fluxo completo dos formulários autenticados, visual mobile, impressão física, carga e latência permanecem pendentes. Não confundir autenticação relatada pelo responsável com testes completos feitos pelo agente.
 
 ## Documentação
 
@@ -52,6 +52,7 @@ Build pode exigir rede para fontes Google. Teste HTTP usa servidor temporário e
 - [Pedidos/estoque](docs/pedidos-estoque.md) e [telas operacionais](docs/telas-operacoes.md)
 - [Composição de bolsas e checkpoint atual](docs/composicao-bolsas.md)
 - [Exportações e checkpoint atual](docs/exportacoes.md)
+- [Entregador](docs/tela-entregador.md), [remessas](docs/telas-remessas.md) e [controle de saída com checklist/PDF](docs/controle-saida.md)
 - [Desenvolvimento](docs/desenvolvimento.md), [decisões técnicas](docs/decisoes-tecnicas.md) e [implantação](docs/implantacao.md)
 - [Instruções do Codex](AGENTS.md)
 

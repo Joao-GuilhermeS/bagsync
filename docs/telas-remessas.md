@@ -23,9 +23,9 @@ O formulário preserva a chave e uma cópia do FormData quando o resultado for i
 
 ## Dependência e limites
 
-A criação e o cadastro do tipo dependem da migração pendente `20261026181154_checklist_response_types.sql`, validada anteriormente com rollback, mas ainda sem autorização explícita para aplicação permanente. Não publicar esta versão antes de concluir essa atualização do banco. Nenhuma migração nova foi criada neste incremento de telas.
+Migração de tipos `20261026191246_checklist_response_types.sql` aplicada no BagSync; substitui o nome local antes preparado com versão 20261026181154. Respostas/baixa/PDF implementados após o incremento inicial destas telas, pela migração 20261026191312 e pelas rotas de preenchimento. [Contrato atual](controle-saida.md).
 
-Esta entrega não inclui preenchimento final das respostas em texto/✓, envio parcial pela nova tela, armazenamento das respostas livres, PDF do novo checklist, tabela consolidada de acompanhamento ou novas permissões de observações. O contrato atual de entregas via RPC e operações existentes permanece disponível; entregas lançadas sem vínculo com kit não atendem automaticamente as pendências daquele kit.
+Preenchimento final em texto/✓, envio parcial, respostas livres e novo PDF estão implementados no controle de saída. Tabela consolidada de acompanhamento e observações independentes pelos três perfis permanecem pendentes. Entregas genéricas lançadas sem vínculo com kit não atendem automaticamente as pendências daquele kit.
 
 Correção posterior confirmada: município é o nome do modelo. Não criar campo de município atendido nos pedidos. O acompanhamento por modelo usará quantidades das remessas, total de recolhimentos com histórico expansível e observações permitidas aos três perfis. Preservar pedidos específicos e não supor vínculo individual entre recebimento e remessa.
 
@@ -48,4 +48,4 @@ Nenhuma dependência instalada ou dado permanente de teste criado. Alterações 
 - `node tests/http-access.mjs`: login 200, 16 páginas exigindo sessão e dois downloads negados sem sessão; executado fora do sandbox por bloqueio conhecido de loopback.
 - `git diff --check`: sem erros; avisos de normalização LF/CRLF conforme configuração Git.
 
-Não foi feito teste de criação com sessão real nem verificação visual/mobile em navegador. Os testes de banco/RLS da base foram executados nos incrementos anteriores; não foram repetidos nesta etapa sem mudança de SQL. A aplicação da migração de tipos e a validação autenticada continuam pendentes antes da liberação.
+Não foi feito teste de criação com sessão real nem verificação visual/mobile em navegador. Os resultados acima correspondem ao incremento inicial das remessas. Migrações de tipos/respostas e novos testes SQL foram aplicados/executados posteriormente; evidências atualizadas em [controle de saída](controle-saida.md). A validação autenticada continua pendente.

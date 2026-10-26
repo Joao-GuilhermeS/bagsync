@@ -49,4 +49,4 @@ O saldo e o histórico devem respeitar estornos e pedidos distintos. Quantidades
 
 ## Estado
 
-Navegação operacional em /painel/entregador implementada localmente com modelos, facções, operações existentes, romaneios e total recolhido por pedido/facção. Tabela consolidada de produção, observações independentes pelos três perfis e novo PDF do checklist continuam pendentes. Alterações locais anteriores preservadas. A migração de tipos do checklist continua separada e pendente de aplicação permanente; a navegação do entregador reaproveita o banco já aplicado.
+Navegação operacional em /painel/entregador implementada com modelos, facções, romaneios e total recolhido por pedido/facção. Controle de saída com checklist/quantidades/baixa/PDF integrado conforme [contrato](controle-saida.md), com migrações de tipos e respostas já aplicadas no BagSync. Tabela consolidada de produção e observações independentes pelos três perfis continuam pendentes.

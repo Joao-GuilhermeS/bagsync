@@ -21,9 +21,9 @@ Este incremento reutiliza o registro transacional e idempotente existente. A có
 
 ## Limites explícitos
 
-O envio nesta tela ainda usa a operação existente de materiais; não preenche ou finaliza automaticamente o novo checklist da remessa. O PDF disponível é o romaneio por operação já implementado, não a nova ficha de checklist. Entrega sem vínculo com kit não atende automaticamente suas pendências.
+Atualização: o envio na tela do entregador agora seleciona uma remessa preparada e conclui o checklist, com quantidade separada, baixa transacional e novo PDF. O formulário operacional ao lado fica dedicado ao recolhimento de bolsas prontas. [Contrato e validações do controle de saída](controle-saida.md). Entregas genéricas feitas nas telas antigas continuam no histórico, sem atribuição automática a kits.
 
-Ainda pendentes: tabela consolidada com quantidade de produção distribuída/saldo e histórico expansível, observações independentes pelos três perfis, respostas livres do checklist, sua impressão e rotas atribuídas. Não apresentar previsão de kit não enviado como material efetivamente entregue. A migração de tipos do checklist continua pendente de aplicação; esta navegação do entregador não depende dela e não modifica SQL.
+Ainda pendentes: tabela consolidada com quantidade de produção distribuída/saldo e histórico expansível, observações independentes pelos três perfis e rotas atribuídas. Não apresentar previsão de kit não enviado como material efetivamente entregue. Migrações de tipos e respostas do checklist aplicadas no BagSync; a implementação de saída está documentada separadamente.
 
 ## Arquivos e validação
 

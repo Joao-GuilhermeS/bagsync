@@ -5,10 +5,10 @@ import {createShipment} from "./actions";
 import type {TransactionState,Option} from "@/lib/operations/types";
 
 export type TemplateItem={id:string;label:string;input_type:"checkbox"|"text"|null;material_id:string};
-type Props={requestKey:string;orderId:string;workshops:Option[];items:TemplateItem[];materials:Option[]};
-export function ShipmentForm({requestKey,orderId,workshops,items,materials}:Props) {
+type Props={requestKey:string;orderId:string;workshops:Option[];items:TemplateItem[];materials:Option[];workshopId?:string};
+export function ShipmentForm({requestKey,orderId,workshops,items,materials,workshopId}:Props) {
  const prefix=useId();const snapshot=useRef<FormData|null>(null);
- const [values,setValues]=useState<Record<string,string>>({});
+ const [values,setValues]=useState<Record<string,string>>({workshop_id:workshopId??""});
  const initial:TransactionState={success:false,uncertain:false,message:"",warnings:[]};
  const [state,action,pending]=useActionState(async(previous:TransactionState,form:FormData)=>{
   const payload=previous.uncertain&&snapshot.current?snapshot.current:form;snapshot.current=payload;
