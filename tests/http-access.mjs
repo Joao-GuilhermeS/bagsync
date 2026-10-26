@@ -9,6 +9,8 @@ try {
  assert.ok(output.includes("Ready"),"Servidor não iniciou: "+output);
  const routes=["/painel","/painel/cadastros/faccoes","/painel/cadastros/unidades","/painel/cadastros/materiais","/painel/cadastros/bolsas","/painel/pedidos","/painel/pedidos/11111111-1111-4111-8111-111111111111","/painel/estoque/materiais","/painel/estoque/bolsas","/painel/movimentacoes","/painel/cadastros/bolsas/11111111-1111-4111-8111-111111111111/composicao","/painel/exportacoes"];
  routes.push("/painel/cadastros/bolsas/11111111-1111-4111-8111-111111111111/checklist");
+ routes.push("/painel/remessas","/painel/remessas/nova","/painel/remessas/11111111-1111-4111-8111-111111111111");
+ routes.push("/painel/entregador","/painel/entregador/11111111-1111-4111-8111-111111111111","/painel/entregador/11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222");
  for(const route of routes){
   const response=await fetch(`http://127.0.0.1:${port}${route}`,{redirect:"manual"});const body=await response.text();
   assert.ok(response.headers.get("location")==="/login"||body.includes("NEXT_REDIRECT;replace;/login;"),route+" deve exigir sessão");

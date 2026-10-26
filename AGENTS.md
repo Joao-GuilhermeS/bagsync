@@ -102,3 +102,6 @@ módulos operacionais antes da definição dos requisitos.
 - Tela /painel/cadastros/bolsas/[id]/checklist; contrato em docs/tela-checklist.md. Alteração somente pelo gerente, com autorização no servidor e RLS.
 - Configuração do checklist não movimenta estoque nem reescreve snapshots de remessas existentes. Não confundir com composição quantitativa.
 - Responsável solicita questionário agrupado quando surgirem dúvidas de funcionamento ou relacionamentos; não presumir regras ainda indefinidas.
+- Telas de criação/consulta de remessas: docs/telas-remessas.md. Criação é previsão, sem baixa de estoque; preservar chave e payload nos retries incertos. Tipo do checklist depende da migração pendente antes da liberação.
+- Correção explícita do responsável: município é o nome do modelo de bolsa. Padronizar por modelo; não criar município atendido como entidade/campo separado. Navegação do entregador: todos os modelos → facção cadastrada → entrega/recebimento, mantendo pedido específico. Não alterar nomes existentes automaticamente.
+- Acompanhamento de produção: quantidade distribuída da remessa; recolhimentos com total/histórico expansível; observações pelos três perfis como exceção específica, ainda não implementada. Ver docs/acompanhamento-producao.md.

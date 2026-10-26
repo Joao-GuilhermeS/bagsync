@@ -42,6 +42,9 @@ Banco implementado conforme [contrato de pedidos/estoque](pedidos-estoque.md). N
 
 - RN-19 (26/10/2026): cada item do checklist do modelo possui tipo escolhido pelo usuário: caixa de conferência ou texto livre. A escolha é preservada na remessa; texto não deve ser interpretado como quantidade.
 - RN-20: marcação confirma e baixa a quantidade prevista manualmente para aquela remessa; quantidade parcial pode ser informada mesmo em item de conferência. Item de texto livre possui campo numérico separado para o envio/estoque.
-- RN-21: emissão da saída seleciona uma facção/costureiro cadastrado e inclui anotações gerais. PDF imprimível após conclusão com nome do destinatário e quantidade à esquerda, data e município à direita. A impressão utiliza o diálogo do navegador/leitor PDF, sem prometer seleção automática de impressora.
+- RN-21: emissão da saída seleciona uma facção/costureiro cadastrado e inclui anotações gerais. PDF imprimível após conclusão com nome do destinatário e quantidade à esquerda, data e modelo à direita. O campo denominado município na referência física corresponde ao nome do modelo, conforme correção explícita do responsável. A impressão utiliza o diálogo do navegador/leitor PDF, sem prometer seleção automática de impressora.
+
+- RN-22 (corrigida pelo responsável em 26/10/2026): município é o nome do modelo; padronizar por modelo sem cadastro/filtro independente de município atendido. Exibir todos os modelos em cards, depois facções cadastradas e entrega/recebimento. Quantidade distribuída usa a quantidade de bolsas da saída/remessa; recolhimentos aparecem somados, com histórico expansível de quantidades e datas. Preservar o pedido específico em cada lançamento.
+- RN-23: Gerente Logístico, Motorista e Gestor podem registrar observações no acompanhamento da produção. Exceção específica ao perfil Gestor, sem autorização geral de escrita. Ainda não implementada na aplicação ou no banco.
 
 Estas regras complementam/substituem os trechos históricos correspondentes; não implicam que kits, rotas ou novo PDF já estejam implementados. Referência: adaptacao-kits-rotas.md.

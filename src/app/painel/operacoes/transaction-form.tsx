@@ -4,15 +4,15 @@ import {useActionState,useId,useRef,useState} from "react";
 import {submitTransaction} from "./actions";
 import {operationLabels,type OperationKind} from "@/lib/operations/validation";
 import type {OperationOptions,Option,TransactionState} from "@/lib/operations/types";
-type Props={task:"order"|"operation";requestKey:string;options:OperationOptions;kinds?:OperationKind[];orderId?:string;reversalOf?:string};
+type Props={task:"order"|"operation";requestKey:string;options:OperationOptions;kinds?:OperationKind[];orderId?:string;workshopId?:string;reversalOf?:string};
 export function TransactionForm(props:Props) {
  const [key,setKey]=useState(props.requestKey);
  return <TransactionFields key={key} {...props} requestKey={key} onNew={()=>setKey(crypto.randomUUID())}/>;
 }
-function TransactionFields({task,requestKey,options,kinds=["material_delivery","bag_receipt"],orderId,reversalOf,onNew}:Props&{onNew:()=>void}) {
+function TransactionFields({task,requestKey,options,kinds=["material_delivery","bag_receipt"],orderId,workshopId,reversalOf,onNew}:Props&{onNew:()=>void}) {
  const prefix=useId();const snapshot=useRef<FormData|null>(null);
  const [kind,setKind]=useState<OperationKind>(kinds[0]);
- const [values,setValues]=useState<Record<string,string>>({order_id:orderId??""});
+ const [values,setValues]=useState<Record<string,string>>({order_id:orderId??"",workshop_id:workshopId??""});
  const [items,setItems]=useState([{key:0,material_id:"",quantity:""}]);const nextRow=useRef(1);
  const initial:TransactionState={message:"",success:false,uncertain:false,warnings:[]};
  const [state,action,pending]=useActionState(async(previous:TransactionState,form:FormData)=>{
