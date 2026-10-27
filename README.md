@@ -44,7 +44,14 @@ node tests/http-access.mjs
 
 Build pode exigir rede para fontes Google. Teste HTTP usa servidor temporário em 127.0.0.1:3101. Suites SQL em supabase/tests/ são administrativas e transacionais com rollback; ler instruções antes de executar, sem concorrer com provisionamento. Estado atual: 42 testes Node, lint, TypeScript/build e suíte SQL do acompanhamento aprovados; 23 páginas protegidas, três arquivos e consulta de histórico negados sem sessão. PDFs de QA de uma e 11 páginas foram renderizados e revisados no incremento de saída. Fluxo completo dos formulários autenticados, visual mobile, impressão física, carga e latência permanecem pendentes. Não confundir autenticação relatada pelo responsável com testes completos feitos pelo agente.
 
+## Interface atual
+
+Menu por função, painel com indicadores reais, navegação mobile e formulários em painéis. Contrato e limites em [Interface e navegação](docs/interface-navegacao.md). Neste incremento: 45 testes Node e lint aprovados; build/TypeScript aprovado com `npx next build --webpack`. O build padrão apresentou falha interna de subprocesso do Turbopack, inclusive fora do sandbox; não houve troca permanente do compilador. Prévia isolada revisada no desktop/celular; validação dos formulários com sessão real permanece pendente.
+
 ## Documentação
+
+- [Visão geral: requisitos, regras básicas e funcionamento](docs/visao-geral-bagsync.md)
+- [Interface e navegação](docs/interface-navegacao.md) e [design system](design-system/bagsync/MASTER.md)
 
 - [Requisitos](docs/requisitos.md) e [regras de negócio](docs/regras-de-negocio.md)
 - [Arquitetura](docs/arquitetura.md) e [modelo relacional](docs/modelo-relacional.md)

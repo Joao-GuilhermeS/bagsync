@@ -1,4 +1,5 @@
 "use client";
+import {useActionToast} from "@/components/ui/toast";
 import Link from "next/link";
 import {useActionState,useId,useRef,useState} from "react";
 import {submitTransaction} from "./actions";
@@ -19,10 +20,11 @@ function TransactionFields({task,requestKey,options,kinds=["material_delivery","
   const payload=previous.uncertain&&snapshot.current?snapshot.current:form;snapshot.current=payload;
   return submitTransaction(previous,payload);
  },initial);
+ useActionToast(state);
  const input="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-slate-900 disabled:bg-slate-100";
  const field=(name:string,label:string,inputMode?:"numeric"|"decimal")=><div><label htmlFor={`${prefix}-${name}`} className="mb-1 block text-sm font-medium">{label}</label><input id={`${prefix}-${name}`} name={name} value={values[name]??""} onChange={e=>setValues({...values,[name]:e.target.value})} required inputMode={inputMode} className={input}/></div>;
  const select=(name:string,label:string,opts:Option[])=><div><label htmlFor={`${prefix}-${name}`} className="mb-1 block text-sm font-medium">{label}</label><select id={`${prefix}-${name}`} name={name} value={values[name]??""} onChange={e=>setValues({...values,[name]:e.target.value})} required className={input}><option value="" disabled>Selecione</option>{opts.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select>{!opts.length&&<p className="mt-1 text-sm text-amber-900">Nenhum registro disponível. Confira os cadastros.</p>}</div>;
- if(state.success)return <div className="space-y-4"><p role="status" className="rounded-lg bg-teal-50 p-3 text-teal-900">{state.message}</p>{state.warnings.length>0&&<div role="alert" className="rounded-lg border border-amber-400 bg-amber-50 p-4 text-amber-950"><h3 className="font-semibold">Atenção ao lançamento</h3><ul className="mt-2 list-inside list-disc space-y-2">{state.warnings.map((warning,i)=><li key={i}>{warning}</li>)}</ul></div>}<p className="break-all text-xs text-slate-600">Referência: {state.id}</p>{task==="order"&&<Link className="block font-medium text-teal-800 underline" href={`/painel/pedidos/${state.id}`}>Abrir pedido</Link>}{kind!=="reversal"&&<button type="button" onClick={onNew} className="min-h-11 rounded-lg border bg-white px-4">{task==="order"?"Criar outro pedido":"Novo lançamento"}</button>}</div>;
+ if(state.success)return <div className="space-y-4"><p className="rounded-lg bg-teal-50 p-3 text-teal-900">{state.message}</p>{state.warnings.length>0&&<div role="alert" className="rounded-lg border border-amber-400 bg-amber-50 p-4 text-amber-950"><h3 className="font-semibold">Atenção ao lançamento</h3><ul className="mt-2 list-inside list-disc space-y-2">{state.warnings.map((warning,i)=><li key={i}>{warning}</li>)}</ul></div>}<p className="break-all text-xs text-slate-600">Referência: {state.id}</p>{task==="order"&&<Link className="block font-medium text-teal-800 underline" href={`/painel/pedidos/${state.id}`}>Abrir pedido</Link>}{kind!=="reversal"&&<button type="button" onClick={onNew} className="min-h-11 rounded-lg border bg-white px-4">{task==="order"?"Criar outro pedido":"Novo lançamento"}</button>}</div>;
  const reversal=task==="operation"&&kind==="reversal";
  const materials=task==="operation"&&(kind==="material_entry"||kind==="material_delivery");
  return <form action={action} className="space-y-4">

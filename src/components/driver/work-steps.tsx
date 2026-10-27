@@ -1,0 +1,4 @@
+import {Icon} from "../ui/icon";
+export function WorkSteps({active}:{active:1|2|3}){
+ return <ol aria-label="Etapas de entrega e recolhimento" className="mb-7 grid grid-cols-3 gap-2 sm:gap-4">{["Escolher modelo","Escolher facção","Registrar operação"].map((label,index)=>{const step=index+1;return <li key={label} aria-current={step===active?"step":undefined} className={`flex min-w-0 items-center gap-2 rounded-xl border px-3 py-3 sm:gap-3 sm:px-4 ${step===active?"border-olive/30 bg-mint text-forest":"bg-white text-slate-500"}`}><span className={`grid size-7 shrink-0 place-items-center rounded-full text-xs font-semibold sm:size-8 ${step===active?"bg-forest text-white":step<active?"bg-mint text-olive":"bg-slate-100"}`}>{step<active?<Icon name="check" className="size-4"/>:step}</span><span className="text-xs font-medium leading-snug sm:text-sm">{label}</span></li>;})}</ol>;
+}

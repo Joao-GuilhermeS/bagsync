@@ -82,7 +82,7 @@ módulos operacionais antes da definição dos requisitos.
 - Revalidar painel após sucesso; nunca esconder avisos de saldo negativo/excedente.
 
 ## Prioridade e composição
-- Responsável orientou adiar refinamento visual/navegação e relatou lentidão sem medição: não afirmar otimização ou diagnóstico de desempenho inexistente.
+- Em 27/10/2026, o responsável autorizou reorganizar interface/navegação, substituindo a orientação anterior de adiar refinamento visual. Seguir docs/interface-navegacao.md e design-system/bagsync/MASTER.md; não afirmar otimização ou diagnóstico de desempenho sem medição.
 - Composição integrada: docs/composicao-bolsas.md. Não cria baixa/reserva automática nem snapshot histórico por pedido.
 - Exportações aprovadas para próximo incremento: PDF por operação e extratos CSV com período/pedido/facção; docs/exportacoes.md.
 

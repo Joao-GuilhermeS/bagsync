@@ -44,3 +44,6 @@ next-env.d.ts
 /supabase/.temp/
 
 /tmp/pdfs/
+/tmp/ui-preview/
+/output/playwright/
+/.playwright-cli/

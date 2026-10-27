@@ -1,3 +1,9 @@
-import Link from "next/link";
-import {catalogs} from "@/lib/catalogs/validation";
-export default function Panel() {return <section><p className="mb-2 text-sm font-medium uppercase tracking-wider text-teal-800">Organização da produção</p><h1 className="text-3xl font-semibold tracking-tight">Produção e estoque</h1><p className="mt-3 max-w-2xl text-slate-600">Mantenha facções, unidades, materiais e modelos de bolsas organizados para usar nos pedidos de produção.</p><div className="mt-6 flex flex-wrap gap-3"><Link href="/painel/entregador" className="rounded-lg bg-teal-800 px-5 py-3 font-medium text-white">Entregas e recolhimentos</Link><Link href="/painel/pedidos" className="rounded-lg bg-teal-800 px-5 py-3 font-medium text-white">Abrir pedidos</Link><Link href="/painel/movimentacoes" className="rounded-lg border bg-white px-5 py-3">Consultar movimentações</Link></div><div className="mt-8 grid gap-4 sm:grid-cols-2">{Object.entries(catalogs).map(([key,c])=><Link key={key} href={`/painel/cadastros/${key}`} className="rounded-xl border bg-white p-6 hover:border-teal-700"><h2 className="text-xl font-semibold">{c.title}</h2><p className="mt-3 text-sm text-teal-800">Consultar cadastro →</p></Link>)}</div></section>;}
+import {Suspense} from "react";
+import {workspace} from "@/lib/operations/data";
+import {dashboardData} from "@/lib/dashboard";
+import {DashboardOverview} from "@/components/dashboard/overview";
+async function Overview(){
+ const {access,client}=await workspace();const data=await dashboardData(client,access.companyId);
+ return <DashboardOverview data={data} role={access.role}/>;
+}
+export default function Panel(){return <Suspense fallback={<div className="space-y-5" role="status"><p className="page-title">Visão geral</p><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{[1,2,3,4].map(item=><div key={item} className="surface h-40 animate-pulse bg-white"/>)}</div><p className="text-sm text-slate-500">Atualizando os indicadores da sua empresa…</p></div>}><Overview/></Suspense>;}

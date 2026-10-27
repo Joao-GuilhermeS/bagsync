@@ -1,3 +1,6 @@
+import {FormDrawer} from "@/components/ui/drawer";
+import {PageHeader} from "@/components/ui/page-header";
+import {Badge} from "@/components/ui/badge";
 import Link from "next/link";
 import {Suspense} from "react";
 import {notFound} from "next/navigation";
@@ -18,15 +21,7 @@ async function ChecklistContent({params,searchParams}:Props) {
  ]);
  if(bag.error||checklist.error)throw new Error("Não foi possível carregar o checklist.");if(!bag.data)notFound();
  const manager=access.role==="gerente_logistico";const items=checklist.data as ChecklistItem[];
- return <section><Link href="/painel/cadastros/bolsas" className="inline-block py-3 text-teal-800 underline">Voltar aos modelos</Link>
-  <h1 className="break-words text-3xl font-semibold">Checklist: {bag.data.name}</h1>
-  <p className="my-3 text-slate-600">Defina os itens deste modelo. As quantidades previstas serão informadas manualmente em cada remessa; não há baixa de estoque nesta tela.</p>
-  {!manager&&<p className="mb-4">Seu perfil permite apenas consulta.</p>}
-  <div className={`mt-6 grid items-start gap-6 ${manager?"lg:grid-cols-[minmax(0,1fr)_22rem]":""}`}><div className="space-y-4">
-   {!items.length&&<p className="rounded-xl border bg-white p-5">Nenhum item nesta página do checklist.</p>}
-   {items.map(item=><article key={item.id} className="rounded-xl border bg-white p-5"><h2 className="break-words text-lg font-semibold">{item.label}</h2><p className="my-2 break-words text-sm">{materials.find(m=>m.id===item.material_id)?.name??"Material indisponível"}</p><p className="text-sm">{item.input_type==="checkbox"?"Caixa de marcação (✓)":item.input_type==="text"?"Texto livre":"Tipo ainda não configurado"} · Posição: {item.position} · {item.active?"Ativo":"Inativo"}</p>{manager&&<details className="mt-4 rounded-lg border p-3"><summary className="min-h-11 cursor-pointer py-2 text-teal-800">Editar item</summary><ChecklistForm bagId={id} requestId={item.id} materials={materials} item={item}/></details>}</article>)}
-   <Pagination page={page} count={checklist.count??0}/>
-  </div>{manager&&<aside className="rounded-xl border bg-white p-5"><h2 className="mb-4 text-xl font-semibold">Adicionar item</h2><p className="mb-4 text-sm text-slate-600">Desative itens que não serão usados em novas remessas. Remessas anteriores mantêm seu checklist.</p>{!materials.length&&<Link href="/painel/cadastros/materiais" className="mb-4 block text-teal-800 underline">Cadastre primeiro um material.</Link>}<ChecklistForm bagId={id} requestId={crypto.randomUUID()} materials={materials}/></aside>}</div>
- </section>;
+ return <section><Link href="/painel/cadastros/bolsas" className="mb-4 inline-block min-h-11 py-3 text-sm text-forest underline">Voltar aos modelos</Link><PageHeader eyebrow="Modelo de bolsa" title={`Checklist: ${bag.data.name}`} description="Defina os itens e o tipo de preenchimento. As quantidades serão previstas manualmente em cada remessa." actions={manager&&<FormDrawer title="Adicionar item ao checklist" trigger="Adicionar item" description="Escolha o material e como ele será preenchido na saída.">{!materials.length&&<p className="mb-4 text-sm text-amber-900">Cadastre primeiro um material.</p>}<ChecklistForm bagId={id} requestId={crypto.randomUUID()} materials={materials}/></FormDrawer>}/><div className="space-y-3">{!items.length&&<div className="surface p-10 text-center"><h2 className="font-semibold">Checklist ainda sem itens nesta página</h2><p className="mt-2 text-sm text-slate-500">Adicione os materiais que precisam ser conferidos na saída.</p></div>}{items.map(item=><article key={item.id} className="surface flex flex-wrap items-center justify-between gap-4 p-5"><div className="min-w-0"><div className="flex flex-wrap items-center gap-2"><h2 className="break-words font-semibold">{item.label}</h2><Badge tone={item.active?"success":"neutral"}>{item.active?"Ativo":"Inativo"}</Badge></div><p className="mt-2 break-words text-sm text-slate-500">{materials.find(m=>m.id===item.material_id)?.name}</p><p className="mt-1 text-xs text-slate-500">{item.input_type==="checkbox"?"Caixa de conferência":item.input_type==="text"?"Texto livre":"Tipo não configurado"} · Posição {item.position}</p></div>{manager&&<FormDrawer title={`Editar ${item.label}`} trigger="Editar item" variant="secondary"><ChecklistForm bagId={id} requestId={item.id} materials={materials} item={item}/></FormDrawer>}</article>)}</div><Pagination page={page} count={checklist.count??0}/><p className="mt-4 text-sm text-slate-500">Desativar um item afeta novas remessas. O histórico das remessas existentes é preservado.</p></section>;
+
 }
 export default function ChecklistPage(props:Props){return <Suspense fallback={<p role="status">Carregando checklist…</p>}><ChecklistContent {...props}/></Suspense>;}
