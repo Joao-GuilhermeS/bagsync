@@ -1,5 +1,9 @@
 # Tela do entregador
 
+## Atualização — Expedição e entregas (27/10/2026)
+
+Materiais a entregar vêm somente de romaneios emitidos, sem estorno, e são confirmados sem nova baixa. Recolhimento permanece independente. Contato/endereço da facção exibidos no contexto. Contrato vigente em [Expedição e entregas](expedicao-entregas.md), que substitui descrições históricas divergentes abaixo.
+
 ## Regra corrigida em 26/10/2026
 
 Município é o nome do modelo de bolsa neste projeto. Usar apenas **Modelo** como referência operacional; não adicionar entidade, campo ou etapa de município atendido. O endereço geográfico da facção permanece um dado separado, ainda não estruturado. Não renomear registros reais automaticamente.

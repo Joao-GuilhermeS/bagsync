@@ -90,7 +90,7 @@ do $test$
 declare oid uuid:=current_setting('test.order')::uuid; w uuid:=current_setting('test.workshop')::uuid;
 begin
  perform public.register_inventory_operation(gen_random_uuid(),'bag_receipt',oid,w,'[{"quantity":"1"}]');
- perform public.register_inventory_operation(gen_random_uuid(),'material_delivery',oid,w,jsonb_build_array(jsonb_build_object('material_id',current_setting('test.material'),'quantity','1')));
+ begin perform public.register_inventory_operation(gen_random_uuid(),'material_delivery',oid,w,jsonb_build_array(jsonb_build_object('material_id',current_setting('test.material'),'quantity','1')));raise exception 'Motorista emitiu saída de Expedição';exception when insufficient_privilege then null;end;
  begin
   perform public.create_production_order(gen_random_uuid(),'__negado__',current_setting('test.bag')::uuid,1);
   raise exception 'Motorista criou pedido';
@@ -144,7 +144,7 @@ do $test$
 declare q numeric;
 begin
  select balance into q from public.material_stock_balances where material_id=current_setting('test.material')::uuid;
- if q<>1.5 then raise exception 'View saldo material incorreta'; end if;
+ if q<>2.5 then raise exception 'View saldo material incorreta'; end if;
  select received_quantity into q from public.production_order_progress where order_id=current_setting('test.order')::uuid;
  if q<>8 then raise exception 'View progresso incorreta'; end if;
  if exists(select 1 from public.bag_stock_balances where company_id=current_setting('test.other')::uuid) then raise exception 'View vazou dados'; end if;

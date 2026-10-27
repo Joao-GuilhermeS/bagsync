@@ -1,5 +1,9 @@
 # Arquitetura
 
+## Atualização — Expedição e entregas (27/10/2026)
+
+Expedição e entrega são etapas separadas: baixa transacional na emissão, confirmação imutável via RPC sem estoque. Rotas canônicas /painel/expedicao e /painel/entregas; aliases de remessas preservados. Contrato vigente em [Expedição e entregas](expedicao-entregas.md), que substitui descrições históricas divergentes abaixo.
+
 ## Controle de saída — atualização em 26/10/2026
 
 Acompanhamento posterior: production_tracking e production_kit_distribution são views SECURITY INVOKER que agregam separadamente remessas, recebimentos e notas. Histórico consultado sob demanda por RPC de leitura STABLE/SECURITY INVOKER. Observações acrescentadas por RPC idempotente autorizada aos três perfis, sem abrir escrita direta ou conceder operações de estoque ao Gestor. [Contrato e testes](tela-acompanhamento.md).

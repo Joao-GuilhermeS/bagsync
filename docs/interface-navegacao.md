@@ -1,5 +1,9 @@
 # Interface e navegação — BagSync
 
+## Atualização — Expedição e entregas (27/10/2026)
+
+Fábrica contém Expedição; Operação contém Entregas de materiais e o fluxo por modelo/recolhimentos. Removida a aba de medidas; unidades predefinidas no seletor de materiais. Contrato vigente em [Expedição e entregas](expedicao-entregas.md), que substitui descrições históricas divergentes abaixo.
+
 ## Objetivo e escopo
 
 Reorganização autorizada em 27/10/2026 para facilitar a localização das funções existentes, com prioridade ao uso em celular. Sem alterações de banco, autenticação ou permissões. O texto de referência do responsável orienta a apresentação; funcionalidades ainda não aprovadas não foram adicionadas.

@@ -7,7 +7,7 @@ let output="";server.stdout.on("data",chunk=>output+=chunk);server.stderr.on("da
 try {
  for(let i=0;i<40&&!output.includes("Ready")&&server.exitCode===null;i++)await new Promise(resolve=>setTimeout(resolve,250));
  assert.ok(output.includes("Ready"),"Servidor não iniciou: "+output);
- const routes=["/painel","/painel/cadastros/faccoes","/painel/cadastros/unidades","/painel/cadastros/materiais","/painel/cadastros/bolsas","/painel/pedidos","/painel/pedidos/11111111-1111-4111-8111-111111111111","/painel/estoque/materiais","/painel/estoque/bolsas","/painel/movimentacoes","/painel/cadastros/bolsas/11111111-1111-4111-8111-111111111111/composicao","/painel/exportacoes"];
+ const routes=["/painel/entregas","/painel/expedicao","/painel/expedicao/nova","/painel/expedicao/11111111-1111-4111-8111-111111111111","/painel/expedicao/11111111-1111-4111-8111-111111111111/preencher","/painel/expedicao/11111111-1111-4111-8111-111111111111/preenchimentos","/painel","/painel/cadastros/faccoes","/painel/cadastros/materiais","/painel/cadastros/bolsas","/painel/pedidos","/painel/pedidos/11111111-1111-4111-8111-111111111111","/painel/estoque/materiais","/painel/estoque/bolsas","/painel/movimentacoes","/painel/cadastros/bolsas/11111111-1111-4111-8111-111111111111/composicao","/painel/exportacoes"];
  routes.push("/painel/cadastros/bolsas/11111111-1111-4111-8111-111111111111/checklist");
  routes.push("/painel/remessas","/painel/remessas/nova","/painel/remessas/11111111-1111-4111-8111-111111111111");
  routes.push("/painel/entregador","/painel/entregador/11111111-1111-4111-8111-111111111111","/painel/entregador/11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222");
@@ -21,7 +21,8 @@ try {
  for(const route of ["/painel/exportacoes/extrato","/painel/exportacoes/romaneio/11111111-1111-4111-8111-111111111111","/painel/remessas/11111111-1111-4111-8111-111111111111/preenchimentos/22222222-2222-4222-8222-222222222222/pdf"]){
   const r=await fetch(`http://127.0.0.1:${port}${route}`);assert.equal(r.status,401);assert.ok(r.headers.get("cache-control").includes("no-store"));assert.equal(r.headers.get("content-disposition"),null);assert.equal(typeof (await r.json()).error,"string");
  }
+ const canonicalPdf=await fetch(`http://127.0.0.1:${port}/painel/expedicao/11111111-1111-4111-8111-111111111111/preenchimentos/22222222-2222-4222-8222-222222222222/pdf`);assert.equal(canonicalPdf.status,401);assert.ok(canonicalPdf.headers.get("cache-control").includes("no-store"));
  const login=await fetch(`http://127.0.0.1:${port}/login`);assert.equal(login.status,200);assert.ok((await login.text()).includes("Acesse sua empresa"));
  const history=await fetch(`http://127.0.0.1:${port}/painel/producao/historico?tipo=notes`);assert.equal(history.status,401);assert.ok(history.headers.get("cache-control").includes("no-store"));assert.equal(history.headers.get("content-disposition"),null);assert.equal(typeof(await history.json()).error,"string");
- console.log(`HTTP OK: login 200 e ${routes.length} rotas protegidas, três arquivos e histórico negados sem sessão.`);
+ console.log(`HTTP OK: login 200 e ${routes.length} rotas protegidas, quatro arquivos e histórico negados sem sessão.`);
 } catch(error){console.error(error);process.exitCode=1;} finally {server.kill();}

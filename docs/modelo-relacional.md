@@ -1,5 +1,9 @@
 # Modelo relacional — base definida para implementação
 
+## Atualização — Expedição e entregas (27/10/2026)
+
+workshops ganhou contato/endereço. shipment_delivery_confirmations registra recebimento na facção, com FK composta e unicidades; shipment_dispatches expõe os estados sob RLS. measurement_units recebe unidades predefinidas por empresa. Contrato vigente em [Expedição e entregas](expedicao-entregas.md), que substitui descrições históricas divergentes abaixo.
+
 ## Identidade e isolamento
 
 - companies: id UUID PK; name texto obrigatório não vazio; created_at timestamptz.

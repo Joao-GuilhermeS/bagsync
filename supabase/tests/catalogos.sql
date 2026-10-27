@@ -17,7 +17,7 @@ begin
  get diagnostics affected=row_count;
  if affected<>1 then raise exception 'Gerente nao atualizou'; end if;
  delete from public.workshops where id=w;
- insert into public.measurement_units(company_id,name,symbol) values(current_setting('test.company')::uuid,'__teste__','__teste__') returning id into u;
+ select id into u from public.measurement_units where company_id=current_setting('test.company')::uuid and symbol='m';
  insert into public.materials(company_id,unit_id,name) values(current_setting('test.company')::uuid,u,'__teste__') returning id into m;
  insert into public.bags(company_id,name) values(current_setting('test.company')::uuid,'__teste__') returning id into b;
  insert into public.bag_materials values(current_setting('test.company')::uuid,b,m,0.25);
@@ -64,9 +64,13 @@ begin
  foreach t in array array['workshops','measurement_units','materials','bags','bag_materials'] loop
   execute format('select count(*) from public.%I where company_id=$1',t) into n using current_setting('test.other')::uuid;
   if n<>0 then raise exception 'Leitura cruzada: %',t; end if;
-  execute format('delete from public.%I where company_id=$1',t) using current_setting('test.company')::uuid;
-  get diagnostics n=row_count;
-  if n<>0 then raise exception 'Exclusao indevida: %',t; end if;
+  if t='measurement_units' then
+   begin delete from public.measurement_units where company_id=current_setting('test.company')::uuid;raise exception 'Unidade removível';exception when insufficient_privilege then null;end;
+  else
+   execute format('delete from public.%I where company_id=$1',t) using current_setting('test.company')::uuid;
+   get diagnostics n=row_count;
+   if n<>0 then raise exception 'Exclusao indevida: %',t; end if;
+  end if;
  end loop;
  if not exists(select 1 from public.bags where company_id=current_setting('test.company')::uuid) then raise exception 'Consulta propria bloqueada'; end if;
  begin
@@ -87,9 +91,13 @@ begin
  foreach t in array array['workshops','measurement_units','materials','bags','bag_materials'] loop
   execute format('select count(*) from public.%I where company_id=$1',t) into n using current_setting('test.other')::uuid;
   if n<>0 then raise exception 'Leitura cruzada: %',t; end if;
-  execute format('delete from public.%I where company_id=$1',t) using current_setting('test.company')::uuid;
-  get diagnostics n=row_count;
-  if n<>0 then raise exception 'Exclusao indevida: %',t; end if;
+  if t='measurement_units' then
+   begin delete from public.measurement_units where company_id=current_setting('test.company')::uuid;raise exception 'Unidade removível';exception when insufficient_privilege then null;end;
+  else
+   execute format('delete from public.%I where company_id=$1',t) using current_setting('test.company')::uuid;
+   get diagnostics n=row_count;
+   if n<>0 then raise exception 'Exclusao indevida: %',t; end if;
+  end if;
  end loop;
  if not exists(select 1 from public.bags where company_id=current_setting('test.company')::uuid) then raise exception 'Consulta propria bloqueada'; end if;
  begin

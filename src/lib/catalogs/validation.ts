@@ -1,6 +1,5 @@
 export const catalogs = {
  faccoes: {table: "workshops", title: "Facções e costureiras", singular: "facção"},
- unidades: {table: "measurement_units", title: "Unidades de medida", singular: "unidade"},
  materiais: {table: "materials", title: "Materiais de produção", singular: "material"},
  bolsas: {table: "bags", title: "Modelos de bolsas", singular: "modelo de bolsa"},
 } as const;
@@ -15,10 +14,17 @@ export function validateCatalog(catalog: Catalog, form: FormData): Record<string
  const raw = form.get("name");
  if (typeof raw !== "string" || !raw.trim()) throw new Error("Informe o nome.");
  const result: Record<string,string> = {name:raw.trim()};
- if (catalog === "unidades") {
-  const symbol = form.get("symbol");
-  if(typeof symbol !== "string" || !symbol.trim()) throw new Error("Informe o símbolo da unidade.");
-  result.symbol = symbol.trim();
+ if(catalog === "faccoes") {
+  const limits={document_number:40,phone:30,street:200,address_number:30,address_complement:150,neighborhood:100,city:100,state:2,postal_code:9};
+  for(const [field,limit] of Object.entries(limits)) {
+   const raw=form.get(field);
+   if(raw!==null&&typeof raw!=="string")throw new Error("Dados de contato inválidos.");
+   const value=(raw??"").trim();
+   if(value.length>limit)throw new Error(`Revise os dados de contato: máximo de ${limit} caracteres no campo informado.`);
+   result[field]=field==="state"?value.toUpperCase():value;
+  }
+  if(result.state&&!/^[A-Z]{2}$/.test(result.state))throw new Error("Informe a UF com duas letras.");
+  if(result.postal_code&&!/^\d{5}-?\d{3}$/.test(result.postal_code))throw new Error("Informe um CEP com oito dígitos.");
  }
  if(catalog === "materiais") {
   const unit = form.get("unit_id");

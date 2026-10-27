@@ -1,5 +1,9 @@
 # Regras confirmadas — 25/10/2026
 
+## Atualização — Expedição e entregas (27/10/2026)
+
+Gerente emite a saída na Expedição; motorista confirma a entrega e continua recolhendo bolsas. Unidades são somente leitura. Documento/telefone/endereço novos são opcionais. Contrato vigente em [Expedição e entregas](expedicao-entregas.md), que substitui descrições históricas divergentes abaixo.
+
 Origem/aprovação: responsável pelo projeto, respostas no chat; aceite pelo desenvolvedor.
 
 - RN-01: empresas independentes sem filiais; usuário vinculado a uma única empresa.

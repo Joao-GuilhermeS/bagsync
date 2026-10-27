@@ -5,7 +5,7 @@ test("páginas profundas mantêm a seção e o item de menu corretos",()=>{
  const groups=navigationFor("gerente_logistico");
  assert.equal(navigationLocation("/painel/cadastros/bolsas/id/checklist",groups).item.label,"Modelos de bolsas");
  assert.equal(navigationLocation("/painel/estoque/bolsas",groups).group,"Estoque");
- assert.equal(navigationLocation("/painel/remessas/id/preencher",groups).item.label,"Remessas e checklists");
+ assert.equal(navigationLocation("/painel/expedicao/id/preencher",groups).item.label,"Expedição");
  assert.equal(navigationLocation("/painel",groups).item.label,"Visão geral");
 });
 test("menu do entregador prioriza a operação sem mudar as permissões do backend",()=>{

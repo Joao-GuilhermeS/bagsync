@@ -112,3 +112,12 @@ módulos operacionais antes da definição dos requisitos.
 - Gravar respostas/saída por submit_shipment_checklist; não interpretar texto livre como quantidade nem criar baixa duplicada. Não enviado não movimenta estoque; ✓ usa saldo calculado no servidor.
 - Preservar histórico imutável de preenchimentos e estornos. PDF corresponde a um preenchimento, não ao saldo cumulativo; marcar envio estornado e não prometer impressão silenciosa.
 - Migrações 20261026191246 e 20261026191312 aplicadas somente no BagSync. Tipos legados nulos não devem ser inferidos a partir de templates atuais.
+
+## Expedição e entregas — atualização em 27/10/2026
+- Ler docs/expedicao-entregas.md. Esta confirmação substitui o preenchimento da saída pelo motorista: Gerente Logístico emite pela Expedição, com baixa de estoque; motorista confirma recebimento na facção sem nova baixa e continua recolhendo bolsas.
+- Unidades são predefinidas e somente leitura no aplicativo. Não reintroduzir CRUD/aba de medidas. Preservar IDs legados e não presumir conversões para rolos/caixas/pacotes.
+- Checklist por modelo mantém escolha por item entre caixa OK e texto livre; unidade vem do material, e texto não substitui quantidade numérica.
+- Facções têm documento genérico, telefone e endereço opcionais. Não presumir tipo/unicidade do documento ou tornar campos novos obrigatórios sem confirmação. Município físico do endereço não é o modelo da produção.
+- Confirmar entrega somente via confirm_shipment_delivery; usar request_key/payload preservados em retry incerto. shipment_delivery_confirmations é imutável e não gera movimentos de estoque.
+- Caminhos canônicos /painel/expedicao e /painel/entregas; remessas permanece compatível com links antigos. Tipos/ações/SQL devem negar baixa de materiais ao motorista, preservando bag_receipt.
+- Migrações 20261027184848, 20261027185253 e 20261027190254 aplicadas apenas no BagSync; não reescrever as já aplicadas.

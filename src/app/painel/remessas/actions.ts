@@ -27,7 +27,7 @@ export async function createShipment(_previous:TransactionState,form:FormData):P
 
 export async function submitChecklist(_previous:TransactionState,form:FormData):Promise<TransactionState> {
  const fail=(message:string,uncertain=false):TransactionState=>({success:false,uncertain,message,warnings:[]});
- const access=await requireAccess();if(!access||!["gerente_logistico","motorista"].includes(access.role))return fail("Seu perfil não permite registrar saída de materiais.");
+ const access=await requireAccess();if(!access||access.role!=="gerente_logistico")return fail("Somente o Gerente Logístico pode concluir a Expedição.");
  let input:ReturnType<typeof parseShipmentChecklist>;
  try{input=parseShipmentChecklist(form);}catch(error){return fail(error instanceof Error?error.message:"Dados inválidos.");}
  try{
@@ -38,6 +38,6 @@ export async function submitChecklist(_previous:TransactionState,form:FormData):
   }
   if(typeof data?.submission_id!=="string")return fail("Resultado não confirmado. Repita a mesma tentativa.",true);
   revalidatePath("/painel","layout");
-  return {success:true,uncertain:false,id:data.submission_id,warnings:operationWarnings(data),message:data.operation_id?"Controle de saída registrado. As quantidades enviadas foram baixadas do estoque.":"Checklist salvo sem novo envio de materiais. O estoque não foi movimentado."};
+  return {success:true,uncertain:false,id:data.submission_id,warnings:operationWarnings(data),message:data.operation_id?"Romaneio emitido. Estoque baixado na Expedição; materiais a entregar à facção.":"Checklist salvo sem novo envio de materiais. O estoque não foi movimentado."};
  }catch{return fail("Resultado não confirmado. Repita a mesma tentativa ou confira o histórico antes de iniciar outra saída.",true);}
 }

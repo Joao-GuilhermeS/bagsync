@@ -1,8 +1,8 @@
 import type {Role} from "../auth/authorization";
-export const operationLabels = {material_entry:"Entrada de material",material_delivery:"Entrega de materiais à facção",bag_receipt:"Recebimento de bolsas",reversal:"Estorno"} as const;
+export const operationLabels = {material_entry:"Entrada de material",material_delivery:"Saída de materiais (Expedição)",bag_receipt:"Recebimento de bolsas",reversal:"Estorno"} as const;
 export type OperationKind=keyof typeof operationLabels;
 export function allowedOperation(role:Role,kind:OperationKind):boolean {
- return role==="gerente_logistico" || (role==="motorista" && (kind==="material_delivery"||kind==="bag_receipt"));
+ return role==="gerente_logistico" || (role==="motorista" && kind==="bag_receipt");
 }
 function text(form:FormData,name:string):string {const value=form.get(name);return typeof value==="string"?value.trim():"";}
 function uuid(value:unknown):string {

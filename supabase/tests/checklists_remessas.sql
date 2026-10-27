@@ -95,7 +95,7 @@ update public.company_users set role='motorista' where user_id=current_setting('
 set local role authenticated;
 do $test$
 begin
- perform public.record_kit_delivery(gen_random_uuid(),current_setting('test.kit')::uuid,jsonb_build_array(jsonb_build_object('kit_item_id',current_setting('test.item'),'mode','complete')));
+ begin perform public.record_kit_delivery(gen_random_uuid(),current_setting('test.kit')::uuid,jsonb_build_array(jsonb_build_object('kit_item_id',current_setting('test.item'),'mode','complete')));raise exception 'Motorista emitiu saída de Expedição';exception when insufficient_privilege then null;end;
  begin
   perform public.create_shipment_kit(gen_random_uuid(),null,null,1,'[]');raise exception 'Motorista criou kit';
  exception when insufficient_privilege then null;end;

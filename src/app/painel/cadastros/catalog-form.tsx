@@ -3,7 +3,7 @@ import {useActionToast} from "@/components/ui/toast";
 import {useActionState, useId} from "react";
 import {saveCatalog} from "./actions";
 import type {Catalog} from "@/lib/catalogs/validation";
-export type CatalogRecord = {id:string;name:string;symbol?:string;unit_id?:string};
+export type CatalogRecord = {id:string;name:string;unit_id?:string;document_number?:string;phone?:string;street?:string;address_number?:string;address_complement?:string;neighborhood?:string;city?:string;state?:string;postal_code?:string};
 export type UnitOption = {id:string;name:string;symbol:string};
 export function CatalogForm({catalog,record,units=[],remove=false}: {catalog:Catalog;record?:CatalogRecord;units?:UnitOption[];remove?:boolean}) {
  const [state,action,pending]=useActionState(saveCatalog,{message:"",success:false});
@@ -15,8 +15,10 @@ export function CatalogForm({catalog,record,units=[],remove=false}: {catalog:Cat
   {record && <input type="hidden" name="id" value={record.id}/>}
   {remove ? <><input type="hidden" name="operation" value="delete"/><label className="flex items-center gap-3"><input name="confirm" value="sim" type="checkbox" required className="size-5"/>Confirmo a exclusão de {record?.name}.</label></> : <>
    <div><label htmlFor={`${prefix}-name`} className="mb-1 block text-sm font-medium">Nome</label><input id={`${prefix}-name`} name="name" required defaultValue={record?.name} className={input}/></div>
-   {catalog==="unidades" && <div><label htmlFor={`${prefix}-symbol`} className="mb-1 block text-sm font-medium">Símbolo (ex.: m, un, kg)</label><input id={`${prefix}-symbol`} name="symbol" required defaultValue={record?.symbol} className={input}/></div>}
-   {catalog==="materiais" && <div><label htmlFor={`${prefix}-unit`} className="mb-1 block text-sm font-medium">Unidade de medida</label><select id={`${prefix}-unit`} name="unit_id" required defaultValue={record?.unit_id??""} className={input}><option value="" disabled>Selecione uma unidade</option>{units.map(u=><option key={u.id} value={u.id}>{u.name} ({u.symbol})</option>)}</select></div>}
+   {catalog==="faccoes" && <><p className="text-sm text-slate-600">Contato e endereço para localizar a facção nas entregas. Preencha os dados disponíveis.</p><div className="grid gap-4 sm:grid-cols-2">{([
+    ["document_number","Número do documento",40],["phone","Telefone",30],["postal_code","CEP",9],["street","Logradouro",200],["address_number","Número",30],["address_complement","Complemento",150],["neighborhood","Bairro",100],["city","Município da facção",100],["state","UF",2],
+   ] as const).map(([field,label,max])=><div key={field} className={field==="street"?"sm:col-span-2":""}><label htmlFor={`${prefix}-${field}`} className="mb-1 block text-sm font-medium">{label}</label><input id={`${prefix}-${field}`} name={field} type={field==="phone"?"tel":"text"} autoComplete={field==="phone"?"tel":undefined} maxLength={max} defaultValue={record?.[field]??""} className={input}/></div>)}</div></>}
+   {catalog==="materiais" && <div><label htmlFor={`${prefix}-unit`} className="mb-1 block text-sm font-medium">Unidade de medida</label><select id={`${prefix}-unit`} name="unit_id" required defaultValue={record?.unit_id??""} className={input}><option value="" disabled>Selecione uma unidade</option>{units.map(u=><option key={u.id} value={u.id}>{u.name} ({u.symbol})</option>)}</select><p className="mt-2 text-sm text-slate-600">Unidades predefinidas. Sem conversão automática entre unidades.</p></div>}
   </>}
   {state.message && <p role={state.success?undefined:"alert"} className={`rounded-lg p-3 text-sm ${state.success?"bg-teal-50 text-teal-900":"bg-red-50 text-red-900"}`}>{state.message}</p>}
   <button disabled={pending || (!remove && catalog==="materiais" && !units.length)} className={`min-h-11 rounded-lg px-5 font-medium text-white disabled:opacity-50 ${remove?"bg-red-800":"bg-teal-800"}`}>{pending?"Aguarde…":remove?"Excluir registro":record?"Salvar alterações":"Cadastrar"}</button>

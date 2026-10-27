@@ -76,7 +76,7 @@ update public.company_users set role='motorista' where user_id=current_setting('
 set local role authenticated;
 do $test$
 begin
- perform public.submit_shipment_checklist(gen_random_uuid(),current_setting('test.kit')::uuid,jsonb_build_array(jsonb_build_object('kit_item_id',current_setting('test.i1'),'mode','complete'),jsonb_build_object('kit_item_id',current_setting('test.i2'),'mode','partial','quantity','3','text','Motorista complementou')),'Registrado em campo');
+ begin perform public.submit_shipment_checklist(gen_random_uuid(),current_setting('test.kit')::uuid,jsonb_build_array(jsonb_build_object('kit_item_id',current_setting('test.i1'),'mode','complete'),jsonb_build_object('kit_item_id',current_setting('test.i2'),'mode','partial','quantity','3','text','Motorista complementou')),'Registrado em campo');raise exception 'Motorista emitiu saída de Expedição';exception when insufficient_privilege then null;end;
 end $test$;
 reset role;
 update public.company_users set role='gestor' where user_id=current_setting('test.uid')::uuid;

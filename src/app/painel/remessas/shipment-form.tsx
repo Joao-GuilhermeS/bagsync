@@ -18,7 +18,7 @@ export function ShipmentForm({requestKey,orderId,workshops,items,materials,works
  useActionToast(state);
  const input="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3";
  const value=(name:string)=>({value:values[name]??"",onChange:(event:React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>)=>setValues(old=>({...old,[name]:event.target.value}))});
- if(state.success)return <div className="space-y-4"><p className="rounded-lg bg-teal-50 p-4">{state.message}</p><Link href={`/painel/remessas/${state.id}`} className="inline-block min-h-11 rounded-lg bg-teal-800 px-4 py-3 text-white">Consultar remessa e pendências</Link></div>;
+ if(state.success)return <div className="space-y-4"><p className="rounded-lg bg-teal-50 p-4">{state.message}</p><Link href={`/painel/expedicao/${state.id}`} className="inline-block min-h-11 rounded-lg bg-teal-800 px-4 py-3 text-white">Consultar remessa e pendências</Link></div>;
  return <form action={action} className="space-y-5"><fieldset disabled={pending||state.uncertain} className="min-w-0 space-y-5">
   <input type="hidden" name="request_key" value={requestKey}/><input type="hidden" name="order_id" value={orderId}/>
   <div><label htmlFor={`${prefix}-workshop`} className="mb-1 block font-medium">Facção / costureiro destinatário</label><select id={`${prefix}-workshop`} name="workshop_id" required {...value("workshop_id")} className={input}><option value="" disabled>Selecione o cadastro</option>{workshops.map(w=><option key={w.id} value={w.id}>{w.name}</option>)}</select></div>

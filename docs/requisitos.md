@@ -1,5 +1,9 @@
 # Requisitos confirmados — 25/10/2026
 
+## Atualização — Expedição e entregas (27/10/2026)
+
+Unidades predefinidas e contatos de facções; Expedição emite romaneio e baixa o estoque, seguida de confirmação na facção sem nova baixa. Contrato vigente em [Expedição e entregas](expedicao-entregas.md), que substitui descrições históricas divergentes abaixo.
+
 ## Complemento — acompanhamento da produção (26/10/2026)
 
 Acompanhamento com cards de todos os modelos cadastrados. Correção confirmada em 26/10/2026: município é o nome do modelo; padronizar por modelo, sem entidade ou etapa separada de município atendido. Navegação: modelo → facção → entrega/recebimento. Exibir facção/costureiro, quantidade distribuída para fabricação, data de distribuição, quantidades e datas dos recolhimentos e observações. Quantidade distribuída vem da saída/remessa; recolhimentos mostram total e histórico expansível; os três perfis podem registrar observações específicas deste acompanhamento. [Confirmações e limites](acompanhamento-producao.md). Preservar pedidos simultâneos, recebimentos parciais e estornos; não confundir modelo com endereço da facção.

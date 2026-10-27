@@ -1,5 +1,9 @@
 # BagSync — Requisitos e funcionamento
 
+## Atualização — Expedição e entregas (27/10/2026)
+
+Expedição → emissão/baixa → confirmação de entrega sem nova baixa. Unidades predefinidas; facções com documento, telefone e endereço; recolhimento de bolsas separado. Contrato vigente em [Expedição e entregas](expedicao-entregas.md), que substitui descrições históricas divergentes abaixo.
+
 **Empresa inicial:** RL Bolsas  
 **Atualizado em:** 27/10/2026  
 **Finalidade:** apresentar, de forma básica, o escopo confirmado, as regras de negócio e o funcionamento do sistema.

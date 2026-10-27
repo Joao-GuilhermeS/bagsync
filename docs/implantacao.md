@@ -1,5 +1,9 @@
 # Implantação
 
+## Atualização — Expedição e entregas (27/10/2026)
+
+Migrações 20261027184848, 20261027185253 e 20261027190254 aplicadas exclusivamente no BagSync. Scripts e limitações no contrato do incremento. Contrato vigente em [Expedição e entregas](expedicao-entregas.md), que substitui descrições históricas divergentes abaixo.
+
 Nenhuma publicação realizada nesta etapa. Remoto GitHub configurado não comprova sincronização ou implantação.
 Hospedagem, projeto Supabase, ambientes, domínio, orçamento, região e responsáveis não definidos. Não há configuração Supabase no código inspecionado.
 Antes de publicar: aprovar destino e impacto; definir variáveis por ambiente; validar build, autenticação, autorização e isolamento quando aplicável; definir backups, recuperação, observabilidade e rollback.

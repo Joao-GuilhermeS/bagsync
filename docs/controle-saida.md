@@ -1,5 +1,9 @@
 # Controle de saída por checklist
 
+## Atualização — Expedição e entregas (27/10/2026)
+
+O preenchimento é feito pelo Gerente Logístico na Expedição. Emitir baixa o estoque e libera o romaneio para o motorista apenas confirmar a entrega; não repetir a baixa. Contrato vigente em [Expedição e entregas](expedicao-entregas.md), que substitui descrições históricas divergentes abaixo.
+
 ## Entrega — 26/10/2026
 
 Objetivo: concluir o envio de materiais da remessa com respostas de conferência ou texto livre, quantidades efetivas separadas, anotações e PDF imprimível. Implementado como incremento das remessas e da tela do entregador, sem cadastrar município como entidade distinta do modelo.
