@@ -43,3 +43,7 @@ Migração 20261026074225: bag_checklist_items, shipment_kits, shipment_kit_item
 ## Respostas e controle de saída — aplicados em 26/10/2026
 
 Migração 20261026191246 acrescenta input_type ao modelo e ao snapshot. Migração 20261026191312 cria kit_checklist_submissions (preenchimento, operação opcional, chave, nota, autor/data) e kit_checklist_answers (item, modo, texto livre, quantidade). FKs compostas da mesma empresa/kit, RLS e histórico sem escrita direta. submit_shipment_checklist grava respostas e baixa na mesma transação, ou somente respostas quando não houver envio. [Dicionário, permissões e testes](controle-saida.md).
+
+## Acompanhamento e observações — aplicado em 26/10/2026
+
+Migração 20261026194930: production_notes (empresa/pedido/facção, texto, chave, autor/perfil/data); FKs compostas, RLS e escrita apenas por add_production_note. Views production_kit_distribution e production_tracking usam security_invoker, com agregações independentes para evitar dupla contagem. Histórico paginado por production_tracking_history, somente leitura/SECURITY INVOKER. [Dicionário e evidências](tela-acompanhamento.md).

@@ -25,7 +25,7 @@ O formulário preserva a chave e uma cópia do FormData quando o resultado for i
 
 Migração de tipos `20261026191246_checklist_response_types.sql` aplicada no BagSync; substitui o nome local antes preparado com versão 20261026181154. Respostas/baixa/PDF implementados após o incremento inicial destas telas, pela migração 20261026191312 e pelas rotas de preenchimento. [Contrato atual](controle-saida.md).
 
-Preenchimento final em texto/✓, envio parcial, respostas livres e novo PDF estão implementados no controle de saída. Tabela consolidada de acompanhamento e observações independentes pelos três perfis permanecem pendentes. Entregas genéricas lançadas sem vínculo com kit não atendem automaticamente as pendências daquele kit.
+Preenchimento final em texto/✓, envio parcial, respostas livres e novo PDF estão implementados no controle de saída. Tabela consolidada e observações independentes pelos três perfis implementadas em [acompanhamento](tela-acompanhamento.md). Entregas genéricas lançadas sem vínculo com kit não atendem automaticamente as pendências daquele kit.
 
 Correção posterior confirmada: município é o nome do modelo. Não criar campo de município atendido nos pedidos. O acompanhamento por modelo usará quantidades das remessas, total de recolhimentos com histórico expansível e observações permitidas aos três perfis. Preservar pedidos específicos e não supor vínculo individual entre recebimento e remessa.
 

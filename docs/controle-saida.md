@@ -51,7 +51,7 @@ Na tela do entregador, recebimento de bolsas prontas continua pelo formulário t
 | Estornar envio | Sim | Não | Não |
 | Alterar/excluir respostas diretamente | Não | Não | Não |
 
-RLS habilitado nas duas tabelas; apenas SELECT para autenticados. Escrita exclusiva por `submit_shipment_checklist(request_key, kit_id, answers, note)`, com autorização derivada do vínculo real da sessão, sem empresa/autor recebidos do cliente. Função SECURITY DEFINER com search_path vazio e EXECUTE revogado de PUBLIC/anon. A permissão futura dos três perfis para observações independentes do acompanhamento não concede ao Gestor o registro de saídas.
+RLS habilitado nas duas tabelas; apenas SELECT para autenticados. Escrita exclusiva por `submit_shipment_checklist(request_key, kit_id, answers, note)`, com autorização derivada do vínculo real da sessão, sem empresa/autor recebidos do cliente. Função SECURITY DEFINER com search_path vazio e EXECUTE revogado de PUBLIC/anon. A permissão dos três perfis para observações independentes do acompanhamento, implementada posteriormente, não concede ao Gestor o registro de saídas.
 
 ## PDF
 
@@ -76,4 +76,4 @@ Advisors: nenhuma FK sem índice ou tabela exposta sem RLS detectada. Permanecem
 
 ## Pendências
 
-Validar com sessão real o fluxo no celular e a impressão na impressora do cliente; não foi realizado teste autenticado de navegador, concorrência com duas sessões, carga ou impressão física. Próximo incremento funcional: tabela consolidada por modelo/facção com quantidade distribuída/recolhida/pendente, histórico expansível e observações específicas pelos três perfis. Rotas atribuídas continuam posteriores.
+Validar com sessão real o fluxo no celular e a impressão na impressora do cliente; não foi realizado teste autenticado de navegador, concorrência com duas sessões, carga ou impressão física. Tabela consolidada e observações específicas pelos três perfis foram implementadas posteriormente em [acompanhamento](tela-acompanhamento.md). Rotas atribuídas continuam posteriores.

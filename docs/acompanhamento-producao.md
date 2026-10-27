@@ -19,6 +19,7 @@ Pedidos simultâneos continuam independentes e usam estoque compartilhado. Receb
 
 1. Corrigido: município é o nome do modelo. Padronizar interface e relacionamentos por modelo, sem dupla seleção município/modelo.
 2. Resolvido: quantidade distribuída corresponde à quantidade de bolsas da saída/remessa para a facção.
+   Refinamento confirmado nesta implementação: conta na primeira saída de material, uma única vez por remessa, sem somar novamente nos complementos. Preparação sem envio não é distribuição.
 3. Resolvido: mostrar total recolhido com histórico expansível das quantidades e datas de cada recolhimento parcial.
 4. Resolvido: Gerente Logístico, Motorista e Gestor podem registrar observações no acompanhamento. Exceção específica, sem ampliar permissões sobre cadastros ou estoque.
 
@@ -49,4 +50,4 @@ O saldo e o histórico devem respeitar estornos e pedidos distintos. Quantidades
 
 ## Estado
 
-Navegação operacional em /painel/entregador implementada com modelos, facções, romaneios e total recolhido por pedido/facção. Controle de saída com checklist/quantidades/baixa/PDF integrado conforme [contrato](controle-saida.md), com migrações de tipos e respostas já aplicadas no BagSync. Tabela consolidada de produção e observações independentes pelos três perfis continuam pendentes.
+Navegação operacional, controle de saída e PDF implementados. Tabela consolidada em /painel/producao e observações pelos três perfis implementadas com migração aplicada no BagSync. [Regras de contagem, permissões, uso e testes](tela-acompanhamento.md). Rotas/endereço e validação autenticada/mobile continuam pendentes.

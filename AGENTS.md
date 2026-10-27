@@ -104,7 +104,8 @@ módulos operacionais antes da definição dos requisitos.
 - Responsável solicita questionário agrupado quando surgirem dúvidas de funcionamento ou relacionamentos; não presumir regras ainda indefinidas.
 - Telas de criação/consulta de remessas: docs/telas-remessas.md. Criação é previsão, sem baixa de estoque; preservar chave e payload nos retries incertos. Tipos e respostas do checklist aplicados no BagSync em 26/10/2026.
 - Correção explícita do responsável: município é o nome do modelo de bolsa. Padronizar por modelo; não criar município atendido como entidade/campo separado. Navegação do entregador: todos os modelos → facção cadastrada → entrega/recebimento, mantendo pedido específico. Não alterar nomes existentes automaticamente.
-- Acompanhamento de produção: quantidade distribuída da remessa; recolhimentos com total/histórico expansível; observações pelos três perfis como exceção específica, ainda não implementada. Ver docs/acompanhamento-producao.md.
+- Acompanhamento de produção implementado: /painel/producao; contrato em docs/tela-acompanhamento.md. Quantidade distribuída conta na primeira saída válida de material, uma vez por remessa; não duplicar complementos nem junções entre entregas/recolhimentos/notas.
+- Observações de produção pelos três perfis usam permissão específica e RPC add_production_note, com idempotência e histórico imutável. Não liberar ao Gestor escrita de estoque/cadastros/saídas. Migração 20261026194930 aplicada somente no BagSync.
 
 ## Controle de saída implementado
 - Contrato em docs/controle-saida.md. Entregador usa remessa preparada para preencher checklist; recolhimento de bolsas permanece uma operação independente, vinculada a pedido/facção.

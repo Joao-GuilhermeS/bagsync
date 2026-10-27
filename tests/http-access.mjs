@@ -12,6 +12,7 @@ try {
  routes.push("/painel/remessas","/painel/remessas/nova","/painel/remessas/11111111-1111-4111-8111-111111111111");
  routes.push("/painel/entregador","/painel/entregador/11111111-1111-4111-8111-111111111111","/painel/entregador/11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222");
  routes.push("/painel/remessas/11111111-1111-4111-8111-111111111111/preencher","/painel/remessas/11111111-1111-4111-8111-111111111111/preenchimentos");
+ routes.push("/painel/producao","/painel/producao/11111111-1111-4111-8111-111111111111");
  for(const route of routes){
   const response=await fetch(`http://127.0.0.1:${port}${route}`,{redirect:"manual"});const body=await response.text();
   assert.ok(response.headers.get("location")==="/login"||body.includes("NEXT_REDIRECT;replace;/login;"),route+" deve exigir sessão");
@@ -21,5 +22,6 @@ try {
   const r=await fetch(`http://127.0.0.1:${port}${route}`);assert.equal(r.status,401);assert.ok(r.headers.get("cache-control").includes("no-store"));assert.equal(r.headers.get("content-disposition"),null);assert.equal(typeof (await r.json()).error,"string");
  }
  const login=await fetch(`http://127.0.0.1:${port}/login`);assert.equal(login.status,200);assert.ok((await login.text()).includes("Acesse sua empresa"));
- console.log(`HTTP OK: login 200 e ${routes.length} rotas protegidas e três arquivos negados sem sessão.`);
+ const history=await fetch(`http://127.0.0.1:${port}/painel/producao/historico?tipo=notes`);assert.equal(history.status,401);assert.ok(history.headers.get("cache-control").includes("no-store"));assert.equal(history.headers.get("content-disposition"),null);assert.equal(typeof(await history.json()).error,"string");
+ console.log(`HTTP OK: login 200 e ${routes.length} rotas protegidas, três arquivos e histórico negados sem sessão.`);
 } catch(error){console.error(error);process.exitCode=1;} finally {server.kill();}

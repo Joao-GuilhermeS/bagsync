@@ -1,6 +1,6 @@
 export const roles = ["gerente_logistico", "motorista", "gestor"] as const;
 export type Role = (typeof roles)[number];
-export type Permission = "consultar" | "gerenciar_operacoes" | "registrar_entrega_recebimento";
+export type Permission = "consultar" | "gerenciar_operacoes" | "registrar_entrega_recebimento" | "registrar_observacao_producao";
 
 export interface AccessContext {
   userId: string;
@@ -17,7 +17,8 @@ export function canAccess(
   if (!context?.userId || !companyId || context.companyId !== companyId) return false;
   if (!roles.includes(context.role)) return false;
   switch (permission) {
-    case "consultar": return true;
+    case "consultar":
+    case "registrar_observacao_producao": return true;
     case "gerenciar_operacoes": return context.role === "gerente_logistico";
     case "registrar_entrega_recebimento":
       return context.role === "gerente_logistico" || context.role === "motorista";

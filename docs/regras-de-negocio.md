@@ -3,7 +3,7 @@
 Origem/aprovação: responsável pelo projeto, respostas no chat; aceite pelo desenvolvedor.
 
 - RN-01: empresas independentes sem filiais; usuário vinculado a uma única empresa.
-- RN-02: gerente logístico gerencia operações; motorista consulta e registra entregas/recebimentos em facções; gestor apenas consulta.
+- RN-02: gerente logístico gerencia operações; motorista consulta e registra entregas/recebimentos em facções; gestor consulta, com as exceções específicas de atribuição de rotas (RN-16) e observações da produção (RN-23), sem CRUD geral.
 - RN-03: materiais de produção e bolsas acabadas/entregues têm consultas em páginas separadas.
 - RN-04: registrar materiais enviados por costureira/facção e bolsas recolhidas, conciliando com estoque.
 - RN-05: provisionamento de usuários pelo desenvolvedor no Supabase inicialmente. CRUD operacional não concede administração de identidades/perfis.
@@ -36,7 +36,7 @@ Banco implementado conforme [contrato de pedidos/estoque](pedidos-estoque.md). N
 
 - RN-14: facções/costureiros não acessam a aplicação; envios e recebimentos são registrados pelos usuários da empresa.
 - RN-15: lote significa recebimento parcial; não haverá entidade de lote independente.
-- RN-16: Gerente Logístico e Gestor podem atribuir rotas; Gestor continua sem escrita nas demais operações/cadastros. Permissão de rotas ainda não implementada.
+- RN-16: Gerente Logístico e Gestor podem atribuir rotas; Gestor continua sem escrita de estoque/cadastros/saídas. Observações de produção seguem a exceção RN-23. Permissão de rotas ainda não implementada.
 - RN-17: checklist predefinido por modelo; previstos informados manualmente por remessa, sem multiplicação automática pela composição.
 - RN-18: confirmação OK para envio completo, valor numérico para parcial, pendências explícitas e PDF físico do checklist. Traço significa material não enviado e pendente, mantendo o kit incompleto (confirmado pelo responsável em 26/10/2026).
 
@@ -45,6 +45,7 @@ Banco implementado conforme [contrato de pedidos/estoque](pedidos-estoque.md). N
 - RN-21: emissão da saída seleciona uma facção/costureiro cadastrado e inclui anotações gerais. PDF imprimível após conclusão com nome do destinatário e quantidade à esquerda, data e modelo à direita. O campo denominado município na referência física corresponde ao nome do modelo, conforme correção explícita do responsável. A impressão utiliza o diálogo do navegador/leitor PDF, sem prometer seleção automática de impressora.
 
 - RN-22 (corrigida pelo responsável em 26/10/2026): município é o nome do modelo; padronizar por modelo sem cadastro/filtro independente de município atendido. Exibir todos os modelos em cards, depois facções cadastradas e entrega/recebimento. Quantidade distribuída usa a quantidade de bolsas da saída/remessa; recolhimentos aparecem somados, com histórico expansível de quantidades e datas. Preservar o pedido específico em cada lançamento.
-- RN-23: Gerente Logístico, Motorista e Gestor podem registrar observações no acompanhamento da produção. Exceção específica ao perfil Gestor, sem autorização geral de escrita. Ainda não implementada na aplicação ou no banco.
+- RN-23: Gerente Logístico, Motorista e Gestor podem acrescentar observações no acompanhamento da produção. Exceção específica ao perfil Gestor, sem autorização geral de escrita. Implementada com histórico imutável e idempotência, sem edição/exclusão pela aplicação.
+- RN-24 (confirmada em 26/10/2026): quantidade da remessa conta como produção distribuída na primeira saída de material para a facção, uma única vez. Complementos não duplicam o total. Remessas sem envio válido não contam; estornos preservam os originais e ajustam os totais. Recolhimentos e saldos permanecem separados por pedido/facção.
 
 Estas regras complementam/substituem os trechos históricos correspondentes; não implicam que kits, rotas ou novo PDF já estejam implementados. Referência: adaptacao-kits-rotas.md.

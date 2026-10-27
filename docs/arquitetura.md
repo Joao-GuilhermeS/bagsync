@@ -2,6 +2,8 @@
 
 ## Controle de saída — atualização em 26/10/2026
 
+Acompanhamento posterior: production_tracking e production_kit_distribution são views SECURITY INVOKER que agregam separadamente remessas, recebimentos e notas. Histórico consultado sob demanda por RPC de leitura STABLE/SECURITY INVOKER. Observações acrescentadas por RPC idempotente autorizada aos três perfis, sem abrir escrita direta ou conceder operações de estoque ao Gestor. [Contrato e testes](tela-acompanhamento.md).
+
 O preenchimento de checklist usa ação de servidor autenticada → RPC submit_shipment_checklist → validação do snapshot/empresa/perfil → operação de entrega existente → respostas e movimento na mesma transação. Preenchimentos sem envio são registros independentes, sem operação de estoque fictícia. Históricos imutáveis separados de template e previsão. PDF gerado no servidor com fonte local, consulta sujeita a RLS e resposta privada/no-store. [Contrato e limites](controle-saida.md).
 
 ## Observada
