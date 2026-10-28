@@ -1,0 +1,26 @@
+"use client";
+import Link from "next/link";
+import {useState} from "react";
+import type {ExpeditionCardData} from "@/lib/shipments/expedition-list";
+import {matchingNames} from "@/lib/catalogs/search";
+import {formatQuantity} from "@/lib/operations/validation";
+import {chartPercent} from "@/lib/production/dashboard-metrics";
+import type {TransportState} from "@/lib/shipments/expedition";
+import {Icon} from "../ui/icon";
+import {Badge} from "../ui/badge";
+
+export function ExpeditionList({cards,manager,order,workshop}:{cards:ExpeditionCardData[];manager:boolean;order?:string;workshop?:string}){
+ const [search,setSearch]=useState("");const [status,setStatus]=useState<TransportState|"todos">("todos");const [requested,setPage]=useState(1);
+ const scoped=cards.filter(card=>(!order||card.orderId===order)&&(!workshop||card.workshopId===workshop));
+ const searched=matchingNames(scoped.map(card=>({...card,name:`${card.model} ${card.workshop} ${card.order}`})),search);
+ const filtered=searched.filter(card=>status==="todos"||card.status===status);
+ const pages=Math.max(1,Math.ceil(filtered.length/12));const page=Math.min(requested,pages);const visible=filtered.slice((page-1)*12,page*12);
+ return <div><section aria-label="Filtrar expedições" className="mb-5 rounded-xl border bg-white p-4 shadow-sm"><label htmlFor="expedition-search" className="sr-only">Buscar modelo ou facção</label><input id="expedition-search" type="search" value={search} onChange={event=>{setSearch(event.target.value);setPage(1);}} placeholder="Buscar por modelo ou facção..." className="field-input mb-4"/><div className="flex flex-wrap gap-2" role="group" aria-label="Status das remessas">{([["todos","Todas"],["pendentes","Pendentes"],["transito","Em Trânsito"],["entregues","Entregues"]] as const).map(([value,label])=><button key={value} type="button" aria-pressed={status===value} onClick={()=>{setStatus(value);setPage(1);}} className={status===value?"btn-primary":"btn-secondary"}>{label}<span className="text-xs opacity-70">{value==="todos"?searched.length:searched.filter(card=>card.status===value).length}</span></button>)}</div></section>
+  <p className="mb-4 text-xs text-slate-500" role="status">{filtered.length} remessa(s) · Em trânsito = romaneio emitido aguardando confirmação na facção.</p>
+  {!visible.length?<div className="rounded-2xl border border-dashed bg-white p-10 text-center"><Icon name="box" className="mx-auto mb-4 size-9 text-slate-300"/><h2 className="font-semibold text-forest">{cards.length?"Nenhuma remessa encontrada":"Nenhuma remessa preparada"}</h2><p className="mt-2 text-sm text-slate-500">{cards.length?"Revise a busca ou escolha outro status.":"Prepare um kit e confira os materiais para emitir o romaneio."}</p>{manager&&<Link href="/painel/expedicao/nova" className="btn-primary mt-5">Nova Remessa</Link>}</div>:<div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">{visible.map(card=>{
+   const complete=String(BigInt(card.itemCount)-BigInt(card.pendingItems));
+   return <article key={card.id} className="rounded-2xl border bg-white p-5 shadow-sm"><div className="mb-4 flex flex-wrap gap-2"><Badge tone={card.status==="entregues"?"success":card.status==="transito"?"progress":"pending"}>{card.status==="entregues"?"Entregue":card.status==="transito"?"Enviado ao Motorista":"Aguardando Envio"}</Badge><Badge tone={card.itemCount==="0"||card.pendingItems!=="0"?"pending":"success"}>{card.itemCount==="0"||card.pendingItems!=="0"?"Kit Incompleto":"Kit Completo"}</Badge></div><h2 className="break-words text-lg font-semibold text-forest">{card.model}</h2><p className="mt-1 break-words text-sm font-medium text-slate-600">{card.workshop}</p><p className="mt-1 break-words text-xs text-slate-400">{card.order}</p><div className="my-4 flex flex-wrap justify-between gap-2 text-sm"><span className="font-semibold tabular-nums">{formatQuantity(card.bags)} bolsas</span><time dateTime={card.date} className="text-xs text-slate-400">{new Date(card.date).toLocaleDateString("pt-BR",{timeZone:"America/Sao_Paulo"})}</time></div><p className="mb-2 text-xs text-slate-500">{complete}/{card.itemCount} itens conferidos / atendidos</p><div className="h-1.5 overflow-hidden rounded-full bg-slate-100" aria-hidden="true"><div className="h-full rounded-full bg-olive" style={{width:`${chartPercent(complete,card.itemCount)}%`}}/></div><div className="mt-5 flex flex-wrap gap-2">{manager&&<Link href={`/painel/expedicao/${card.id}/preencher`} className="btn-primary text-xs">Abrir Checklist</Link>}{card.pdfSubmission&&<Link target="_blank" rel="noreferrer" href={`/painel/expedicao/${card.id}/preenchimentos/${card.pdfSubmission}/pdf`} className="btn-secondary text-xs">Imprimir Romaneio</Link>}<Link href={`/painel/expedicao/${card.id}`} className="btn-secondary text-xs">Ver Histórico</Link></div></article>;
+  })}</div>}
+  {pages>1&&<nav aria-label="Paginação das remessas" className="mt-5 flex items-center justify-between gap-3"><button type="button" disabled={page===1} onClick={()=>setPage(page-1)} className="btn-secondary">Anterior</button><span className="text-sm">{page} / {pages}</span><button type="button" disabled={page===pages} onClick={()=>setPage(page+1)} className="btn-secondary">Próxima</button></nav>}
+ </div>;
+}

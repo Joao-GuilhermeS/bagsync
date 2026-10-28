@@ -127,3 +127,8 @@ módulos operacionais antes da definição dos requisitos.
 - Em pedido = previsto por pedido, contado uma vez; em produção = saldo restante por pedido/facção; prontas = recolhidas válidas. Reutilizar production_tracking para estornos/complementos; não somar total pedido às demais categorias nem limitar excedentes.
 - Agregação exata com BigInt/strings, sem Number para quantitativos. Filtros locais por nome/ID não substituem autorização/RLS; consultas autenticadas e restritas à empresa.
 - Refatoração atual usa Recharts 3.10.1/react-is 19.3.0: filtros unificados com busca interna, KPIs clicáveis, tooltip e percentual, grid inferior em três blocos. Biblioteca recebe somente geometria limitada; eixos/tooltip mantêm valores exatos. Respeitar movimento reduzido e tabela acessível. Contrato atualizado em docs/dashboard-visao-geral.md.
+
+## UX da Expedição — 28/10/2026
+- Contrato em docs/ux-expedicao.md: cards filtráveis, stepper de três etapas, ChecklistItem compartilhado e cards de entrega na tela do motorista. Em Trânsito é agrupamento visual de a_entregar, independente de kit incompleto.
+- saveExpedition orquestra criação e emissão em duas RPCs transacionais distintas; não afirmar atomicidade do conjunto. Preservar duas chaves distintas e payload em repetição incerta. Previsão pode persistir se emissão falhar; memória local não sobrevive a recarga.
+- Salvar previsão não salva respostas locais nem movimenta estoque. Emissão efetiva libera card; confirmação não baixa novamente. Sem novas migrations ou dependências neste incremento.

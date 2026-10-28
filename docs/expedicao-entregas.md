@@ -88,3 +88,6 @@ Resultados finais e limitações de validação visual/técnica são registrados
 - Advisors: sem aviso de índice duplicado ou FK sem índice após a correção. Onze índices sem uso como INFO. Segurança mantém sete RPCs SECURITY DEFINER autenticadas intencionais (com verificações de identidade/empresa/perfil) e o aviso preexistente de proteção contra senhas vazadas desativada.
 
 Validação manual dos formulários com sessão real e impressão física continuam pendentes. Não foram executados commit/push nem alterações no projeto antigo.
+
+## Interface atualizada em 28/10/2026
+Ver [UX da Expedição](ux-expedicao.md): listagem, stepper, estado local, recuperação de emissão incerta e cards do motorista. Os contratos de banco descritos neste documento permanecem vigentes.
