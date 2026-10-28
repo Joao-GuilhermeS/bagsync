@@ -9,7 +9,7 @@ Direção fornecida pelo responsável em 27/10/2026 e adaptada às funções exi
 | Verde floresta / navegação / ação principal | #1E3A2B |
 | Oliva / destaque / foco | #4D6B32 |
 | Menta / seleção e apoio | #E8F0E6 |
-| Fundo | #F6F7F5 |
+| Fundo | #F8F9FA |
 | Superfície | #FFFFFF |
 | Texto principal | #17251D |
 | Bordas | #E1E7DF |
@@ -30,3 +30,7 @@ Fonte Geist já existente; números tabulares, hierarquia clara e cartões com b
 Aplicadas as skills UI/UX Pro Max e Playwright. A busca inicial de design system retornou padrão de marketing e paleta azul inadequados ao escopo; a busca por produto operacional não encontrou correspondência validada. Não foram adotados esses resultados como padrão aprovado. A base é a paleta explícita do usuário e as orientações gerais de legibilidade/foco, verificadas na prévia local.
 
 Não criar regras operacionais, entidades ou permissões para preencher elementos do layout. Usar dados reais no aplicativo e estados vazios honestos. Não prometer desempenho ou acessibilidade integral sem medição específica.
+
+## Visão geral — refatoração em 28/10/2026
+
+Cabeçalho sucinto, filtros em uma barra, três KPIs clicáveis e barras agrupadas Recharts. Grid inferior de três blocos no desktop, duas colunas no tablet e uma no celular. Cartões brancos com bordas finas, raios de 16 px e shadow-sm. Séries em tokens --chart-ordered, --chart-production e --chart-ready. Evitar banner extra e repetição dos números em painéis laterais. Contrato em docs/dashboard-visao-geral.md.

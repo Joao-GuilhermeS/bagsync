@@ -1,5 +1,11 @@
 # Interface e navegação — BagSync
 
+## Dashboard — atualização em 28/10/2026
+
+Refatoração vigente: filtros unificados com seletor pesquisável, KPIs que filtram séries, gráfico Recharts e três blocos inferiores no mesmo grid. Skeleton e tabela compacta dos últimos recolhimentos incluídos. Detalhes atuais em [dashboard-visao-geral.md](dashboard-visao-geral.md).
+
+Os cards superiores de bolsas pendentes, remessas do dia, kits e saldo negativo foram substituídos por filtro e gráfico dos quantitativos de bolsas por modelo. As seções inferiores foram mantidas. Contrato atual em [dashboard-visao-geral.md](dashboard-visao-geral.md), que substitui a descrição histórica desses indicadores abaixo.
+
 ## Atualização — Expedição e entregas (27/10/2026)
 
 Fábrica contém Expedição; Operação contém Entregas de materiais e o fluxo por modelo/recolhimentos. Removida a aba de medidas; unidades predefinidas no seletor de materiais. Contrato vigente em [Expedição e entregas](expedicao-entregas.md), que substitui descrições históricas divergentes abaixo.

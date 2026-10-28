@@ -121,3 +121,9 @@ módulos operacionais antes da definição dos requisitos.
 - Confirmar entrega somente via confirm_shipment_delivery; usar request_key/payload preservados em retry incerto. shipment_delivery_confirmations é imutável e não gera movimentos de estoque.
 - Caminhos canônicos /painel/expedicao e /painel/entregas; remessas permanece compatível com links antigos. Tipos/ações/SQL devem negar baixa de materiais ao motorista, preservando bag_receipt.
 - Migrações 20261027184848, 20261027185253 e 20261027190254 aplicadas apenas no BagSync; não reescrever as já aplicadas.
+
+## Dashboard — 28/10/2026
+- Visão geral usa quantitativos por modelo, pesquisa por nome e gráfico interativo; contrato em docs/dashboard-visao-geral.md. Preservar abaixo dele Onde você quer começar, Acesso rápido e Recolhimentos recentes.
+- Em pedido = previsto por pedido, contado uma vez; em produção = saldo restante por pedido/facção; prontas = recolhidas válidas. Reutilizar production_tracking para estornos/complementos; não somar total pedido às demais categorias nem limitar excedentes.
+- Agregação exata com BigInt/strings, sem Number para quantitativos. Filtros locais por nome/ID não substituem autorização/RLS; consultas autenticadas e restritas à empresa.
+- Refatoração atual usa Recharts 3.10.1/react-is 19.3.0: filtros unificados com busca interna, KPIs clicáveis, tooltip e percentual, grid inferior em três blocos. Biblioteca recebe somente geometria limitada; eixos/tooltip mantêm valores exatos. Respeitar movimento reduzido e tabela acessível. Contrato atualizado em docs/dashboard-visao-geral.md.

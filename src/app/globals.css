@@ -2,12 +2,15 @@
 
 :root {
   color-scheme: light;
-  --background: #f6f7f5;
+  --background: #f8f9fa;
   --foreground: #17251d;
   --forest: #1e3a2b;
   --olive: #4d6b32;
   --mint: #e8f0e6;
   --border: #e1e7df;
+  --chart-ordered: #1e3a2b;
+  --chart-production: #6c9580;
+  --chart-ready: #9db76a;
 }
 @theme inline {
   --color-background: var(--background);
