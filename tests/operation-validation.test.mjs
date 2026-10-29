@@ -14,7 +14,7 @@ test("formatação pt-BR não perde decimais nem sinal de saldo",()=>{
 test("pedido e operação ignoram empresa e autor enviados pelo cliente",()=>{
  const order=parseOrder(form({request_key:id,name:" Pedido ",bag_id:id,expected_quantity:"5",company_id:"outra",created_by:"outro"}));
  assert.equal(order.p_name,"Pedido");assert.equal(order.p_expected_quantity,"5");assert.ok(!("company_id" in order));
- const op=parseOperation(form({request_key:id,kind:"bag_receipt",order_id:id,workshop_id:id,quantity:"2",bag_id:"injetado"}));
+ const op=parseOperation(form({request_key:id,kind:"bag_receipt",kit_id:id,order_id:id,workshop_id:id,quantity:"2",bag_id:"injetado"}));
  assert.deepEqual(op.p_items,[{quantity:"2"}]);assert.ok(!("bag_id" in op));
 });
 test("materiais devem ter quantidades correspondentes e não podem se repetir",()=>{

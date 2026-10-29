@@ -43,3 +43,6 @@ Migração 20261025204641_pedidos_movimentacoes aplicada somente no BagSync. Tes
 ## Exportações
 
 20261025233431_exportacoes_consulta aplicada somente no BagSync; migrações anteriores intactas. Deploy precisa de runtime Node e fontes src/assets/fonts incluídas no tracing (verificado no build). Não depende de Python/Poppler em produção. Dependências: npm ci com lockfile; seguir exportacoes.md para validação dos downloads e limites. Não houve publicação/deploy neste incremento.
+
+## Prazos de produção — 29/10/2026
+Migration 20261029140127 aplicada com autorização ao BagSync. Publicar a versão do aplicativo que envia p_due_on na remessa e p_kit_id no recolhimento; chamadas antigas sem esses campos são rejeitadas para novas gravações. Não reexecutar migration aplicada. Frontend não foi publicado pelo agente.

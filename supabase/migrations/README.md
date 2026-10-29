@@ -15,3 +15,6 @@
 20261026191312_shipment_checklist_submissions.sql: aplicada permanentemente no BagSync. Respostas/anotações imutáveis, RPC transacional e idempotente para concluir a saída, vínculo com estoque e RLS. Testes em ../tests/shipment_checklist_submissions.sql aprovados antes e depois, com rollback. Contrato em docs/controle-saida.md.
 
 20261026194930_production_tracking_notes.sql: aplicada no BagSync; views SECURITY INVOKER de distribuição/acompanhamento, histórico paginado de leitura e observações imutáveis pelos três perfis via RPC autorizada. Gerada inicialmente como 20261026193914 e alinhada ao histórico remoto. Testes ../tests/production_tracking.sql aprovados antes e depois com rollback. Contrato em docs/tela-acompanhamento.md.
+
+## Prazos — 29/10/2026
+20261029140127_production_deadlines aplicada somente no BagSync com autorização. Prazo obrigatório em novas remessas, eventos de prorrogação e recolhimentos vinculados. Não reaplicar. Contrato e evidências: docs/prazos-producao.md.

@@ -53,3 +53,7 @@ Banco implementado conforme [contrato de pedidos/estoque](pedidos-estoque.md). N
 - RN-24 (confirmada em 26/10/2026): quantidade da remessa conta como produção distribuída na primeira saída de material para a facção, uma única vez. Complementos não duplicam o total. Remessas sem envio válido não contam; estornos preservam os originais e ajustam os totais. Recolhimentos e saldos permanecem separados por pedido/facção.
 
 Estas regras complementam/substituem os trechos históricos correspondentes; não implicam que kits, rotas ou novo PDF já estejam implementados. Referência: adaptacao-kits-rotas.md.
+
+## Prazos — adendo aprovado em 29/10/2026
+
+Novas remessas exigem prazo em dias corridos/Brasília. Gerente Logístico define e prorroga com justificativa e histórico. Atenção: vencimento hoje ou nos próximos dois dias; atraso: data anterior a hoje. Recolhimentos novos escolhem remessa, com parciais, estornos e aviso de excedente. Não atribuir data ou ratear recolhimentos antigos automaticamente. Contrato e exceções em [Prazos de produção](prazos-producao.md).

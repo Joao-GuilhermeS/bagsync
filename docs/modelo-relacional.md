@@ -51,3 +51,7 @@ Migração 20261026191246 acrescenta input_type ao modelo e ao snapshot. Migraç
 ## Acompanhamento e observações — aplicado em 26/10/2026
 
 Migração 20261026194930: production_notes (empresa/pedido/facção, texto, chave, autor/perfil/data); FKs compostas, RLS e escrita apenas por add_production_note. Views production_kit_distribution e production_tracking usam security_invoker, com agregações independentes para evitar dupla contagem. Histórico paginado por production_tracking_history, somente leitura/SECURITY INVOKER. [Dicionário e evidências](tela-acompanhamento.md).
+
+## Prazos — adendo em 29/10/2026
+
+Adicionados shipment_kits.due_on, shipment_deadline_events (histórico com autor/data/motivo/idempotência) e shipment_receipts (recolhimento ↔ remessa com FKs compostas por empresa). Views SECURITY INVOKER: shipment_receipt_progress e production_deadlines. RPCs públicas validam prazo e remessa; implementações anteriores preservadas sem grants no schema privado. Migration aplicada 20261029140127. [Contrato detalhado](prazos-producao.md).

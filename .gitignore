@@ -45,5 +45,6 @@ next-env.d.ts
 
 /tmp/pdfs/
 /tmp/ui-preview/
+/tmp/deadline-db/
 /output/playwright/
 /.playwright-cli/

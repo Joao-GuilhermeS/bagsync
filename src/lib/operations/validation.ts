@@ -25,13 +25,13 @@ export function parseOperation(form:FormData) {
  const kind=text(form,"kind");
  if(!Object.prototype.hasOwnProperty.call(operationLabels,kind))throw new Error("Operação inválida.");
  const p_kind=kind as OperationKind;
- const result={p_request_key:uuid(text(form,"request_key")),p_kind,p_order_id:null as string|null,p_workshop_id:null as string|null,p_items:[] as Array<{material_id?:string;quantity:string}>,p_reversal_of:null as string|null,p_note:text(form,"note")||null};
+ const result={p_request_key:uuid(text(form,"request_key")),p_kind,p_order_id:null as string|null,p_workshop_id:null as string|null,p_items:[] as Array<{material_id?:string;quantity:string}>,p_reversal_of:null as string|null,p_note:text(form,"note")||null,p_kit_id:null as string|null};
  if(p_kind==="reversal") {
   if(form.get("confirm")!=="sim")throw new Error("Confirme o estorno do registro original.");
   result.p_reversal_of=uuid(text(form,"reversal_of"));return result;
  }
  if(p_kind!=="material_entry") {result.p_order_id=uuid(text(form,"order_id"));result.p_workshop_id=uuid(text(form,"workshop_id"));}
- if(p_kind==="bag_receipt")result.p_items=[{quantity:positiveQuantity(form.get("quantity"),true)}];
+ if(p_kind==="bag_receipt"){result.p_kit_id=uuid(text(form,"kit_id"));result.p_items=[{quantity:positiveQuantity(form.get("quantity"),true)}];}
  else {
   const ids=form.getAll("material_id"),quantities=form.getAll("material_quantity");
   if(!ids.length||ids.length!==quantities.length)throw new Error("Inclua os materiais e suas quantidades.");

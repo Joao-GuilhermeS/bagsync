@@ -21,20 +21,20 @@ begin
  insert into public.bag_checklist_items(company_id,bag_id,material_id,label,position,input_type) values(cid,b,m,'Item B',1,'text') returning id into t2;
  oid:=(public.create_production_order(gen_random_uuid(),'__kit__',b,10)->>'order_id')::uuid;
  items:=jsonb_build_array(jsonb_build_object('template_item_id',t1,'expected_quantity','100'),jsonb_build_object('template_item_id',t2,'expected_quantity','25'));
- r:=public.create_shipment_kit(k,oid,w,10,items); kid:=(r->>'kit_id')::uuid;
+ r:=public.create_shipment_kit(k,oid,w,10,items,p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7); kid:=(r->>'kit_id')::uuid;
  perform set_config('test.kit',kid::text,true);
- if r<>public.create_shipment_kit(k,oid,w,10,items) then raise exception 'Replay do kit divergente';end if;
+ if r<>public.create_shipment_kit(k,oid,w,10,items,p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7) then raise exception 'Replay do kit divergente';end if;
  if (select count(*) from public.stock_movements where material_id=m)<>0 then raise exception 'Criação movimentou estoque';end if;
  if (select status from public.shipment_kit_status where kit_id=kid)<>'incompleto' then raise exception 'Kit vazio de envios completo';end if;
  if (select pending_items from public.shipment_kit_status where kit_id=kid)<>2 then raise exception 'Itens não enviados não ficaram pendentes';end if;
  begin
-  perform public.create_shipment_kit(k,oid,w,11,items);raise exception 'Replay alterado aceito';
+  perform public.create_shipment_kit(k,oid,w,11,items,p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7);raise exception 'Replay alterado aceito';
  exception when invalid_parameter_value then null;end;
  begin
-  perform public.create_shipment_kit(gen_random_uuid(),oid,w,10,jsonb_build_array(items->0));raise exception 'Checklist incompleto aceito';
+  perform public.create_shipment_kit(gen_random_uuid(),oid,w,10,jsonb_build_array(items->0),p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7);raise exception 'Checklist incompleto aceito';
  exception when invalid_parameter_value then null;end;
  begin
-  perform public.create_shipment_kit(gen_random_uuid(),oid,current_setting('test.other_workshop')::uuid,10,items);raise exception 'Facção de outra empresa aceita';
+  perform public.create_shipment_kit(gen_random_uuid(),oid,current_setting('test.other_workshop')::uuid,10,items,p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7);raise exception 'Facção de outra empresa aceita';
  exception when foreign_key_violation then null;end;
  select id into i1 from public.shipment_kit_items where kit_id=kid and template_item_id=t1;
  select id into i2 from public.shipment_kit_items where kit_id=kid and template_item_id=t2;
@@ -44,7 +44,7 @@ begin
  exception when check_violation then null;end;
  update public.bag_checklist_items set input_type=null where id=t1;
  begin
-  perform public.create_shipment_kit(gen_random_uuid(),oid,w,10,items);raise exception 'Nova remessa com tipo não configurado';
+  perform public.create_shipment_kit(gen_random_uuid(),oid,w,10,items,p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7);raise exception 'Nova remessa com tipo não configurado';
  exception when invalid_parameter_value then null;end;
  update public.bag_checklist_items set input_type='text' where id=t1;
  if (select input_type from public.shipment_kit_items where id=i1) is distinct from 'checkbox' then raise exception 'Mudança do modelo alterou tipo histórico';end if;
@@ -97,7 +97,7 @@ do $test$
 begin
  begin perform public.record_kit_delivery(gen_random_uuid(),current_setting('test.kit')::uuid,jsonb_build_array(jsonb_build_object('kit_item_id',current_setting('test.item'),'mode','complete')));raise exception 'Motorista emitiu saída de Expedição';exception when insufficient_privilege then null;end;
  begin
-  perform public.create_shipment_kit(gen_random_uuid(),null,null,1,'[]');raise exception 'Motorista criou kit';
+  perform public.create_shipment_kit(gen_random_uuid(),null,null,1,'[]',p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7);raise exception 'Motorista criou kit';
  exception when insufficient_privilege then null;end;
  begin
   insert into public.bag_checklist_items(company_id,bag_id,material_id,label) values(current_setting('test.company')::uuid,current_setting('test.bag')::uuid,current_setting('test.material')::uuid,'Proibido');
@@ -130,7 +130,7 @@ set local role anon;
 do $test$
 begin
  begin
-  perform public.create_shipment_kit(gen_random_uuid(),null,null,1,'[]');raise exception 'Anônimo acessou RPC';
+  perform public.create_shipment_kit(gen_random_uuid(),null,null,1,'[]',p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7);raise exception 'Anônimo acessou RPC';
  exception when insufficient_privilege then null;end;
  begin
   perform 1 from public.shipment_kits;raise exception 'Anônimo leu kits';
@@ -143,7 +143,7 @@ do $test$
 begin
  if exists(select 1 from public.shipment_kits) then raise exception 'Sem identidade leu kits';end if;
  begin
-  perform public.create_shipment_kit(gen_random_uuid(),null,null,1,'[]');raise exception 'Sem identidade criou kit';
+  perform public.create_shipment_kit(gen_random_uuid(),null,null,1,'[]',p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7);raise exception 'Sem identidade criou kit';
  exception when insufficient_privilege then null;end;
 end $test$;
 reset role;

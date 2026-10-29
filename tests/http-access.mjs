@@ -13,7 +13,7 @@ try {
  routes.push("/painel/entregador","/painel/entregador/11111111-1111-4111-8111-111111111111","/painel/entregador/11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222");
  routes.push("/painel/remessas/11111111-1111-4111-8111-111111111111/preencher","/painel/remessas/11111111-1111-4111-8111-111111111111/preenchimentos");
  routes.push("/painel/producao","/painel/producao/11111111-1111-4111-8111-111111111111");
- routes.push("/painel/pedidos/novo");
+ routes.push("/painel/pedidos/novo","/painel/prazos");
  routes.push("/painel/movimentacoes?material=11111111-1111-4111-8111-111111111111","/painel/movimentacoes?bolsa=11111111-1111-4111-8111-111111111111");
  for(const route of routes){
   const response=await fetch(`http://127.0.0.1:${port}${route}`,{redirect:"manual"});const body=await response.text();

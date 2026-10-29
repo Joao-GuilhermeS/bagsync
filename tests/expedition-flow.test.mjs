@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {parseExpedition,mapExpeditionAnswers,expeditionTransport} from "../src/lib/shipments/expedition.ts";
 import {workshopContact} from "../src/lib/shipments/contact.ts";
 const id="11111111-1111-4111-8111-111111111111",key="22222222-2222-4222-8222-222222222222",snapshotId="33333333-3333-4333-8333-333333333333";
-const form=()=>{const data=new FormData();for(const [name,value] of Object.entries({intent:"emit",request_key:id,submission_key:key,order_id:id,workshop_id:id,bag_quantity:"100",template_item_id:id,expected_quantity:"10,5",mode:"complete",response_text:"",quantity:"0",note:"Observação",company_id:"outra"}))data.set(name,value);return data;};
+const form=()=>{const data=new FormData();for(const [name,value] of Object.entries({intent:"emit",request_key:id,submission_key:key,order_id:id,workshop_id:id,bag_quantity:"100",due_on:"2026-11-10",template_item_id:id,expected_quantity:"10,5",mode:"complete",response_text:"",quantity:"0",note:"Observação",company_id:"outra"}))data.set(name,value);return data;};
 test("preparação e emissão usam chaves distintas e não aceitam empresa do formulário",()=>{
  const parsed=parseExpedition(form());assert.equal(parsed.create.p_items[0].expected_quantity,"10.5");assert.equal(parsed.submissionKey,key);assert.equal(parsed.create.company_id,undefined);
  const invalid=form();invalid.set("submission_key",id);assert.throws(()=>parseExpedition(invalid));

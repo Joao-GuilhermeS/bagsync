@@ -1,5 +1,6 @@
 import {isUuid} from "../catalogs/validation.ts";
 import {positiveQuantity} from "../operations/validation.ts";
+import {requiredDeadline} from "../deadlines/validation.ts";
 
 function text(form:FormData,name:string) {
  const value=form.get(name);return typeof value==="string"?value.trim():"";
@@ -18,7 +19,7 @@ export function parseShipment(form:FormData) {
   seen.add(template_item_id);
   return {template_item_id,expected_quantity:positiveQuantity(quantities[index])};
  });
- return {p_request_key:uuid(text(form,"request_key")),p_order_id:uuid(text(form,"order_id")),p_workshop_id:uuid(text(form,"workshop_id")),p_bag_quantity:positiveQuantity(form.get("bag_quantity"),true),p_items,p_note:text(form,"note")||null};
+ return {p_request_key:uuid(text(form,"request_key")),p_order_id:uuid(text(form,"order_id")),p_workshop_id:uuid(text(form,"workshop_id")),p_bag_quantity:positiveQuantity(form.get("bag_quantity"),true),p_items,p_note:text(form,"note")||null,p_due_on:requiredDeadline(form.get("due_on"))};
 }
 
 export function parseShipmentChecklist(form:FormData) {

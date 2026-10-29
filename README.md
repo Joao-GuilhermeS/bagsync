@@ -42,9 +42,11 @@ npm run build
 node tests/http-access.mjs
 ```
 
-Build pode exigir rede para fontes Google. Teste HTTP usa servidor temporário em 127.0.0.1:3101. Suites SQL em supabase/tests/ são administrativas e transacionais com rollback; ler instruções antes de executar, sem concorrer com provisionamento. Estado atual: 65 testes Node, lint, TypeScript/build com Webpack e oito suítes SQL aprovados; 31 páginas protegidas, quatro arquivos e consulta de histórico negados sem sessão. PDFs de QA de uma e 11 páginas foram renderizados e revisados no incremento de saída. Fluxo completo dos formulários autenticados, impressão física, carga e latência permanecem pendentes; revisão visual em prévia isolada registrada na documentação. Não confundir autenticação relatada pelo responsável com testes completos feitos pelo agente.
+Build pode exigir rede para fontes Google. Teste HTTP usa servidor temporário em 127.0.0.1:3101. Suites SQL em supabase/tests/ são administrativas e transacionais com rollback; ler instruções antes de executar, sem concorrer com provisionamento. Estado atual: 69 testes Node, lint, TypeScript/build com Webpack e nove suítes SQL aprovados; 32 páginas protegidas, quatro arquivos e consulta de histórico negados sem sessão. PDFs de QA de uma e 11 páginas foram renderizados e revisados no incremento de saída. Fluxo completo dos formulários autenticados, impressão física, carga e latência permanecem pendentes; revisão visual em prévia isolada registrada na documentação. Não confundir autenticação relatada pelo responsável com testes completos feitos pelo agente.
 
 ## Interface atual
+
+Prazos de produção em `/painel/prazos`: data obrigatória em novas remessas, alertas por vencimento e prorrogação justificada pelo Gerente Logístico. Novos recolhimentos escolhem a remessa; parciais e estornos conciliam seu saldo. [Contrato, migration aplicada e validação](docs/prazos-producao.md).
 
 Estoque atualizado em 29/10: Data Table com ordenação A–Z/saldo, busca, status, unidades, entrada rápida e histórico por item. Usa TanStack React Table 9.3.1 e primitivas locais no padrão shadcn/ui. [Contrato e validação](docs/estoque-data-table.md).
 
@@ -56,7 +58,7 @@ Visão geral atualizada em 28/10: barra de filtros com busca interna por modelo,
 
 Atualização de 27/10: **Expedição → romaneio/baixa → confirmação da entrega**, com recolhimento de bolsas separado. Materiais usam 17 unidades predefinidas, sem cadastro editável de medidas. Facções incluem documento, telefone e endereço. Contrato e validação em [Expedição e entregas](docs/expedicao-entregas.md).
 
-Menu por função, painel com indicadores reais, navegação mobile e formulários em painéis. Contrato e limites em [Interface e navegação](docs/interface-navegacao.md). Neste checkpoint: 65 testes Node e lint aprovados; build/TypeScript aprovado com `npx next build --webpack`. O build padrão apresentou falha interna de subprocesso do Turbopack, inclusive fora do sandbox; não houve troca permanente do compilador. Prévia isolada revisada no desktop/celular; validação dos formulários com sessão real permanece pendente.
+Menu por função, painel com indicadores reais, navegação mobile e formulários em painéis. Contrato e limites em [Interface e navegação](docs/interface-navegacao.md). Neste checkpoint: 69 testes Node e lint aprovados; build/TypeScript aprovado com `npx next build --webpack`. O build padrão apresentou falha interna de subprocesso do Turbopack, inclusive fora do sandbox; não houve troca permanente do compilador. Prévia isolada revisada no desktop/celular; validação dos formulários com sessão real permanece pendente.
 
 ## Documentação
 

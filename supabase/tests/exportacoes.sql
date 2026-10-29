@@ -20,6 +20,7 @@ values(current_setting('test.other')::uuid,gen_random_uuid(),'bag_receipt',curre
 returning set_config('test.other_operation',id::text,true);
 insert into public.stock_movements(company_id,operation_id,bag_id,quantity)
 values(current_setting('test.other')::uuid,current_setting('test.other_operation')::uuid,current_setting('test.other_bag')::uuid,3);
+insert into public.materials(company_id,name,unit_id) values(current_setting('test.company')::uuid,'__kit_aux__',current_setting('test.unit')::uuid) returning set_config('test.material2',id::text,true);
 select set_config('request.jwt.claims',jsonb_build_object('sub',current_setting('test.uid'),'role','authenticated')::text,true);
 set local role authenticated;
 do $test$
@@ -49,9 +50,24 @@ begin
  if not (r->'warnings' @> '[{"code":"saldo_negativo"}]') then raise exception 'Aviso de saldo ausente'; end if;
  select sum(quantity) into qty from public.stock_movements where material_id=current_setting('test.material')::uuid;
  if qty<>-2.5 then raise exception 'Saldo incorreto'; end if;
- r:=public.register_inventory_operation(gen_random_uuid(),'bag_receipt',oid,w,'[{"quantity":"4"}]');
+
+ -- Remessas válidas auxiliares: material separado preserva as assertivas do razão original.
+ declare
+  template uuid; kit1 uuid; kit2 uuid; item uuid; preset jsonb;
+ begin
+  insert into public.bag_checklist_items(company_id,bag_id,material_id,label,input_type) values(cid,b,current_setting('test.material2')::uuid,'Auxiliar','checkbox') returning id into template;
+  preset:=jsonb_build_array(jsonb_build_object('template_item_id',template,'expected_quantity','1'));
+  kit1:=(public.create_shipment_kit(gen_random_uuid(),oid,w,10,preset,p_due_on=>current_date+7)->>'kit_id')::uuid;
+  kit2:=(public.create_shipment_kit(gen_random_uuid(),oid,current_setting('test.workshop2')::uuid,10,preset,p_due_on=>current_date+7)->>'kit_id')::uuid;
+  select id into item from public.shipment_kit_items where kit_id=kit1;
+  perform public.submit_shipment_checklist(gen_random_uuid(),kit1,jsonb_build_array(jsonb_build_object('kit_item_id',item,'mode','complete')));
+  select id into item from public.shipment_kit_items where kit_id=kit2;
+  perform public.submit_shipment_checklist(gen_random_uuid(),kit2,jsonb_build_array(jsonb_build_object('kit_item_id',item,'mode','complete')));
+  perform set_config('test.receipt_kit1',kit1::text,true);perform set_config('test.receipt_kit2',kit2::text,true);
+ end;
+ r:=public.register_inventory_operation(gen_random_uuid(),'bag_receipt',oid,w,'[{"quantity":"4"}]',p_kit_id=>current_setting('test.receipt_kit1')::uuid);
  receipt_id:=(r->>'operation_id')::uuid;
- r:=public.register_inventory_operation(gen_random_uuid(),'bag_receipt',oid,current_setting('test.workshop2')::uuid,'[{"quantity":"7"}]');
+ r:=public.register_inventory_operation(gen_random_uuid(),'bag_receipt',oid,current_setting('test.workshop2')::uuid,'[{"quantity":"7"}]',p_kit_id=>current_setting('test.receipt_kit2')::uuid);
  if not (r->'warnings' @> '[{"code":"recebimento_excedente"}]') then raise exception 'Aviso excedente ausente'; end if;
  perform public.register_inventory_operation(gen_random_uuid(),'reversal',p_reversal_of=>receipt_id);
  select sum(s.quantity) into qty from public.stock_movements s join public.inventory_operations o on o.id=s.operation_id where o.order_id=oid and s.bag_id=b;
@@ -72,9 +88,9 @@ begin
  begin
   perform public.register_inventory_operation(gen_random_uuid(),'bag_receipt',oid,current_setting('test.other_workshop')::uuid,'[{"quantity":"1"}]');
   raise exception 'Faccao de outra empresa aceita';
- exception when foreign_key_violation then null; end;
+ exception when invalid_parameter_value then null; end;
  begin
-  perform public.register_inventory_operation(gen_random_uuid(),'bag_receipt',oid,w,'[{"quantity":"0.5"}]');
+  perform public.register_inventory_operation(gen_random_uuid(),'bag_receipt',oid,w,'[{"quantity":"0.5"}]',p_kit_id=>current_setting('test.receipt_kit1')::uuid);
   raise exception 'Bolsa fracionada aceita';
  exception when invalid_parameter_value then null; end;
  begin
@@ -89,7 +105,7 @@ set local role authenticated;
 do $test$
 declare oid uuid:=current_setting('test.order')::uuid; w uuid:=current_setting('test.workshop')::uuid;
 begin
- perform public.register_inventory_operation(gen_random_uuid(),'bag_receipt',oid,w,'[{"quantity":"1"}]');
+ perform public.register_inventory_operation(gen_random_uuid(),'bag_receipt',oid,w,'[{"quantity":"1"}]',p_kit_id=>current_setting('test.receipt_kit1')::uuid);
  begin perform public.register_inventory_operation(gen_random_uuid(),'material_delivery',oid,w,jsonb_build_array(jsonb_build_object('material_id',current_setting('test.material'),'quantity','1')));raise exception 'Motorista emitiu saída de Expedição';exception when insufficient_privilege then null;end;
  begin
   perform public.create_production_order(gen_random_uuid(),'__negado__',current_setting('test.bag')::uuid,1);

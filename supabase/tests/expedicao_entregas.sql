@@ -27,7 +27,7 @@ begin
  insert into public.bag_checklist_items(company_id,bag_id,material_id,label,input_type) values(cid,b,m,'Conferência','checkbox') returning id into t1;
  insert into public.bag_checklist_items(company_id,bag_id,material_id,label,input_type) values(cid,b,m,'Texto livre','text') returning id into t2;
  oid:=(public.create_production_order(gen_random_uuid(),'__expedicao__',b,100)->>'order_id')::uuid;
- kid:=(public.create_shipment_kit(gen_random_uuid(),oid,w,100,jsonb_build_array(jsonb_build_object('template_item_id',t1,'expected_quantity','100'),jsonb_build_object('template_item_id',t2,'expected_quantity','25')))->>'kit_id')::uuid;
+ kid:=(public.create_shipment_kit(gen_random_uuid(),oid,w,100,jsonb_build_array(jsonb_build_object('template_item_id',t1,'expected_quantity','100'),jsonb_build_object('template_item_id',t2,'expected_quantity','25')),p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7)->>'kit_id')::uuid;
  select id into i1 from public.shipment_kit_items where kit_id=kid and template_item_id=t1;
  select id into i2 from public.shipment_kit_items where kit_id=kid and template_item_id=t2;
  if exists(select 1 from public.shipment_dispatches where kit_id=kid) then raise exception 'Previsão liberada para entrega';end if;
@@ -74,7 +74,7 @@ begin
  if n<>0 then raise exception 'Motorista alterou contato';end if;
  begin delete from public.shipment_delivery_confirmations where submission_id=sid;raise exception 'Histórico apagável';exception when insufficient_privilege then null;end;
  -- Recolhimento continua disponível ao motorista.
- perform public.register_inventory_operation(gen_random_uuid(),'bag_receipt',current_setting('test.order')::uuid,current_setting('test.workshop')::uuid,'[{"quantity":"10"}]');
+ perform public.register_inventory_operation(gen_random_uuid(),'bag_receipt',current_setting('test.order')::uuid,current_setting('test.workshop')::uuid,'[{"quantity":"10"}]',p_kit_id=>current_setting('test.kit')::uuid);
 end $test$;
 reset role;
 update public.company_users set role='gerente_logistico' where user_id=current_setting('test.uid')::uuid;

@@ -23,6 +23,7 @@ export function operationWarnings(result:unknown):string[] {
  if(!result||typeof result!=="object"||!("warnings" in result)||!Array.isArray(result.warnings))return [];
  return result.warnings.map((warning:Record<string,unknown>)=>{
   if(warning?.code==="saldo_negativo")return `Saldo negativo no lançamento: ${formatQuantity(String(warning.balance))}. Confira o estoque compartilhado.`;
+  if(warning?.code==="recebimento_excedente_remessa")return `Recolhido acima do previsto na remessa: ${formatQuantity(String(warning.received))} de ${formatQuantity(String(warning.expected))} bolsas.`;
   if(warning?.code==="recebimento_excedente")return `Recebido acima do previsto: ${formatQuantity(String(warning.received))} de ${formatQuantity(String(warning.expected))} bolsas.`;
   return "Operação registrada com aviso. Confira o histórico e o estoque.";
  });

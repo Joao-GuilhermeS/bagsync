@@ -5,7 +5,7 @@ export type NavGroup={label:string;items:NavItem[]};
 export function navigationFor(role:Role):NavGroup[]{
  const groups:NavGroup[]=[
   {label:"Principal",items:[{href:"/painel",label:"Visão geral",icon:"home"},{href:"/painel/pedidos",label:"Pedidos de produção",icon:"orders"}]},
-  {label:"Produção e facções",items:[{href:"/painel/producao",label:"Acompanhar produção",icon:"chart"}]},
+  {label:"Produção e facções",items:[{href:"/painel/producao",label:"Acompanhar produção",icon:"chart"},{href:"/painel/prazos",label:"Prazos de produção",icon:"orders"}]},
   {label:"Materiais e logística",items:[{href:"/painel/estoque/materiais",label:"Estoque de materiais",icon:"layers"},{href:"/painel/expedicao",label:"Expedição",icon:"box"},{href:"/painel/entregas",label:"Entregas de materiais",icon:"truck"},{href:"/painel/entregador",label:"Entregas e recolhimentos",icon:"truck"}]},
   {label:"Produto final",items:[{href:"/painel/estoque/bolsas",label:"Bolsas prontas",icon:"bag"}]},
   {label:"Cadastros",items:[{href:"/painel/cadastros/faccoes",label:"Facções e costureiros",icon:"users"},{href:"/painel/cadastros/bolsas",label:"Modelos de bolsas",icon:"bag"},{href:"/painel/cadastros/materiais",label:"Materiais e insumos",icon:"layers"}]},

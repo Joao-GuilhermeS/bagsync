@@ -19,7 +19,7 @@ begin
  insert into public.bag_checklist_items(company_id,bag_id,material_id,label,input_type) values(cid,b,m,'Marcação','checkbox') returning id into t1;
  insert into public.bag_checklist_items(company_id,bag_id,material_id,label,input_type) values(cid,b,m,'Texto','text') returning id into t2;
  oid:=(public.create_production_order(gen_random_uuid(),'__respostas__',b,100)->>'order_id')::uuid;
- kid:=(public.create_shipment_kit(gen_random_uuid(),oid,w,100,jsonb_build_array(jsonb_build_object('template_item_id',t1,'expected_quantity','100'),jsonb_build_object('template_item_id',t2,'expected_quantity','25')))->>'kit_id')::uuid;
+ kid:=(public.create_shipment_kit(gen_random_uuid(),oid,w,100,jsonb_build_array(jsonb_build_object('template_item_id',t1,'expected_quantity','100'),jsonb_build_object('template_item_id',t2,'expected_quantity','25')),p_due_on=>(now() at time zone 'America/Sao_Paulo')::date+7)->>'kit_id')::uuid;
  select id into i1 from public.shipment_kit_items where kit_id=kid and template_item_id=t1;
  select id into i2 from public.shipment_kit_items where kit_id=kid and template_item_id=t2;
  perform set_config('test.kit',kid::text,true);perform set_config('test.i1',i1::text,true);perform set_config('test.i2',i2::text,true);

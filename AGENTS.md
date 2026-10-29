@@ -142,3 +142,9 @@ módulos operacionais antes da definição dos requisitos.
 - Contrato em docs/estoque-data-table.md. StockTable segue estrutura shadcn/ui com TanStack React Table 9.3.1; comparação de saldos exata com BigInt, sem somar unidades diferentes. Saldo zero neutro; negativo permitido e sinalizado.
 - Busca/filtros/ordenação precedem paginação local de 10. Consultas paginadas estáveis carregam a empresa inteira; não ordenar somente uma página arbitrária por ID. Layout escuro verde solicitado aplica-se apenas ao estoque.
 - Entrada rápida preenche material, sem alterar validação/RPC/permissão. Histórico por material/bolsa filtra operações via movimentos associados, preservando lançamentos e estornos completos. Não expor dados de outra empresa nem gravar ao abrir ações.
+
+## Prazos de produção — 29/10/2026
+- Ler docs/prazos-producao.md. Prazo obrigatório em novas remessas; legados sem data. Dias corridos/Brasília; atenção hoje, amanhã e em dois dias; somente Gerente define/prorroga com motivo e histórico.
+- Novos bag_receipt exigem p_kit_id da remessa correta com saída válida. Parciais/estornos/excessos conciliam a remessa sem mudar o razão existente. Não ratear recolhimentos históricos sem vínculo.
+- Migration 20261029140127 aplicada com autorização somente no BagSync. Corpos v1 privados não são APIs para novos lançamentos; não restaurar grants nem contornar wrappers públicos. Replay de criação confere prazo inicial, não o prorrogado.
+- PGlite em tmp/deadline-db é ferramenta opcional de teste, ignorada pelo Git, sem dependência do aplicativo. Nove suítes SQL locais e remotas com rollback; nunca versionar fixtures de teste como registros de negócio.
