@@ -44,3 +44,6 @@ Mapas usam endereço codificado; telefone e WhatsApp usam dígitos validados. N�
 - Após o rollback, conferência de leitura confirmou o estado preservado: uma remessa preparada, nenhum preenchimento e nenhuma confirmação de entrega persistidos.
 
 Pendências de aceite: emissão e confirmação em navegador com sessão real, card preenchido do motorista e impressão física. Nenhum commit ou push executado pelo agente.
+
+## Atualização: tabela e checklist compacto
+A apresentação de cards foi substituída pela tabela e o alerta manual aprovado. Contrato atual: [Expedição compacta](expedicao-compacta.md).

@@ -55,3 +55,6 @@ Migração 20261026194930: production_notes (empresa/pedido/facção, texto, cha
 ## Prazos — adendo em 29/10/2026
 
 Adicionados shipment_kits.due_on, shipment_deadline_events (histórico com autor/data/motivo/idempotência) e shipment_receipts (recolhimento ↔ remessa com FKs compostas por empresa). Views SECURITY INVOKER: shipment_receipt_progress e production_deadlines. RPCs públicas validam prazo e remessa; implementações anteriores preservadas sem grants no schema privado. Migration aplicada 20261029140127. [Contrato detalhado](prazos-producao.md).
+
+## Revisões manuais de kits
+Migration 20261029194628_shipment_kit_manual_review adiciona shipment_kit_review_events: FK composta empresa/remessa, autor, flag incomplete, nota, data, sequência e chave idempotente por empresa. Histórico imutável com RLS. shipment_kit_status combina saldo quantitativo com último alerta. Consulte expedicao-compacta.md para transações e permissões.

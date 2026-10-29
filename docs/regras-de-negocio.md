@@ -57,3 +57,6 @@ Estas regras complementam/substituem os trechos históricos correspondentes; nã
 ## Prazos — adendo aprovado em 29/10/2026
 
 Novas remessas exigem prazo em dias corridos/Brasília. Gerente Logístico define e prorroga com justificativa e histórico. Atenção: vencimento hoje ou nos próximos dois dias; atraso: data anterior a hoje. Recolhimentos novos escolhem remessa, com parciais, estornos e aviso de excedente. Não atribuir data ou ratear recolhimentos antigos automaticamente. Contrato e exceções em [Prazos de produção](prazos-producao.md).
+
+## Alerta manual de kit — confirmado em 29/10/2026
+O Gerente Logístico pode sinalizar Kit Incompleto mesmo sem falta quantitativa. Corrigir remove o alerta; Kit Completo exige também ausência de materiais pendentes. Revisões ficam no histórico e não movimentam estoque. Complementos continuam lançamentos adicionais, sem editar saídas já registradas.

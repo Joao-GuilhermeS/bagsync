@@ -52,3 +52,6 @@ Migration 20261029140127 aplicada com autorização ao BagSync. Publicar a vers�
 O acesso confirmado é `http://26.24.177.139:3000`. O host exato está em `allowedDevOrigins` no next.config.ts para permitir assets internos e HMR do Next. Não substituir por curinga. Caso o IP de desenvolvimento mude, atualizar explicitamente a lista e reiniciar o servidor. Essa opção não configura domínio de produção ou permissões do Supabase.
 
 Executar `npm run dev -- --hostname 0.0.0.0` no ambiente de desenvolvimento e atualizar o navegador após mudanças de configuração. Diagnóstico e testes: [revisão dos controles](revisao-controles-interativos.md).
+
+## Expedição compacta — 29/10/2026
+Migration 20261029194628_shipment_kit_manual_review aplicada com autorização somente no BagSync. Ativa revisões manuais e a RPC submit_shipment_checklist_review, mantendo APIs anteriores e saldos. Dez suítes SQL locais e nova suíte remota com rollback aprovadas. Consultar docs/expedicao-compacta.md.

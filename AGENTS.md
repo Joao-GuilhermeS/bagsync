@@ -157,3 +157,8 @@ módulos operacionais antes da definição dos requisitos.
 
 ## Acompanhamento: tabela e gaveta
 - Seguir docs/ux-acompanhamento-producao.md. Preservar paginação no servidor, histórico categorizado e avisos de excedente/estorno; Concluído significa somente saldo pendente zerado.
+
+## Expedição compacta e alerta manual
+- Seguir docs/expedicao-compacta.md: tabela de 12, filtros independentes, quantidade direta e checklist técnico compacto. Alerta manual não elimina falta quantitativa. Usar RPCs de revisão com idempotência; preservar estoque, snapshots e RLS. Aplicação da nova migration depende de autorização explícita.
+
+- Migration 20261029194628_shipment_kit_manual_review aplicada com autorização no BagSync em 29/10/2026; preservar a versão aplicada e APIs legadas. Revisões são auditadas e não movimentam estoque.

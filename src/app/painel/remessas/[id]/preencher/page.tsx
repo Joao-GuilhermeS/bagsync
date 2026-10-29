@@ -12,12 +12,14 @@ async function Fill({params}:{params:Promise<{id:string}>}) {
  const kit=await client.from("shipment_kits").select("id,order_id,workshop_id").eq("company_id",access.companyId).eq("id",id).maybeSingle();
  if(kit.error)throw new Error("Não foi possível consultar a remessa.");if(!kit.data)notFound();
  if(access.role!=="gerente_logistico")return <p>A saída é preenchida na Expedição pelo Gerente Logístico. Seu perfil permite consultar o romaneio. <Link className="underline" href={`/painel/expedicao/${id}`}>Consultar remessa</Link></p>;
- const [items,workshop,order]=await Promise.all([
+ const [items,workshop,order,review]=await Promise.all([
   shipmentAnswerItems(client,access.companyId,id),
   client.from("workshops").select("name").eq("company_id",access.companyId).eq("id",kit.data.workshop_id).maybeSingle(),
-  client.from("production_orders").select("name").eq("company_id",access.companyId).eq("id",kit.data.order_id).maybeSingle()
+  client.from("production_orders").select("name").eq("company_id",access.companyId).eq("id",kit.data.order_id).maybeSingle(),
+  client.from("shipment_kit_review_events").select("incomplete").eq("company_id",access.companyId).eq("kit_id",id).order("sequence",{ascending:false}).limit(1)
  ]);
+ if(review.error)throw new Error("A revisão manual de kits precisa da migration shipment_kit_manual_review aplicada.");
  if(workshop.error||order.error)throw new Error("Não foi possível consultar o destinatário.");
- return <section className="mx-auto max-w-3xl"><Link href={`/painel/expedicao/${id}`} className="inline-block py-3 text-teal-800 underline">Voltar à remessa</Link><h1 className="text-3xl font-semibold">Expedição: controle de saída</h1><p className="my-4 break-words">{workshop.data?.name} · {order.data?.name}</p>{items.some(item=>!item.input_type)?<p className="rounded-xl border bg-white p-5">Esta remessa foi criada antes da configuração dos tipos de resposta. Seu histórico será preservado; prepare uma nova remessa com o checklist configurado.</p>:<ShipmentChecklistForm requestKey={randomUUID()} kitId={id} items={items}/>}</section>;
+ return <section className="mx-auto max-w-3xl"><Link href={`/painel/expedicao/${id}`} className="inline-block py-3 text-teal-800 underline">Voltar à remessa</Link><h1 className="text-3xl font-semibold">Expedição: controle de saída</h1><p className="my-4 break-words">{workshop.data?.name} · {order.data?.name}</p>{items.some(item=>!item.input_type)?<p className="rounded-xl border bg-white p-5">Esta remessa foi criada antes da configuração dos tipos de resposta. Seu histórico será preservado; prepare uma nova remessa com o checklist configurado.</p>:<ShipmentChecklistForm requestKey={randomUUID()} kitId={id} items={items} manualIncomplete={review.data?.[0]?.incomplete??false}/>}</section>;
 }
 export default function FillPage(props:{params:Promise<{id:string}>}){return <Suspense fallback={<PageSkeleton label="Carregando controle de saída…" variant="form"/>}><Fill {...props}/></Suspense>;}

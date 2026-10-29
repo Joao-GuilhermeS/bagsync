@@ -31,13 +31,13 @@ export async function submitChecklist(_previous:TransactionState,form:FormData):
  let input:ReturnType<typeof parseShipmentChecklist>;
  try{input=parseShipmentChecklist(form);}catch(error){return fail(error instanceof Error?error.message:"Dados inválidos.");}
  try{
-  const client=await createClient();const {data,error}=await client.rpc("submit_shipment_checklist",input);
+  const client=await createClient();const {data,error}=await client.rpc("submit_shipment_checklist_review",{...input,p_incomplete:form.get("manual_incomplete")==="sim"});
   if(error){
    const definitive=["22023","22P02","23503","23505","23514","42501","22003"].includes(error.code);
    return fail(definitive?operationError(error.code):"Resultado não confirmado. Repita a mesma tentativa sem alterar os dados.",!definitive);
   }
   if(typeof data?.submission_id!=="string")return fail("Resultado não confirmado. Repita a mesma tentativa.",true);
   revalidatePath("/painel","layout");
-  return {success:true,uncertain:false,id:data.submission_id,warnings:operationWarnings(data),message:data.operation_id?"Romaneio emitido. Estoque baixado na Expedição; materiais a entregar à facção.":"Checklist salvo sem novo envio de materiais. O estoque não foi movimentado."};
+  return {success:true,uncertain:false,id:data.submission_id,warnings:operationWarnings(data),message:(data.operation_id?"Romaneio emitido. Materiais a entregar à facção.":"Conferência salva sem nova baixa de estoque.")+(data.kit_status==="completo"?" Kit Completo.":" Kit Incompleto: confira materiais faltantes ou alerta manual.")};
  }catch{return fail("Resultado não confirmado. Repita a mesma tentativa ou confira o histórico antes de iniciar outra saída.",true);}
 }

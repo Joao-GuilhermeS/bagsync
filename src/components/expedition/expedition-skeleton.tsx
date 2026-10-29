@@ -1,2 +1,2 @@
-import {CardsSkeleton, LoadingRegion, Skeleton} from "../ui/skeleton";
-export function ExpeditionSkeleton(){return <LoadingRegion label="Carregando remessas…" className="space-y-5"><Skeleton className="h-8 w-56"/><div className="surface space-y-4 p-4"><Skeleton className="h-12"/><div className="flex gap-2">{[1,2,3].map(index=><Skeleton key={index} className="h-11 w-28"/>)}</div></div><CardsSkeleton count={3}/></LoadingRegion>;}
+import {LoadingRegion,Skeleton} from "../ui/skeleton";
+export function ExpeditionSkeleton(){return <LoadingRegion label="Carregando remessas…" className="space-y-3"><Skeleton className="h-8 w-56"/><Skeleton className="h-28"/><div className="overflow-hidden rounded-xl border bg-white p-3"><Skeleton className="mb-3 h-10"/>{Array.from({length:12},(_,index)=><Skeleton key={index} className="mb-2 h-16"/>)}</div></LoadingRegion>;}

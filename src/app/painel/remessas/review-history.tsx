@@ -1,0 +1,7 @@
+import type {SupabaseClient} from "@supabase/supabase-js";
+import {Badge} from "@/components/ui/badge";
+export async function ReviewHistory({client,company,kit}:{client:SupabaseClient;company:string;kit:string}){
+ const result=await client.from("shipment_kit_review_events").select("id,incomplete,note,created_at,created_by",{count:"exact"}).eq("company_id",company).eq("kit_id",kit).order("sequence",{ascending:false}).limit(25);
+ if(result.error)throw new Error("Não foi possível carregar o histórico de revisão do kit. Confira a migration.");
+ return <section className="mt-5 rounded-xl border bg-white p-4"><h2 className="text-sm font-semibold">Revisões do kit</h2><p className="mt-1 text-xs text-slate-500">Últimas 25 revisões de {result.count??0}. Remover o alerta não elimina materiais faltantes.</p><ol className="mt-3 divide-y">{result.data.map(event=><li key={event.id} className="space-y-2 py-3 text-xs"><div className="flex flex-wrap items-center gap-2"><Badge tone={event.incomplete?"pending":"success"}>{event.incomplete?"Alerta manual registrado":"Alerta manual removido"}</Badge><time dateTime={event.created_at} className="text-slate-500">{new Date(event.created_at).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"})}</time></div>{event.note&&<p className="whitespace-pre-wrap break-words text-slate-600">{event.note}</p>}</li>)}</ol>{!result.data.length&&<p className="mt-3 text-xs text-slate-500">Sem revisões manuais.</p>}</section>;
+}
