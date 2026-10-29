@@ -8,8 +8,10 @@ import {operationWarnings} from "@/lib/operations/data";
 import {operationLabels,formatQuantity,type OperationKind} from "@/lib/operations/validation";
 import {TransactionForm} from "./transaction-form";
 import {Pagination} from "./pagination";
-export async function History({client,company,manager,options,page=1,orderId,workshopId,paginationQuery}:{client:SupabaseClient;company:string;manager:boolean;options:OperationOptions;page?:number;orderId?:string;workshopId?:string;paginationQuery?:Record<string,string>}) {
- let query=client.from("inventory_operations").select("id,kind,order_id,workshop_id,reversal_of,note,created_at,result",{count:"exact"}).eq("company_id",company);
+export async function History({client,company,manager,options,page=1,orderId,workshopId,materialId,bagId,paginationQuery}:{client:SupabaseClient;company:string;manager:boolean;options:OperationOptions;page?:number;orderId?:string;workshopId?:string;materialId?:string;bagId?:string;paginationQuery?:Record<string,string>}) {
+ const itemColumn=materialId?"material_id":bagId?"bag_id":null;
+ let query=client.from("inventory_operations").select(`id,kind,order_id,workshop_id,reversal_of,note,created_at,result${itemColumn?`,stock_movements!inner(${itemColumn})`:""}`,{count:"exact"}).eq("company_id",company);
+ if(itemColumn)query=query.eq(`stock_movements.${itemColumn}`,materialId??bagId!);
  if(orderId)query=query.eq("order_id",orderId);
  if(workshopId)query=query.eq("workshop_id",workshopId);
  const result=await query.order("created_at",{ascending:false}).order("id").range((page-1)*25,page*25-1);

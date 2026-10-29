@@ -1,3 +1,4 @@
+import {PageSkeleton} from "@/components/ui/skeleton";
 import Link from "next/link";
 import {Suspense} from "react";
 import {notFound} from "next/navigation";
@@ -11,4 +12,4 @@ async function Deliveries({searchParams}:Props) {
  if(!["a_entregar","entregue","estornado"].includes(status)||(search.pedido&&!isUuid(search.pedido))||(search.faccao&&!isUuid(search.faccao)))notFound();
  return <section><PageHeader eyebrow="Logística" title="Entregas de materiais" description="Romaneios emitidos na Expedição. Confirme o recebimento na facção sem movimentar o estoque novamente." actions={<Link href="/painel/entregador" className="btn-secondary">Operação por modelo / recolhimentos</Link>}/><nav aria-label="Estado das entregas" className="mb-6 flex flex-wrap gap-2">{[["a_entregar","A entregar"],["entregue","Entregues"],["estornado","Estornados"]].map(([value,label])=><Link key={value} href={`/painel/entregas?${new URLSearchParams({estado:value,...(search.pedido?{pedido:search.pedido}:{}),...(search.faccao?{faccao:search.faccao}:{})})}`} aria-current={status===value?"page":undefined} className={status===value?"btn-primary":"btn-secondary"}>{label}</Link>)}</nav><DispatchList client={client} company={access.companyId} canConfirm={access.role!=="gestor"} order={search.pedido} workshop={search.faccao} page={pageNumber(search.pagina)} status={status}/></section>;
 }
-export default function DeliveriesPage(props:Props){return <Suspense fallback={<p role="status">Carregando entregas…</p>}><Deliveries {...props}/></Suspense>;}
+export default function DeliveriesPage(props:Props){return <Suspense fallback={<PageSkeleton label="Carregando entregas…" variant="cards"/>}><Deliveries {...props}/></Suspense>;}

@@ -132,3 +132,13 @@ módulos operacionais antes da definição dos requisitos.
 - Contrato em docs/ux-expedicao.md: cards filtráveis, stepper de três etapas, ChecklistItem compartilhado e cards de entrega na tela do motorista. Em Trânsito é agrupamento visual de a_entregar, independente de kit incompleto.
 - saveExpedition orquestra criação e emissão em duas RPCs transacionais distintas; não afirmar atomicidade do conjunto. Preservar duas chaves distintas e payload em repetição incerta. Previsão pode persistir se emissão falhar; memória local não sobrevive a recarga.
 - Salvar previsão não salva respostas locais nem movimenta estoque. Emissão efetiva libera card; confirmação não baixa novamente. Sem novas migrations ou dependências neste incremento.
+
+## Layout e carregamento — 28/10/2026
+- Responsável confirmou aplicar somente visual e organização do novo prompt: preservar BagSync, perfis, métricas e Expedição de materiais. Não criar vendas, pagamentos, qualidade, lotes ou novos estados sem requisitos.
+- Seguir docs/ux-layout-carregamento.md e MASTER atualizado: esmeralda #00875A, fundo #F8FAFC, Inter, sidebar branca. LayoutShell mantém alias AppShell; rotas canônicas continuam sob /painel.
+- Skeletons reutilizáveis, PendingButton com name/value preservados e template de entrada respeitam movimento reduzido. Não impor atrasos artificiais nem afirmar CLS/desempenho medidos sem evidência.
+
+## Tabela de estoque — 29/10/2026
+- Contrato em docs/estoque-data-table.md. StockTable segue estrutura shadcn/ui com TanStack React Table 9.3.1; comparação de saldos exata com BigInt, sem somar unidades diferentes. Saldo zero neutro; negativo permitido e sinalizado.
+- Busca/filtros/ordenação precedem paginação local de 10. Consultas paginadas estáveis carregam a empresa inteira; não ordenar somente uma página arbitrária por ID. Layout escuro verde solicitado aplica-se apenas ao estoque.
+- Entrada rápida preenche material, sem alterar validação/RPC/permissão. Histórico por material/bolsa filtra operações via movimentos associados, preservando lançamentos e estornos completos. Não expor dados de outra empresa nem gravar ao abrir ações.

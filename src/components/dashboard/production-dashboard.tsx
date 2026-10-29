@@ -5,12 +5,13 @@ import {useId,useMemo,useState} from "react";
 import {completionPercent,matchingModels,summarizeModels,type ModelMetrics} from "@/lib/production/dashboard-metrics";
 import {formatQuantity} from "@/lib/operations/validation";
 import {Icon} from "../ui/icon";
+import {ChartSkeleton, LoadingRegion} from "../ui/skeleton";
 import {ModelSelect} from "./model-select";
 import {dashboardStages,type DashboardStage} from "./dashboard-config";
 
 const ProductionChart=dynamic(()=>import("./production-chart").then(module=>module.ProductionChart),{
  ssr:false,
- loading:()=> <div className="h-80 animate-pulse rounded-xl bg-slate-100" role="status"><span className="sr-only">Carregando gráfico…</span></div>,
+ loading:()=> <LoadingRegion label="Carregando gráfico…"><ChartSkeleton/></LoadingRegion>,
 });
 
 export function ProductionDashboard({models}:{models:ModelMetrics[]}) {

@@ -1,3 +1,4 @@
+import {PageSkeleton} from "@/components/ui/skeleton";
 import Link from "next/link";
 import {Suspense} from "react";
 import {randomUUID} from "node:crypto";
@@ -17,4 +18,4 @@ async function Content({searchParams}:Props){
  if((search.pedido&&!options.orders.some(row=>row.id===search.pedido))||(search.faccao&&!options.workshops.some(row=>row.id===search.faccao)))notFound();
  return <section className="mx-auto max-w-4xl"><Link href="/painel/expedicao" className="mb-4 inline-block min-h-11 py-3 text-sm text-olive underline">Voltar à Expedição</Link><PageHeader title="Nova Remessa" description="Selecione o destinatário, confira os materiais e emita o romaneio."/><RemessaWizard options={options} requestKey={randomUUID()} submissionKey={randomUUID()} defaultOrder={search.pedido} defaultWorkshop={search.faccao}/></section>;
 }
-export default function NewExpeditionPage(props:Props){return <Suspense fallback={<div role="status" className="mx-auto max-w-4xl space-y-5"><p className="page-title">Nova Remessa</p><div className="h-16 animate-pulse rounded-xl bg-slate-100"/><div className="h-80 animate-pulse rounded-2xl border bg-white"/><span className="sr-only">Carregando opções…</span></div>}><Content {...props}/></Suspense>;}
+export default function NewExpeditionPage(props:Props){return <Suspense fallback={<PageSkeleton label="Carregando nova remessa…" variant="form"/>}><Content {...props}/></Suspense>;}

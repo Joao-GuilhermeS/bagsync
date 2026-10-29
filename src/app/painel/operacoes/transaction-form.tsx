@@ -1,20 +1,21 @@
 "use client";
+import {PendingButton} from "@/components/ui/pending-button";
 import {useActionToast} from "@/components/ui/toast";
 import Link from "next/link";
 import {useActionState,useId,useRef,useState} from "react";
 import {submitTransaction} from "./actions";
 import {operationLabels,type OperationKind} from "@/lib/operations/validation";
 import type {OperationOptions,Option,TransactionState} from "@/lib/operations/types";
-type Props={task:"order"|"operation";requestKey:string;options:OperationOptions;kinds?:OperationKind[];orderId?:string;workshopId?:string;reversalOf?:string};
+type Props={task:"order"|"operation";requestKey:string;options:OperationOptions;kinds?:OperationKind[];orderId?:string;workshopId?:string;reversalOf?:string;materialId?:string};
 export function TransactionForm(props:Props) {
  const [key,setKey]=useState(props.requestKey);
  return <TransactionFields key={key} {...props} requestKey={key} onNew={()=>setKey(crypto.randomUUID())}/>;
 }
-function TransactionFields({task,requestKey,options,kinds=["material_delivery","bag_receipt"],orderId,workshopId,reversalOf,onNew}:Props&{onNew:()=>void}) {
+function TransactionFields({task,requestKey,options,kinds=["material_delivery","bag_receipt"],orderId,workshopId,reversalOf,materialId,onNew}:Props&{onNew:()=>void}) {
  const prefix=useId();const snapshot=useRef<FormData|null>(null);
  const [kind,setKind]=useState<OperationKind>(kinds[0]);
  const [values,setValues]=useState<Record<string,string>>({order_id:orderId??"",workshop_id:workshopId??""});
- const [items,setItems]=useState([{key:0,material_id:"",quantity:""}]);const nextRow=useRef(1);
+ const [items,setItems]=useState([{key:0,material_id:materialId??"",quantity:""}]);const nextRow=useRef(1);
  const initial:TransactionState={message:"",success:false,uncertain:false,warnings:[]};
  const [state,action,pending]=useActionState(async(previous:TransactionState,form:FormData)=>{
   const payload=previous.uncertain&&snapshot.current?snapshot.current:form;snapshot.current=payload;
@@ -42,6 +43,6 @@ function TransactionFields({task,requestKey,options,kinds=["material_delivery","
   </fieldset>
   {state.message&&<p role="alert" className="rounded-lg bg-amber-50 p-3 text-sm text-amber-950">{state.message}</p>}
   {state.uncertain&&<p className="text-sm text-slate-600">Os dados foram preservados para repetir a mesma tentativa com segurança. Se sair ou recarregar a página, confira o histórico antes de lançar novamente.</p>}
-  <button disabled={pending} className={`min-h-11 rounded-lg px-5 font-medium text-white disabled:opacity-60 ${reversal?"bg-red-800":"bg-teal-800"}`}>{pending?"Registrando…":state.uncertain?"Repetir mesma tentativa":task==="order"?"Criar pedido":reversal?"Confirmar estorno":"Registrar operação"}</button>
+  <PendingButton pending={pending} pendingLabel="Registrando…" disabled={pending} className={`min-h-11 rounded-lg px-5 font-medium text-white disabled:opacity-60 ${reversal?"bg-red-800":"bg-teal-800"}`}>{state.uncertain?"Repetir mesma tentativa":task==="order"?"Criar pedido":reversal?"Confirmar estorno":"Registrar operação"}</PendingButton>
  </form>;
 }

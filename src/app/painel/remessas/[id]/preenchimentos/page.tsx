@@ -1,3 +1,4 @@
+import {PageSkeleton} from "@/components/ui/skeleton";
 import Link from "next/link";
 import {Suspense} from "react";
 import {notFound} from "next/navigation";
@@ -11,4 +12,4 @@ async function Submissions({params,searchParams}:Props){
  if(kit.error)throw new Error("Não foi possível carregar a remessa.");if(!kit.data)notFound();
  return <section><Link href={`/painel/expedicao/${id}`} className="inline-block py-3 text-teal-800 underline">Voltar à remessa</Link><h1 className="text-3xl font-semibold">Histórico do controle de saída</h1><SubmissionHistory client={client} company={access.companyId} kit={id} page={pageNumber((await searchParams).pagina)}/></section>;
 }
-export default function SubmissionsPage(props:Props){return <Suspense fallback={<p role="status">Carregando preenchimentos…</p>}><Submissions {...props}/></Suspense>;}
+export default function SubmissionsPage(props:Props){return <Suspense fallback={<PageSkeleton label="Carregando preenchimentos…" variant="table"/>}><Submissions {...props}/></Suspense>;}

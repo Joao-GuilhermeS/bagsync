@@ -1,5 +1,9 @@
 # Interface e navegação — BagSync
 
+## Layout vigente — atualização em 28/10/2026
+
+Paleta esmeralda, Inter, sidebar clara, grupos por função e skeletons reutilizáveis. A organização e identidade atuais estão em [Layout e carregamento](ux-layout-carregamento.md), que substitui os agrupamentos e a paleta históricos descritos abaixo. BagSync, perfis, métricas e regras operacionais foram preservados.
+
 ## Dashboard — atualização em 28/10/2026
 
 Refatoração vigente: filtros unificados com seletor pesquisável, KPIs que filtram séries, gráfico Recharts e três blocos inferiores no mesmo grid. Skeleton e tabela compacta dos últimos recolhimentos incluídos. Detalhes atuais em [dashboard-visao-geral.md](dashboard-visao-geral.md).

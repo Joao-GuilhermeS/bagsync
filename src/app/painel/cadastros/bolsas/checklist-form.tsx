@@ -1,4 +1,5 @@
 "use client";
+import {PendingButton} from "@/components/ui/pending-button";
 import {useActionToast} from "@/components/ui/toast";
 import {useActionState,useId} from "react";
 import {saveChecklist} from "./checklist-actions";
@@ -19,6 +20,6 @@ export function ChecklistForm({bagId,requestId,materials,item}:Props) {
    <label className="flex min-h-11 items-center gap-3"><input name="active" type="checkbox" value="sim" defaultChecked={item?.active??true} className="size-5"/>Ativo para novas remessas</label>
   </fieldset>
   {state.message&&<p role={state.success?undefined:"alert"} className="rounded-lg bg-slate-100 p-3 text-sm">{state.message}</p>}
-  {!item&&state.success?<button type="button" onClick={()=>window.location.reload()} className="min-h-11 rounded-lg bg-teal-800 px-4 text-white">Adicionar outro item</button>:<button disabled={pending||!materials.length} className="min-h-11 rounded-lg bg-teal-800 px-4 text-white disabled:opacity-50">{pending?"Salvando…":item?"Salvar item":"Adicionar ao checklist"}</button>}
+  {!item&&state.success?<button type="button" onClick={()=>window.location.reload()} className="min-h-11 rounded-lg bg-teal-800 px-4 text-white">Adicionar outro item</button>:<PendingButton pending={pending} pendingLabel="Salvando…" disabled={pending||!materials.length} className="min-h-11 rounded-lg bg-teal-800 px-4 text-white disabled:opacity-50">{item?"Salvar item":"Adicionar ao checklist"}</PendingButton>}
  </form>;
 }

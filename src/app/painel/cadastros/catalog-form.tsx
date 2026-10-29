@@ -1,4 +1,5 @@
 "use client";
+import {PendingButton} from "@/components/ui/pending-button";
 import {useActionToast} from "@/components/ui/toast";
 import {useActionState, useId} from "react";
 import {saveCatalog} from "./actions";
@@ -21,6 +22,6 @@ export function CatalogForm({catalog,record,units=[],remove=false}: {catalog:Cat
    {catalog==="materiais" && <div><label htmlFor={`${prefix}-unit`} className="mb-1 block text-sm font-medium">Unidade de medida</label><select id={`${prefix}-unit`} name="unit_id" required defaultValue={record?.unit_id??""} className={input}><option value="" disabled>Selecione uma unidade</option>{units.map(u=><option key={u.id} value={u.id}>{u.name} ({u.symbol})</option>)}</select><p className="mt-2 text-sm text-slate-600">Unidades predefinidas. Sem conversão automática entre unidades.</p></div>}
   </>}
   {state.message && <p role={state.success?undefined:"alert"} className={`rounded-lg p-3 text-sm ${state.success?"bg-teal-50 text-teal-900":"bg-red-50 text-red-900"}`}>{state.message}</p>}
-  <button disabled={pending || (!remove && catalog==="materiais" && !units.length)} className={`min-h-11 rounded-lg px-5 font-medium text-white disabled:opacity-50 ${remove?"bg-red-800":"bg-teal-800"}`}>{pending?"Aguarde…":remove?"Excluir registro":record?"Salvar alterações":"Cadastrar"}</button>
+  <PendingButton pending={pending} pendingLabel="Aguarde…" disabled={pending || (!remove && catalog==="materiais" && !units.length)} className={`min-h-11 rounded-lg px-5 font-medium text-white disabled:opacity-50 ${remove?"bg-red-800":"bg-teal-800"}`}>{remove?"Excluir registro":record?"Salvar alterações":"Cadastrar"}</PendingButton>
  </form>;
 }

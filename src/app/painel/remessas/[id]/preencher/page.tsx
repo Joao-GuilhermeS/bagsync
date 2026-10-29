@@ -1,3 +1,4 @@
+import {PageSkeleton} from "@/components/ui/skeleton";
 import Link from "next/link";
 import {Suspense} from "react";
 import {randomUUID} from "node:crypto";
@@ -19,4 +20,4 @@ async function Fill({params}:{params:Promise<{id:string}>}) {
  if(workshop.error||order.error)throw new Error("Não foi possível consultar o destinatário.");
  return <section className="mx-auto max-w-3xl"><Link href={`/painel/expedicao/${id}`} className="inline-block py-3 text-teal-800 underline">Voltar à remessa</Link><h1 className="text-3xl font-semibold">Expedição: controle de saída</h1><p className="my-4 break-words">{workshop.data?.name} · {order.data?.name}</p>{items.some(item=>!item.input_type)?<p className="rounded-xl border bg-white p-5">Esta remessa foi criada antes da configuração dos tipos de resposta. Seu histórico será preservado; prepare uma nova remessa com o checklist configurado.</p>:<ShipmentChecklistForm requestKey={randomUUID()} kitId={id} items={items}/>}</section>;
 }
-export default function FillPage(props:{params:Promise<{id:string}>}){return <Suspense fallback={<p role="status">Carregando controle de saída…</p>}><Fill {...props}/></Suspense>;}
+export default function FillPage(props:{params:Promise<{id:string}>}){return <Suspense fallback={<PageSkeleton label="Carregando controle de saída…" variant="form"/>}><Fill {...props}/></Suspense>;}

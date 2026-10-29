@@ -1,26 +1,30 @@
 # Design system — BagSync
 
-Direção fornecida pelo responsável em 27/10/2026 e adaptada às funções existentes.
+Direção atualizada pelo responsável em 28/10/2026: visual clean com verde esmeralda, mantendo BagSync e as regras existentes. Substitui a paleta de 27/10.
 
 ## Base visual
 
 | Uso | Valor |
 | --- | --- |
-| Verde floresta / navegação / ação principal | #1E3A2B |
-| Oliva / destaque / foco | #4D6B32 |
-| Menta / seleção e apoio | #E8F0E6 |
-| Fundo | #F8F9FA |
+| Ação principal / ícones ativos | #00875A |
+| Verde de texto, hover e foco | #00734D |
+| Seleção e apoio | #E6F4EA |
+| Fundo | #F8FAFC |
 | Superfície | #FFFFFF |
-| Texto principal | #17251D |
-| Bordas | #E1E7DF |
+| Texto principal | #0F172A |
+| Texto secundário | #64748B |
+| Bordas | #E2E8F0 |
 
-Fonte Geist já existente; números tabulares, hierarquia clara e cartões com bordas suaves. Tema claro consistente, sem inversão automática pelo sistema operacional. Tailwind v4 com tokens `@theme`. Ícones SVG reutilizáveis, sem emojis como controles.
+Fonte Inter via next/font; Geist Mono mantida para uso monoespaçado. Números tabulares, hierarquia clara, cartões brancos com raio de 16 px e shadow-sm. Sidebar branca, rota ativa com fundo suave e ícone esmeralda. Tema claro consistente, sem inversão automática pelo sistema operacional. Tailwind v4 com tokens `@theme`. Ícones SVG reutilizáveis, sem nova dependência de ícones. O token legado forest agora representa grafite para títulos; ações usam primary.
 
 ## Interação
 
 - Controles principais com área mínima de 44 px; rótulos visíveis e foco destacado.
 - Formulários em diálogo nativo, com título acessível, fechamento explícito/Escape e retorno de foco.
 - Navegação lateral no desktop; barra inferior e menu completo no mobile, respeitando área segura.
+- Skeletons estruturais para métricas, gráficos, cards, tabelas e formulários; estado anunciado por aria-busy/status. Sem atraso artificial para demonstrar carregamento.
+- Entrada do conteúdo em 240 ms, deslocamento de 12 px. Shell estável entre rotas. Movimento reduzido elimina repetição das animações e reduz sua duração.
+- Botões com feedback de espera preservam o rótulo no layout, ficam desabilitados e mantêm as chaves de idempotência do formulário.
 - Pendência em âmbar; andamento em índigo; estado regular em oliva; divergência/estorno em rosa/vermelho. Sempre acompanhar cor com texto.
 - Mensagem de sucesso anunciada; erros e avisos de estoque permanecem no formulário.
 - Redução de movimento respeitada; sem depender de hover para ações essenciais.

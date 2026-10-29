@@ -4,7 +4,7 @@ import {navigationFor,navigationLocation,driverStep} from "../src/lib/navigation
 test("páginas profundas mantêm a seção e o item de menu corretos",()=>{
  const groups=navigationFor("gerente_logistico");
  assert.equal(navigationLocation("/painel/cadastros/bolsas/id/checklist",groups).item.label,"Modelos de bolsas");
- assert.equal(navigationLocation("/painel/estoque/bolsas",groups).group,"Estoque");
+ assert.equal(navigationLocation("/painel/estoque/bolsas",groups).group,"Produto final");
  assert.equal(navigationLocation("/painel/expedicao/id/preencher",groups).item.label,"Expedição");
  assert.equal(navigationLocation("/painel",groups).item.label,"Visão geral");
 });

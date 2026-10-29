@@ -1,3 +1,4 @@
+import {PageSkeleton} from "@/components/ui/skeleton";
 import {FormDrawer} from "@/components/ui/drawer";
 import {PageHeader} from "@/components/ui/page-header";
 import Link from "next/link";
@@ -26,4 +27,4 @@ async function CompositionContent({params,searchParams}:Props) {
  return <section><Link href="/painel/cadastros/bolsas" className="mb-4 inline-block min-h-11 py-3 text-sm text-forest underline">Voltar aos modelos</Link><PageHeader eyebrow="Modelo de bolsa" title={`Ficha técnica: ${bagResult.data.name}`} description="Composição opcional por bolsa. Este cadastro não reserva nem baixa o estoque." actions={manager&&<FormDrawer title="Adicionar material à composição" trigger="Adicionar material"><CompositionForm bagId={id} materials={materials}/></FormDrawer>}/><div className="space-y-3">{!items.length&&<p className="surface p-10 text-center text-sm text-slate-500">Nenhum material nesta página da ficha técnica.</p>}{items.map(item=>{const material=byId.get(item.material_id);return <article key={item.material_id} className="surface flex flex-wrap items-center justify-between gap-4 p-5"><div><h2 className="font-semibold">{material?.name??"Material não disponível"}</h2><p className="mt-2 break-all text-sm text-slate-500"><strong className="tabular-nums text-forest">{formatQuantity(item.quantity)} {material?.symbol}</strong> por bolsa</p></div>{manager&&<div className="flex gap-2"><FormDrawer title="Editar quantidade por bolsa" trigger="Editar" variant="secondary"><CompositionForm bagId={id} item={item}/></FormDrawer><FormDrawer title="Remover material da composição" trigger="Remover" variant="danger"><CompositionForm bagId={id} item={item} remove/></FormDrawer></div>}</article>;})}</div><Pagination page={page} count={composition.count??0}/></section>;
 
 }
-export default function CompositionPage(props:Props){return <Suspense fallback={<p role="status">Carregando composição…</p>}><CompositionContent {...props}/></Suspense>;}
+export default function CompositionPage(props:Props){return <Suspense fallback={<PageSkeleton label="Carregando composição…" variant="table"/>}><CompositionContent {...props}/></Suspense>;}
