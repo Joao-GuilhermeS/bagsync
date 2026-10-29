@@ -1,13 +1,15 @@
 import {PageSkeleton} from "@/components/ui/skeleton";
-import Link from "next/link";
+
 import {Suspense} from "react";
 import {notFound} from "next/navigation";
 import {workspace} from "@/lib/operations/data";
 import {isUuid,pageNumber} from "@/lib/catalogs/validation";
-import {formatQuantity} from "@/lib/operations/validation";
+import {TrackingHeader} from "@/components/production/tracking-header";
+import {TrackingTable} from "@/components/production/tracking-table";
+
 import type {ProductionRow} from "@/lib/production/tracking-types";
 import {Pagination} from "../../operacoes/pagination";
-import {ProductionDetails} from "../production-details";
+
 type Props={params:Promise<{bag:string}>;searchParams:Promise<{pagina?:string;pedido?:string;faccao?:string;pendentes?:string}>};
 async function Tracking({params,searchParams}:Props){
  const {access,client}=await workspace();const {bag}=await params;const search=await searchParams;if(!isUuid(bag))notFound();
@@ -15,17 +17,20 @@ async function Tracking({params,searchParams}:Props){
  const page=pageNumber(search.pagina);
  const model=await client.from("bags").select("name").eq("company_id",access.companyId).eq("id",bag).maybeSingle();
  if(model.error)throw new Error("Não foi possível carregar o modelo.");if(!model.data)notFound();
- const orders:{id:string;name:string}[]=[];const workshops:{id:string;name:string}[]=[];
+ const orders:{id:string;name:string}[]=[];const workshops:{id:string;name:string;phone:string|null}[]=[];
  for(let offset=0;;offset+=500){const [o,w]=await Promise.all([
   client.from("production_orders").select("id,name").eq("company_id",access.companyId).eq("bag_id",bag).order("id").range(offset,offset+499),
-  client.from("workshops").select("id,name").eq("company_id",access.companyId).order("id").range(offset,offset+499)
+  client.from("workshops").select("id,name,phone").eq("company_id",access.companyId).order("id").range(offset,offset+499)
  ]);if(o.error||w.error)throw new Error("Não foi possível carregar os filtros.");orders.push(...o.data);workshops.push(...w.data);if(o.data.length<500&&w.data.length<500)break;}
  let query=client.from("production_tracking").select("bag_id,order_id,workshop_id,order_name,workshop_name,distributed_quantity,received_quantity,remaining_quantity,excess_quantity,has_pending,has_excess,distribution_count,unstarted_kit_count,receipt_count,note_count,last_distribution_at,last_receipt_at",{count:"exact"}).eq("company_id",access.companyId).eq("bag_id",bag);
  if(search.pedido)query=query.eq("order_id",search.pedido);if(search.faccao)query=query.eq("workshop_id",search.faccao);if(search.pendentes)query=query.eq("has_pending",true);
  const result=await query.order("workshop_name").order("order_name").order("order_id").order("workshop_id").range((page-1)*25,page*25-1);
  if(result.error)throw new Error("Não foi possível carregar o acompanhamento.");const rows=result.data as ProductionRow[];
- const date=(value:string|null)=>value?new Date(value).toLocaleDateString("pt-BR",{timeZone:"America/Sao_Paulo"}):"—";
  const filters={...(search.pedido?{pedido:search.pedido}:{}),...(search.faccao?{faccao:search.faccao}:{}),...(search.pendentes?{pendentes:"sim"}:{})};
- return <section><Link href="/painel/producao" className="inline-block py-3 text-teal-800 underline">Voltar aos modelos</Link><h1 className="break-words text-3xl font-semibold">Produção: {model.data.name}</h1><p className="my-4 text-slate-600">A primeira saída válida distribui a quantidade de bolsas da remessa. Complementos não duplicam essa quantidade. Cada pedido e facção mantém seus próprios saldos.</p><form method="get" className="mb-6 flex flex-wrap items-end gap-4 rounded-xl border bg-white p-4"><div className="min-w-0 flex-1"><label htmlFor="tracking-order" className="mb-1 block text-sm font-medium">Pedido</label><select id="tracking-order" name="pedido" defaultValue={search.pedido??""} className="min-h-11 w-full rounded-lg border bg-white px-3"><option value="">Todos os pedidos do modelo</option>{orders.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></div><div className="min-w-0 flex-1"><label htmlFor="tracking-workshop" className="mb-1 block text-sm font-medium">Facção</label><select id="tracking-workshop" name="faccao" defaultValue={search.faccao??""} className="min-h-11 w-full rounded-lg border bg-white px-3"><option value="">Todas as facções</option>{workshops.map(w=><option key={w.id} value={w.id}>{w.name}</option>)}</select></div><label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" name="pendentes" value="sim" defaultChecked={!!search.pendentes} className="size-5"/>Somente com bolsas pendentes</label><button className="min-h-11 rounded-lg bg-teal-800 px-5 text-white">Filtrar</button><Link href={`/painel/producao/${bag}`} className="min-h-11 px-3 py-3 text-teal-800 underline">Limpar</Link></form><p className="mb-3 text-sm text-slate-600">{result.count??0} combinação(ões) de pedido e facção.</p><table role="table" className="block w-full text-left lg:table"><caption className="sr-only">Produção distribuída e recolhida, com histórico e observações</caption><thead className="sr-only bg-forest text-white lg:not-sr-only lg:table-header-group"><tr>{["Facção","Pedido","Distribuídas","Recolhidas","Pendentes","Última distribuição","Último recolhimento"].map(label=><th key={label} className="p-3 text-sm font-medium text-white">{label}</th>)}</tr></thead>{rows.map(row=><tbody key={`${row.order_id}:${row.workshop_id}`} className="mb-5 block rounded-xl border bg-white lg:table-row-group"><tr className="grid grid-cols-2 gap-3 p-4 lg:table-row lg:p-0">{[["Facção",row.workshop_name],["Pedido",row.order_name],["Distribuídas",formatQuantity(row.distributed_quantity)],["Recolhidas",formatQuantity(row.received_quantity)],["Pendentes",formatQuantity(row.remaining_quantity)],["Última distribuição",date(row.last_distribution_at)],["Último recolhimento",date(row.last_receipt_at)]].map(([label,value])=><td key={label} className="min-w-0 break-words lg:p-3"><span className="mb-1 block text-xs text-slate-600 lg:hidden">{label}</span><span className="font-medium">{value}</span></td>)}</tr><tr className="block lg:table-row"><td colSpan={7} className="block space-y-3 p-4 lg:table-cell">{row.has_excess&&<p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-950">Recolhido acima da quantidade distribuída registrada: {formatQuantity(row.excess_quantity)} bolsas. Confira as remessas e o histórico.</p>}{row.unstarted_kit_count!=="0"&&<p className="text-sm text-slate-600">{row.unstarted_kit_count} remessa(s) sem envio válido, fora do total distribuído.</p>}<ProductionDetails bag={bag} order={row.order_id} workshop={row.workshop_id} noteCount={row.note_count}/><Link href={`/painel/entregador/${bag}/${row.workshop_id}?pedido=${row.order_id}`} className="inline-block min-h-11 py-3 text-teal-800 underline">Abrir entregas e recolhimentos desta facção</Link></td></tr></tbody>)}</table>{!rows.length&&<p className="rounded-xl border bg-white p-5">Nenhum registro para estes filtros. As facções aparecem após uma remessa, recolhimento ou observação registrada.</p>}<Pagination page={page} count={result.count??0} query={filters}/><p className="mt-4 text-sm text-slate-600">As datas são dos registros no sistema, em horário de Brasília. Abra o histórico para consultar todas as datas e os originais estornados.</p></section>;
+ return <section className="min-w-0 space-y-4 [--primary:#1B3B2B] [--olive:#1B3B2B]">
+  <TrackingHeader bag={bag} name={model.data.name} orders={orders} workshops={workshops} filters={filters} count={result.count??0}/>
+  <TrackingTable bag={bag} rows={rows.map(row=>({...row,phone:workshops.find(workshop=>workshop.id===row.workshop_id)?.phone??null}))}/>
+  <Pagination page={page} count={result.count??0} query={filters}/>
+ </section>;
 }
 export default function TrackingPage(props:Props){return <Suspense fallback={<PageSkeleton label="Carregando acompanhamento…" variant="table"/>}><Tracking {...props}/></Suspense>;}

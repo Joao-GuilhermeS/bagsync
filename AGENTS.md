@@ -154,3 +154,6 @@ módulos operacionais antes da definição dos requisitos.
 - Cabeçalho com filtros e CTA; desktop 65/35 para gráfico e detalhamento. Em tablet/mobile empilhar. Não cortar dados nem bloquear rolagem para caber artificialmente.
 - Facções ativas: IDs distintos com saldo pendente nos modelos filtrados. Alertas reais de production_deadlines e shipment_kit_status; categorias podem se sobrepor. Recentes são os três últimos da empresa, identificados como globais.
 - /painel/visao-geral é alias autenticado de /painel. Preservar agregação exata e regras de pedidos/produção/recolhimento. Sem novas dependências ou migrations.
+
+## Acompanhamento: tabela e gaveta
+- Seguir docs/ux-acompanhamento-producao.md. Preservar paginação no servidor, histórico categorizado e avisos de excedente/estorno; Concluído significa somente saldo pendente zerado.

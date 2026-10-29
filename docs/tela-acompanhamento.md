@@ -71,3 +71,6 @@ Advisors: nenhuma FK sem índice ou RLS ausente reportada. Permanecem [seis avis
 Criados `src/app/painel/producao/**`, `src/lib/production/tracking-{types,validation}.ts`, migração, teste SQL e `tests/production-tracking.test.mjs`. Ajustados navegação, acesso pelo entregador, permissão específica e teste HTTP; documentação atualizada.
 
 Falta validar com sessão real a navegação móvel, expansão, filtros e inclusão de observações pelos perfis. Não houve teste visual/autenticado de navegador, concorrência em duas sessões, carga ou medição de latência. Próxima frente funcional: dados de contato/endereço das facções e rotas, conforme requisitos confirmados e esclarecimentos necessários.
+
+## Apresentação atual
+Tabela clara e histórico em gaveta: [interface do acompanhamento](ux-acompanhamento-producao.md). Os contratos de dados e permissões deste documento permanecem vigentes.
