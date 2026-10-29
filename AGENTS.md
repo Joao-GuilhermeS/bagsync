@@ -148,3 +148,9 @@ módulos operacionais antes da definição dos requisitos.
 - Novos bag_receipt exigem p_kit_id da remessa correta com saída válida. Parciais/estornos/excessos conciliam a remessa sem mudar o razão existente. Não ratear recolhimentos históricos sem vínculo.
 - Migration 20261029140127 aplicada com autorização somente no BagSync. Corpos v1 privados não são APIs para novos lançamentos; não restaurar grants nem contornar wrappers públicos. Replay de criação confere prazo inicial, não o prorrogado.
 - PGlite em tmp/deadline-db é ferramenta opcional de teste, ignorada pelo Git, sem dependência do aplicativo. Nove suítes SQL locais e remotas com rollback; nunca versionar fixtures de teste como registros de negócio.
+
+## Visão geral compacta — 29/10/2026
+- Solicitação atual substitui a preservação do bloco Por Onde Começar: agora três widgets são Acesso Rápido, Alertas & Pendências e Recolhimentos Recentes. Ler docs/dashboard-compacto.md.
+- Cabeçalho com filtros e CTA; desktop 65/35 para gráfico e detalhamento. Em tablet/mobile empilhar. Não cortar dados nem bloquear rolagem para caber artificialmente.
+- Facções ativas: IDs distintos com saldo pendente nos modelos filtrados. Alertas reais de production_deadlines e shipment_kit_status; categorias podem se sobrepor. Recentes são os três últimos da empresa, identificados como globais.
+- /painel/visao-geral é alias autenticado de /painel. Preservar agregação exata e regras de pedidos/produção/recolhimento. Sem novas dependências ou migrations.

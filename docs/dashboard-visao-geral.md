@@ -73,3 +73,6 @@ Os resultados finais são registrados no checkpoint. Prévia isolada revisa os c
 - `git diff --check`: sem erros; apenas avisos de conversão LF/CRLF.
 
 Capturas locais em `output/playwright/dashboard-recharts-desktop.png`, `dashboard-recharts-tooltip.png` e `dashboard-recharts-mobile.png`, ignoradas pelo Git. A prévia não cria registros nem autentica usuários. A tabela inferior preenchida e o fluxo completo com sessão real permanecem como validação manual pendente, pois não havia recolhimentos reais.
+## Apresentação vigente — 29/10/2026
+
+O responsável solicitou nova organização compacta em duas colunas, com os filtros no cabeçalho e métricas laterais. Acesso Rápido, Alertas & Pendências e Recolhimentos Recentes substituem o grid anterior com onboarding. As descrições anteriores de apresentação são históricas; os cálculos são preservados. Contrato atual: [Visão geral compacta](dashboard-compacto.md).

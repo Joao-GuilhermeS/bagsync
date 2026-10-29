@@ -49,7 +49,7 @@ export function LayoutShell({company, role, logout, children}: {company:string;r
         <div className="flex min-h-20 items-center justify-between gap-3 px-4 sm:px-8">
           <div className="min-w-0"><p className="truncate text-xs font-medium text-slate-500" title={company}>{company}</p><p className="mt-1 truncate text-sm font-semibold sm:text-base">{location.item.label}</p></div>
           <div className="flex shrink-0 items-center gap-3">
-            {role === "gerente_logistico" && <Link href="/painel/pedidos/novo" className="btn-primary hidden px-3 sm:inline-flex"><Icon name="plus" className="size-4"/><span className="hidden xl:inline">Novo pedido de produção</span><span className="xl:hidden">Novo pedido</span></Link>}
+            {role === "gerente_logistico" && pathname!=="/painel" && pathname!=="/painel/visao-geral" && <Link href="/painel/pedidos/novo" className="btn-primary hidden px-3 sm:inline-flex"><Icon name="plus" className="size-4"/><span className="hidden xl:inline">Novo pedido de produção</span><span className="xl:hidden">Novo pedido</span></Link>}
             <span className="hidden rounded-full border bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600 md:inline-flex">{labels[role]}</span>
             <span className="grid size-10 place-items-center rounded-full bg-mint text-xs font-semibold text-olive" aria-label={labels[role]}>{initials}</span>
             <div className="hidden lg:block">{logout}</div>
@@ -57,7 +57,7 @@ export function LayoutShell({company, role, logout, children}: {company:string;r
           </div>
         </div>
       </header>
-      <main id="conteudo-principal" tabIndex={-1} className="mx-auto max-w-[1500px] px-4 pt-6 pb-[calc(6rem+env(safe-area-inset-bottom))] outline-none sm:px-8 sm:pt-8 lg:pb-10">{children}</main>
+      <main id="conteudo-principal" tabIndex={-1} className={`mx-auto max-w-[1500px] px-4 pt-6 pb-[calc(6rem+env(safe-area-inset-bottom))] outline-none sm:px-8 sm:pt-8 ${pathname==="/painel"||pathname==="/painel/visao-geral"?"lg:pt-4 lg:pb-4":"lg:pb-10"}`}>{children}</main>
     </div>
     <nav aria-label="Navegação rápida" className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t bg-white px-2 pb-[env(safe-area-inset-bottom)] lg:hidden">
       {bottom.map(item=><Link key={item.href} href={item.href} aria-current={selected(item)?"page":undefined} className={`flex min-h-16 flex-col items-center justify-center gap-1 text-[11px] font-medium ${selected(item)?"text-olive":"text-slate-500"}`}><span className={`rounded-lg px-4 py-1 ${selected(item)?"bg-mint":""}`}><Icon name={item.icon}/></span>{item.label}</Link>)}

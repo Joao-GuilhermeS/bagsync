@@ -27,21 +27,22 @@ function ModelTooltip({active,row,stage}:{active?:boolean;row?:ChartRow;stage:Da
  </div>;
 }
 
-export function ProductionChart({models,stage}:{models:ModelMetrics[];stage:DashboardStage|null}) {
+export function ProductionChart({models,stage,compact=false}:{models:ModelMetrics[];stage:DashboardStage|null;compact?:boolean}) {
  const reduced=useSyncExternalStore(subscribeMotion,motionSnapshot,serverMotion);
  const [requestedPage,setPage]=useState(0);
  const {rows,ticks,labels}=groupedChartData(models);
- const page=Math.min(requestedPage,Math.max(Math.ceil(rows.length/6)-1,0));
- const visible=rows.slice(page*6,page*6+6);
+ const pageSize=compact?3:6;
+ const page=Math.min(requestedPage,Math.max(Math.ceil(rows.length/pageSize)-1,0));
+ const visible=rows.slice(page*pageSize,page*pageSize+pageSize);
  const stages=dashboardStages.filter(item=>!stage||stage===item.key);
 
  return <div>
   <div className="overflow-x-auto rounded-lg focus-visible:outline-offset-2" tabIndex={0} role="region" aria-label="Gráfico de quantidades por modelo; role horizontalmente se necessário">
-   <div className="h-80 w-full" style={{minWidth:Math.max(300,visible.length*150)}}>
-    <ResponsiveContainer width="100%" height="100%" minWidth={0} initialDimension={{width:600,height:320}}>
+   <div className={compact?"h-40 w-full":"h-80 w-full"} style={{minWidth:Math.max(compact?260:300,visible.length*(compact?95:150))}}>
+    <ResponsiveContainer width="100%" height="100%" minWidth={0} initialDimension={{width:600,height:compact?160:320}}>
      <BarChart data={visible} margin={{top:14,right:12,bottom:10,left:4}} barGap={5} accessibilityLayer>
       <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="3 5"/>
-      <XAxis dataKey="id" axisLine={false} tickLine={false} interval={0} tickMargin={14} tick={{fontSize:12,fill:"#64748b"}} tickFormatter={value=>{const name=visible.find(row=>row.id===value)?.name??"";return name.length>18?`${name.slice(0,17)}…`:name;}}/>
+      <XAxis dataKey="id" axisLine={false} tickLine={false} interval={0} tickMargin={14} tick={{fontSize:compact?10:12,fill:"#64748b"}} tickFormatter={value=>{const name=visible.find(row=>row.id===value)?.name??"";return name.length>18?`${name.slice(0,17)}…`:name;}}/>
       <YAxis domain={[0,1000000]} ticks={ticks} axisLine={false} tickLine={false} width={78} tick={{fontSize:11,fill:"#64748b"}} tickFormatter={value=>formatQuantity(labels[ticks.indexOf(value)]??"0")}/>
       <Tooltip cursor={{fill:"var(--mint)",fillOpacity:0.35}} content={info=><ModelTooltip active={info.active} row={info.payload?.[0]?.payload as ChartRow|undefined} stage={stage}/>}/>
       {stages.map(item=><Bar key={item.key} dataKey={`${item.key}Plot`} name={item.label} fill={item.color} radius={[5,5,0,0]} maxBarSize={46} isAnimationActive={!reduced} animationDuration={350} animationEasing="ease-out"/>)}
@@ -49,7 +50,7 @@ export function ProductionChart({models,stage}:{models:ModelMetrics[];stage:Dash
     </ResponsiveContainer>
    </div>
   </div>
-  <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500"><p>Modelos {page*6+1}–{page*6+visible.length} de {rows.length} · unidade: bolsas</p>{rows.length>6&&<div className="flex gap-2"><button type="button" aria-label="Modelos anteriores" disabled={page===0} className="btn-secondary min-h-11 px-3 py-2" onClick={()=>setPage(page-1)}><Icon name="back" className="size-4"/></button><button type="button" aria-label="Próximos modelos" disabled={(page+1)*6>=rows.length} className="btn-secondary min-h-11 px-3 py-2" onClick={()=>setPage(page+1)}><Icon name="arrow" className="size-4"/></button></div>}</div>
-  <details className="mt-4 border-t pt-3"><summary className="min-h-11 py-3 text-xs font-medium text-slate-500">Ver quantidades exatas em tabela</summary><div className="overflow-x-auto"><table className="w-full text-left text-sm"><caption className="sr-only">Quantidades dos modelos desta página do gráfico</caption><thead><tr><th scope="col" className="py-3 pr-4">Modelo</th>{stages.map(item=><th key={item.key} scope="col" className="px-3 py-3 text-right">{item.label}</th>)}</tr></thead><tbody>{visible.map(row=><tr key={row.id} className="border-t"><th scope="row" className="py-3 pr-4 font-medium">{row.name}</th>{stages.map(item=><td key={item.key} className="px-3 py-3 text-right tabular-nums">{formatQuantity(row[item.key])}</td>)}</tr>)}</tbody></table></div></details>
+  <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500"><p>Modelos {page*pageSize+1}–{page*pageSize+visible.length} de {rows.length} · unidade: bolsas</p>{rows.length>pageSize&&<div className="flex gap-2"><button type="button" aria-label="Modelos anteriores" disabled={page===0} className="btn-secondary min-h-11 px-3 py-2" onClick={()=>setPage(page-1)}><Icon name="back" className="size-4"/></button><button type="button" aria-label="Próximos modelos" disabled={(page+1)*pageSize>=rows.length} className="btn-secondary min-h-11 px-3 py-2" onClick={()=>setPage(page+1)}><Icon name="arrow" className="size-4"/></button></div>}</div>
+  <details className="mt-2 border-t pt-1"><summary className="min-h-8 py-2 text-xs font-medium text-slate-500">Ver quantidades exatas em tabela</summary><div className="overflow-x-auto"><table className="w-full text-left text-sm"><caption className="sr-only">Quantidades dos modelos desta página do gráfico</caption><thead><tr><th scope="col" className="py-3 pr-4">Modelo</th>{stages.map(item=><th key={item.key} scope="col" className="px-3 py-3 text-right">{item.label}</th>)}</tr></thead><tbody>{visible.map(row=><tr key={row.id} className="border-t"><th scope="row" className="py-3 pr-4 font-medium">{row.name}</th>{stages.map(item=><td key={item.key} className="px-3 py-3 text-right tabular-nums">{formatQuantity(row[item.key])}</td>)}</tr>)}</tbody></table></div></details>
  </div>;
 }

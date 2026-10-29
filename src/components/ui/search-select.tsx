@@ -4,7 +4,7 @@ import {useEffect,useId,useRef,useState} from "react";
 import {matchingNames} from "@/lib/catalogs/search";
 import {Icon} from "../ui/icon";
 
-export function SearchSelect({options:models,value,onChange,label,emptyLabel="Selecione",allowAll=false}:{options:{id:string;name:string}[];value:string;onChange:(id:string)=>void;label:string;emptyLabel?:string;allowAll?:boolean}) {
+export function SearchSelect({options:models,value,onChange,label,emptyLabel="Selecione",allowAll=false,compact=false}:{options:{id:string;name:string}[];value:string;onChange:(id:string)=>void;label:string;emptyLabel?:string;allowAll?:boolean;compact?:boolean}) {
  const id=useId();const root=useRef<HTMLDivElement>(null);const trigger=useRef<HTMLButtonElement>(null);const input=useRef<HTMLInputElement>(null);
  const [open,setOpen]=useState(false);const [query,setQuery]=useState("");const [cursor,setCursor]=useState(0);
  const matches=matchingNames(models,query);
@@ -24,7 +24,7 @@ export function SearchSelect({options:models,value,onChange,label,emptyLabel="Se
  },[active,id,open]);
 
  return <div ref={root} className="relative min-w-0" onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget as Node))setOpen(false);}}>
-  <label id={`${id}-label`} className="mb-2 block text-xs font-medium text-slate-600">{label}</label>
+  <label id={`${id}-label`} className={compact?"sr-only":"mb-2 block text-xs font-medium text-slate-600"}>{label}</label>
   <button ref={trigger} type="button" aria-labelledby={`${id}-label ${id}-value`} aria-haspopup="dialog" aria-expanded={open} aria-controls={`${id}-popup`} onClick={()=>{setOpen(!open);setQuery("");setCursor(0);}} className="field-input flex items-center justify-between gap-3 text-left text-sm"><span id={`${id}-value`} className="truncate">{models.find(model=>model.id===value)?.name??emptyLabel}</span><Icon name="chevron" className="size-4 shrink-0 rotate-90 text-slate-400"/></button>
   {open&&<div id={`${id}-popup`} role="dialog" aria-label={`Selecionar ${label}`} className="absolute inset-x-0 top-full z-40 mt-2 rounded-xl border bg-white p-2 shadow-lg" onKeyDown={event=>{
    if(event.key==="Escape"){event.preventDefault();setOpen(false);trigger.current?.focus();}

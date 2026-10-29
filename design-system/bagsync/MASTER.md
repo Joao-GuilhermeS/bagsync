@@ -38,3 +38,7 @@ Não criar regras operacionais, entidades ou permissões para preencher elemento
 ## Visão geral — refatoração em 28/10/2026
 
 Cabeçalho sucinto, filtros em uma barra, três KPIs clicáveis e barras agrupadas Recharts. Grid inferior de três blocos no desktop, duas colunas no tablet e uma no celular. Cartões brancos com bordas finas, raios de 16 px e shadow-sm. Séries em tokens --chart-ordered, --chart-production e --chart-ready. Evitar banner extra e repetição dos números em painéis laterais. Contrato em docs/dashboard-visao-geral.md.
+
+### Atualização em 29/10/2026 — substitui a organização acima
+
+Cabeçalho único com filtros embutidos; gráfico compacto à esquerda (65%) e KPIs em Detalhamento do Filtro à direita (35%). Três widgets inferiores: atalhos, alertas e três recolhimentos. Cards rounded-xl, p-3/p-4 e espaços menores; verde #1B3B2B no dashboard. Mobile/tablet empilhados. O gráfico compacto pagina três modelos; detalhes exatos continuam expansíveis. Contrato em docs/dashboard-compacto.md.
