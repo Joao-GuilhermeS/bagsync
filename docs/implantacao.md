@@ -46,3 +46,9 @@ Migração 20261025204641_pedidos_movimentacoes aplicada somente no BagSync. Tes
 
 ## Prazos de produção — 29/10/2026
 Migration 20261029140127 aplicada com autorização ao BagSync. Publicar a versão do aplicativo que envia p_due_on na remessa e p_kit_id no recolhimento; chamadas antigas sem esses campos são rejeitadas para novas gravações. Não reexecutar migration aplicada. Frontend não foi publicado pelo agente.
+
+## Acesso ao servidor de desenvolvimento pela rede
+
+O acesso confirmado é `http://26.24.177.139:3000`. O host exato está em `allowedDevOrigins` no next.config.ts para permitir assets internos e HMR do Next. Não substituir por curinga. Caso o IP de desenvolvimento mude, atualizar explicitamente a lista e reiniciar o servidor. Essa opção não configura domínio de produção ou permissões do Supabase.
+
+Executar `npm run dev -- --hostname 0.0.0.0` no ambiente de desenvolvimento e atualizar o navegador após mudanças de configuração. Diagnóstico e testes: [revisão dos controles](revisao-controles-interativos.md).
