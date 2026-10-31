@@ -14,10 +14,14 @@ export async function saveChecklist(_previous:ChecklistState,form:FormData):Prom
  const {operation,...item}=input;
  try{
   const client=await createClient();
+  const {data:material,error:materialError}=await client.from("materials").select("name").eq("company_id",access.companyId).eq("id",item.material_id).maybeSingle();
+  if(materialError)return {success:false,message:catalogError(materialError.code)};
+  if(!material)return {success:false,message:"Material não encontrado ou sem permissão."};
+  const label=material.name;
   // ID estável no formulário evita duplicação ao repetir uma inclusão de resultado incerto.
   const query=operation==="insert"
-   ?client.from("bag_checklist_items").insert({...item,company_id:access.companyId})
-   :client.from("bag_checklist_items").update({material_id:item.material_id,label:item.label,input_type:item.input_type,position:item.position,active:item.active}).eq("company_id",access.companyId).eq("bag_id",item.bag_id).eq("id",item.id);
+   ?client.from("bag_checklist_items").insert({...item,label,company_id:access.companyId})
+   :client.from("bag_checklist_items").update({material_id:item.material_id,label,input_type:item.input_type,position:item.position,active:item.active}).eq("company_id",access.companyId).eq("bag_id",item.bag_id).eq("id",item.id);
   const {data,error}=await query.select("id");
   if(error)return {success:false,message:error.code==="23505"?"Este identificador já foi cadastrado. Confira a lista antes de iniciar outro item.":catalogError(error.code)};
   if(!data?.length)return {success:false,message:"Item não encontrado ou sem permissão."};

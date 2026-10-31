@@ -81,3 +81,6 @@ Advisors: nenhuma FK sem índice ou tabela exposta sem RLS detectada. Permanecem
 ## Pendências
 
 Validar com sessão real o fluxo no celular e a impressão na impressora do cliente; não foi realizado teste autenticado de navegador, concorrência com duas sessões, carga ou impressão física. Tabela consolidada e observações específicas pelos três perfis foram implementadas posteriormente em [acompanhamento](tela-acompanhamento.md). Rotas atribuídas continuam posteriores.
+
+## Layout A4 do romaneio — 31/10/2026
+Novo desenho de cabeçalho, destinatário, tabela, observações e protocolo. Contrato e limites em [Romaneio A4](romaneio-expedicao-a4.md). Valores históricos e avisos de estorno preservados.

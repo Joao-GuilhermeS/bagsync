@@ -5,15 +5,16 @@ import {parseChecklist} from "../src/lib/checklists/validation.ts";
 const id="12345678-1234-1234-1234-123456789abc";
 function form(changes={}) {
  const data=new FormData();
- for(const [key,value] of Object.entries({operation:"insert",id,bag_id:id,material_id:id,label:" Corpo ",position:"0",active:"sim",input_type:"checkbox",...changes}))data.set(key,value);
+ for(const [key,value] of Object.entries({operation:"insert",id,bag_id:id,material_id:id,position:"0",active:"sim",input_type:"checkbox",...changes}))data.set(key,value);
  return data;
 }
 test("checklist ignora empresa e perfil enviados pelo cliente",()=>{
  const result=parseChecklist(form({company_id:id,role:"gerente_logistico",quantity:"999"}));
- assert.deepEqual(result,{operation:"insert",id,bag_id:id,material_id:id,label:"Corpo",input_type:"checkbox",position:0,active:true});
+ assert.deepEqual(result,{operation:"insert",id,bag_id:id,material_id:id,input_type:"checkbox",position:0,active:true});
 });
-test("checklist valida referências, posição e rótulo sem alterar quantidades de estoque",()=>{
- for(const changes of [{id:"invalido"},{bag_id:""},{material_id:"x"},{label:" "},{position:"-1"},{position:"1.5"},{position:"2147483648"},{position:"NaN"},{operation:"delete"}])assert.throws(()=>parseChecklist(form(changes)));
+test("checklist valida referências e posição sem exigir um nome separado nem alterar quantidades de estoque",()=>{
+ for(const changes of [{id:"invalido"},{bag_id:""},{material_id:"x"},{position:"-1"},{position:"1.5"},{position:"2147483648"},{position:"NaN"},{operation:"delete"}])assert.throws(()=>parseChecklist(form(changes)));
+ assert.equal(parseChecklist(form({label:"Nome arbitrário"})).material_id,id);
  assert.equal(parseChecklist(form({position:"2147483647"})).position,2147483647);
 });
 test("checklist permite edição e desativação explícita para novas remessas",()=>{

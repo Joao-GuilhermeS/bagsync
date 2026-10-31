@@ -4,7 +4,7 @@
 
 Objetivo: permitir configurar o checklist de saída de cada modelo usando o banco já aplicado. Acesso em **Cadastros → Bolsas → Consultar checklist de saída**, na rota `/painel/cadastros/bolsas/[id]/checklist`.
 
-Escopo e aceite: consultar itens paginados, incluir e editar material/rótulo/posição, ativar e desativar para novas remessas. Gerente Logístico altera; Motorista e Gestor consultam. Empresas isoladas por filtros e RLS. Não movimentar estoque nem reescrever remessas existentes. Não houve migração ou instalação de dependências neste incremento.
+Escopo e aceite: consultar itens paginados, incluir e editar material/posição, ativar e desativar para novas remessas. O nome exibido no checklist é obtido do material selecionado, sem campo separado para rótulo. Gerente Logístico altera; Motorista e Gestor consultam. Empresas isoladas por filtros e RLS. Não movimentar estoque nem reescrever remessas existentes. Não houve migração ou instalação de dependências neste incremento.
 
 O checklist é separado da composição quantitativa. Não exige quantidade por bolsa: previsões serão preenchidas manualmente na futura tela de remessa. Apenas itens ativos entram em novas remessas; inativos permanecem visíveis para consulta e reativação. Empates de posição usam ID como desempate estável.
 
@@ -13,7 +13,7 @@ O checklist é separado da composição quantitativa. Não exige quantidade por 
 - Página renderizada no servidor, com 25 itens por página. Opções de materiais/unidades carregadas em blocos para evitar truncamento silencioso.
 - Formulários em uma coluna no celular, controles com altura mínima de 44 px, rótulos associados, estado de envio e mensagens de resultado.
 - Ação de servidor verifica identidade e perfil antes da gravação. Empresa é obtida da sessão. Alterações restringem empresa, modelo e ID do item; FKs/RLS reforçam integridade no banco.
-- Validação aceita somente inclusão/edição, UUIDs, rótulo não vazio, posição inteira não negativa dentro do limite PostgreSQL e ativação explícita. Campos extras de empresa, perfil ou quantidade não são utilizados.
+- Validação aceita somente inclusão/edição, UUIDs e posição inteira não negativa dentro do limite PostgreSQL. O servidor busca o nome do material da empresa autenticada e o usa como rótulo do checklist; não aceita um nome separado enviado pelo formulário. Campos extras de empresa, perfil ou quantidade não são utilizados.
 - Cada inclusão recebe ID estável no formulário. Uma repetição não cria segunda linha com o mesmo ID; resultado incerto orienta conferir a lista. Isso não equivale a operação offline ou persistência da intenção após recarregar a página.
 - Após incluir, o formulário fica bloqueado até selecionar “Adicionar outro item”, que recarrega a página para iniciar nova inclusão. Não há exclusão física pela interface; a desativação atende à retirada de itens de futuras remessas.
 
@@ -44,3 +44,9 @@ A migração foi validada com testes transacionais em BEGIN/ROLLBACK, incluindo 
 Validação deste refinamento: 28 testes Node aprovados; lint, build e `git diff --check` aprovados. Testes SQL novamente aprovados com transação revertida, incluindo asserções que rejeitam snapshot de tipo ausente. Sem teste autenticado/visual do seletor e sem dados permanentes de teste. Nenhum commit ou push executado. Preservadas as alterações locais anteriores.
 
 Criação de remessa, previsto manual, envio parcial/✓, pendências por item e PDF integrados. O recolhimento móvel usa o fluxo existente por pedido/facção. Tabela consolidada, endereço e rotas são etapas posteriores. Dúvidas futuras devem ser agrupadas em questionário ao responsável.
+
+### Refinamento em 31/10/2026: nome do checklist derivado do material
+
+O campo separado “Nome no checklist” foi removido do formulário. Ao incluir ou editar, a ação busca o nome do material dentro da empresa autenticada e o salva como rótulo; o cliente não define esse valor. Não houve migração. Alterações no modelo não reescrevem snapshots das remessas existentes.
+
+Validação real: `node --test tests/checklists.test.mjs` (4 aprovados), ESLint nos arquivos alterados, `npm run build` e `git diff --check` aprovados. Sem gravação em banco, teste autenticado ou inspeção visual neste incremento; nenhum commit ou push executado.

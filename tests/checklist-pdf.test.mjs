@@ -11,3 +11,12 @@ test("controle de saída comporta respostas e anotações longas em várias pág
  const bytes=await generateChecklistPdf({...fixture,is_reversed:true,note:"Anotação longa de validação. ".repeat(100),items:Array.from({length:28},(_,i)=>({...fixture.items[i%2],id:String(i),label:`Item de validação ${i+1} - tecido, zíper e alça`,response_text:i%2?"Texto livre de teste: acentuação, conteúdo e paginação. ".repeat(25):null}))});
  assert.equal(bytes.subarray(0,5).toString(),"%PDF-");await writeFile("tmp/pdfs/checklist-longo-validacao.pdf",bytes);
 });
+
+test("romaneio apresenta destinatário completo, operador informado e item pendente",async()=>{
+ const bytes=await generateChecklistPdf({...fixture,operator_name:"Operador de validação",operator_id:"44444444-4444-4444-8444-444444444444",contact:{phone:"(00) 00000-0000",street:"Rua de validação",address_number:"10",address_complement:"Galpão de validação",neighborhood:"Bairro de validação",city:"Cidade de validação",state:"CE",postal_code:"00000-000"},items:[{...fixture.items[0],quantity:"1000"},{...fixture.items[1],quantity:"0",mode:"pending"}]});
+ await writeFile("tmp/pdfs/checklist-contato-validacao.pdf",bytes);
+});
+test("conferência sem envio mantém aviso e não representa baixa de estoque",async()=>{
+ const bytes=await generateChecklistPdf({...fixture,operation_id:null,items:fixture.items.map(item=>({...item,mode:"pending",quantity:"0"}))});
+ await writeFile("tmp/pdfs/checklist-sem-envio-validacao.pdf",bytes);
+});
