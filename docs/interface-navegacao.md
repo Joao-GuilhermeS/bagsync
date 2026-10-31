@@ -65,3 +65,6 @@ Resultados técnicos deste incremento são registrados no checkpoint de entrega;
 Execução final: 45 testes Node e lint aprovados. `npm run build` falhou internamente ao iniciar subprocesso do Turbopack, também fora do sandbox. A alternativa `npx next build --webpack` compilou, validou TypeScript e gerou as 26 páginas com sucesso. O script padrão e as dependências foram preservados; a falha específica do Turbopack permanece pendente de diagnóstico.
 
 Nesse build, `node tests/http-access.mjs` passou: login 200, 23 páginas protegidas, três arquivos e histórico negados sem sessão. `git diff --check` sem erros (somente avisos de conversão LF/CRLF). Nenhuma migração ou teste SQL novo foi necessário neste incremento de apresentação.
+
+## Cabeçalho móvel — 31/10/2026
+Botão de menu seguido do avatar do perfil à esquerda, antes da identificação da empresa e da página. Cabeçalho desktop preservado. Alteração visual sem mudança de permissões ou navegação.

@@ -48,13 +48,16 @@ export function LayoutShell({company, role, logout, children,access}: {company:s
     <div className={collapsed?"lg:pl-22":"lg:pl-72"}>
       <header className="sticky top-0 z-30 border-b bg-white">
         <div className="flex min-h-20 items-center justify-between gap-3 px-4 sm:px-8">
-          <div className="min-w-0"><p className="truncate text-xs font-medium text-slate-500" title={company}>{company}</p><p className="mt-1 truncate text-sm font-semibold sm:text-base">{location.item.label}</p></div>
+          <div className="flex shrink-0 items-center gap-3 lg:hidden">
+            <button type="button" aria-label="Abrir menu" onClick={()=>menu.current?.showModal()} className="btn-secondary size-11 p-0"><Icon name="menu"/></button>
+            <span className="grid size-10 place-items-center rounded-full bg-mint text-xs font-semibold text-olive" aria-label={labels[role]}>{initials}</span>
+          </div>
+          <div className="min-w-0 flex-1"><p className="truncate text-xs font-medium text-slate-500" title={company}>{company}</p><p className="mt-1 truncate text-sm font-semibold sm:text-base">{location.item.label}</p></div>
           <div className="flex shrink-0 items-center gap-3">
             {role === "gerente_logistico" && (!access||hasFeature(access,"pedidos")) && pathname!=="/painel" && pathname!=="/painel/visao-geral" && <Link href="/painel/pedidos/novo" className="btn-primary hidden px-3 sm:inline-flex"><Icon name="plus" className="size-4"/><span className="hidden xl:inline">Novo pedido de produção</span><span className="xl:hidden">Novo pedido</span></Link>}
             <span className="hidden rounded-full border bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600 md:inline-flex">{labels[role]}</span>
-            <span className="grid size-10 place-items-center rounded-full bg-mint text-xs font-semibold text-olive" aria-label={labels[role]}>{initials}</span>
+            <span className="hidden size-10 place-items-center rounded-full bg-mint text-xs font-semibold text-olive lg:grid" aria-label={labels[role]}>{initials}</span>
             <div className="hidden lg:block">{logout}</div>
-            <button type="button" aria-label="Abrir menu" onClick={()=>menu.current?.showModal()} className="btn-secondary size-11 p-0 lg:hidden"><Icon name="menu"/></button>
           </div>
         </div>
       </header>
