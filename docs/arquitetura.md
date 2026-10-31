@@ -52,3 +52,7 @@ Nova rota /painel/cadastros/bolsas/[id]/composicao e Server Action usam a tabela
 ## Exportações integradas
 
 Downloads Node via Route Handlers com Auth/vínculo validados, sem cache compartilhado e sem service_role. RPC SECURITY INVOKER reúne um snapshot sob RLS; quantidade textual e CSV protegido contra fórmulas. PDFKit com fontes locais licenciadas e tracing explícito. Limites técnicos evitam truncamento silencioso. [Contrato e QA](exportacoes.md).
+
+## Administração de acessos — banco e Edge aplicados em 31/10/2026
+
+Contexto autenticado consulta permissões efetivas no banco; navegação, páginas, Server Actions, RPCs e RLS aplicam as restrições. Principal identificada por UUID/empresa. Limites de uso e concessão são independentes, com prevenção de escalada administrativa. Criação direta passa pela Edge Function create-account, única camada que usa chave administrativa do runtime para Auth Admin. Finalização empresarial transacional e recuperação idempotente compensam a ausência de transação única entre Auth e banco. Não há chave privilegiada no Next.js. [Contrato e estado da implantação](administracao-acessos.md).

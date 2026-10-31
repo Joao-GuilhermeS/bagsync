@@ -162,3 +162,9 @@ módulos operacionais antes da definição dos requisitos.
 - Seguir docs/expedicao-compacta.md: tabela de 12, filtros independentes, quantidade direta e checklist técnico compacto. Alerta manual não elimina falta quantitativa. Usar RPCs de revisão com idempotência; preservar estoque, snapshots e RLS. Aplicação da nova migration depende de autorização explícita.
 
 - Migration 20261029194628_shipment_kit_manual_review aplicada com autorização no BagSync em 29/10/2026; preservar a versão aplicada e APIs legadas. Revisões são auditadas e não movimentam estoque.
+
+## Contas e permissões — 31/10/2026
+- Seguir docs/administracao-acessos.md. Principal por UUID/empresa define limites de uso e concessão; outros administradores não alteram a principal nem a própria conta. Gestor preserva consultas, observações e rotas; sem operações de estoque/Expedição.
+- Criação direta com senha inicial na interface, sem convite ou confirmação por e-mail, via Edge Function autenticada. Nunca usar user_metadata como autorização, registrar senhas ou expor chave administrativa. Limite de concessão não pode ser ampliado por criar outro administrador.
+- Migration e função remotas dependem de autorização explícita. Testes de provisionamento não podem deixar contas reais de teste.
+- Migration 20261031162328_account_permissions aplicada e Edge Function create-account versão 1 publicada com autorização em 31/10/2026 apenas no BagSync. Onze suítes SQL locais/remotas aprovadas com rollback. Testes operacionais usam identidade transacional própria; nunca trocar perfil/vínculo da principal para simular outro usuário. Criação real/login de nova conta seguem como aceite pela interface.

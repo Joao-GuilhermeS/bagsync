@@ -1,3 +1,4 @@
+import {hasFeature} from "@/lib/auth/features";
 import {PageSkeleton} from "@/components/ui/skeleton";
 
 import {Suspense} from "react";
@@ -29,7 +30,7 @@ async function Tracking({params,searchParams}:Props){
  const filters={...(search.pedido?{pedido:search.pedido}:{}),...(search.faccao?{faccao:search.faccao}:{}),...(search.pendentes?{pendentes:"sim"}:{})};
  return <section className="min-w-0 space-y-4 [--primary:#1B3B2B] [--olive:#1B3B2B]">
   <TrackingHeader bag={bag} name={model.data.name} orders={orders} workshops={workshops} filters={filters} count={result.count??0}/>
-  <TrackingTable bag={bag} rows={rows.map(row=>({...row,phone:workshops.find(workshop=>workshop.id===row.workshop_id)?.phone??null}))}/>
+  <TrackingTable canNote={hasFeature(access,"observacoes")} bag={bag} rows={rows.map(row=>({...row,phone:workshops.find(workshop=>workshop.id===row.workshop_id)?.phone??null}))}/>
   <Pagination page={page} count={result.count??0} query={filters}/>
  </section>;
 }

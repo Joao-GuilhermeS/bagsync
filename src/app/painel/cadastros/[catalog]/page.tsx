@@ -1,3 +1,4 @@
+import {hasFeature} from "@/lib/auth/features";
 import {PageSkeleton} from "@/components/ui/skeleton";
 import {FormDrawer} from "@/components/ui/drawer";
 import {PageHeader} from "@/components/ui/page-header";
@@ -35,7 +36,7 @@ async function CatalogContent({params,searchParams}:Props) {
  }
  if(error) throw new Error("Não foi possível carregar o cadastro.");
  const records=(data??[]) as CatalogRecord[];
- const manager=access.role==="gerente_logistico";
+ const manager=hasFeature(access,"cadastros");
  const balances=new Map<string,string>();
  if(catalog==="materiais"&&records.length){
   const stock=await client.from("material_stock_balances").select("material_id,balance::text").eq("company_id",access.companyId).in("material_id",records.map(r=>r.id));

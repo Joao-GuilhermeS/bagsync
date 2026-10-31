@@ -1,3 +1,4 @@
+import {hasFeature} from "@/lib/auth/features";
 import {PageSkeleton} from "@/components/ui/skeleton";
 import {FormDrawer} from "@/components/ui/drawer";
 import {PageHeader} from "@/components/ui/page-header";
@@ -21,7 +22,7 @@ async function ChecklistContent({params,searchParams}:Props) {
   checklistMaterials(client,access.companyId)
  ]);
  if(bag.error||checklist.error)throw new Error("Não foi possível carregar o checklist.");if(!bag.data)notFound();
- const manager=access.role==="gerente_logistico";const items=checklist.data as ChecklistItem[];
+ const manager=hasFeature(access,"cadastros");const items=checklist.data as ChecklistItem[];
  return <section><Link href="/painel/cadastros/bolsas" className="mb-4 inline-block min-h-11 py-3 text-sm text-forest underline">Voltar aos modelos</Link><PageHeader eyebrow="Modelo de bolsa" title={`Checklist: ${bag.data.name}`} description="Defina os itens e o tipo de preenchimento. As quantidades serão previstas manualmente em cada remessa." actions={manager&&<FormDrawer title="Adicionar item ao checklist" trigger="Adicionar item" description="Escolha o material e como ele será preenchido na saída.">{!materials.length&&<p className="mb-4 text-sm text-amber-900">Cadastre primeiro um material.</p>}<ChecklistForm bagId={id} requestId={crypto.randomUUID()} materials={materials}/></FormDrawer>}/><ModelChecklistTable items={items} materials={materials} bagId={id} manager={manager}/><Pagination page={page} count={checklist.count??0}/><p className="mt-4 text-sm text-slate-500">Desativar um item afeta novas remessas. O histórico das remessas existentes é preservado.</p></section>;
 
 }

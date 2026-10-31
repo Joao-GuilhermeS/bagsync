@@ -1,0 +1,1 @@
+export default function Restricted(){return <section className="surface p-6"><h1 className="page-title">Nenhuma funcionalidade disponível</h1><p className="mt-3 text-sm text-slate-500">Solicite ao responsável a revisão das permissões da sua conta.</p></section>;}

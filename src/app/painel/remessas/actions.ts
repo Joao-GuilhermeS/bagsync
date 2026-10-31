@@ -1,4 +1,5 @@
 "use server";
+import {hasFeature} from "@/lib/auth/features";
 import {revalidatePath} from "next/cache";
 import {requireAccess} from "@/lib/auth/context";
 import {createClient} from "@/lib/supabase/server";
@@ -10,7 +11,7 @@ import type {TransactionState} from "@/lib/operations/types";
 export async function createShipment(_previous:TransactionState,form:FormData):Promise<TransactionState> {
  const fail=(message:string,uncertain=false):TransactionState=>({success:false,uncertain,message,warnings:[]});
  const access=await requireAccess();
- if(!access||access.role!=="gerente_logistico")return fail("Somente o Gerente Logístico pode criar remessas.");
+ if(!access||!hasFeature(access,"expedicao"))return fail("Somente o Gerente Logístico pode criar remessas.");
  let input:ReturnType<typeof parseShipment>;
  try{input=parseShipment(form);}catch(error){return fail(error instanceof Error?error.message:"Dados inválidos.");}
  try{
@@ -27,7 +28,7 @@ export async function createShipment(_previous:TransactionState,form:FormData):P
 
 export async function submitChecklist(_previous:TransactionState,form:FormData):Promise<TransactionState> {
  const fail=(message:string,uncertain=false):TransactionState=>({success:false,uncertain,message,warnings:[]});
- const access=await requireAccess();if(!access||access.role!=="gerente_logistico")return fail("Somente o Gerente Logístico pode concluir a Expedição.");
+ const access=await requireAccess();if(!access||!hasFeature(access,"expedicao"))return fail("Somente o Gerente Logístico pode concluir a Expedição.");
  let input:ReturnType<typeof parseShipmentChecklist>;
  try{input=parseShipmentChecklist(form);}catch(error){return fail(error instanceof Error?error.message:"Dados inválidos.");}
  try{

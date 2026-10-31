@@ -1,3 +1,4 @@
+import {hasFeature} from "@/lib/auth/features";
 import {businessDate} from "@/lib/deadlines/dates";
 import {PageSkeleton} from "@/components/ui/skeleton";
 import Link from "next/link";
@@ -12,7 +13,7 @@ import {PageHeader} from "@/components/ui/page-header";
 type Props={searchParams:Promise<{pedido?:string;faccao?:string}>};
 async function Content({searchParams}:Props){
  const {access,client}=await workspace();
- if(access.role!=="gerente_logistico")return <p>Seu perfil permite consultar a Expedição. <Link href="/painel/expedicao" className="underline">Voltar às remessas</Link></p>;
+ if(!hasFeature(access,"expedicao"))return <p>Seu perfil permite consultar a Expedição. <Link href="/painel/expedicao" className="underline">Voltar às remessas</Link></p>;
  const search=await searchParams;
  if((search.pedido&&!isUuid(search.pedido))||(search.faccao&&!isUuid(search.faccao)))notFound();
  const options=await expeditionOptions(client,access.companyId);

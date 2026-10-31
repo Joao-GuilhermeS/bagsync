@@ -1,4 +1,5 @@
 "use server";
+import {hasFeature} from "@/lib/auth/features";
 import {revalidatePath} from "next/cache";
 import {requireAccess} from "@/lib/auth/context";
 import {createClient} from "@/lib/supabase/server";
@@ -8,7 +9,7 @@ import {catalogError} from "@/lib/catalogs/validation";
 export type ChecklistState={success:boolean;message:string};
 export async function saveChecklist(_previous:ChecklistState,form:FormData):Promise<ChecklistState> {
  const access=await requireAccess();
- if(!access||access.role!=="gerente_logistico")return {success:false,message:"Somente o Gerente Logístico pode alterar o checklist."};
+ if(!access||!hasFeature(access,"cadastros"))return {success:false,message:"Somente o Gerente Logístico pode alterar o checklist."};
  let input:ReturnType<typeof parseChecklist>;
  try{input=parseChecklist(form);}catch(error){return {success:false,message:error instanceof Error?error.message:"Dados inválidos."};}
  const {operation,...item}=input;

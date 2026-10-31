@@ -1,6 +1,9 @@
 -- Testes transacionais da revisão manual, sem dados persistentes.
 begin;
-select set_config('test.uid',(select user_id::text from public.company_users where role='gerente_logistico' limit 1),true);
+-- Identidade exclusiva desta transação: nunca trocar o perfil/vínculo da conta real.
+select set_config('test.fixture_company',(select company_id::text from public.company_users where role='gerente_logistico' limit 1),true);
+insert into auth.users(id,email) values(gen_random_uuid(),gen_random_uuid()::text||'@bagsync-test.invalid') returning set_config('test.uid',id::text,true);
+insert into public.company_users(user_id,company_id,role) values(current_setting('test.uid')::uuid,current_setting('test.fixture_company')::uuid,'gerente_logistico');
 select set_config('test.company',(select company_id::text from public.company_users where user_id=current_setting('test.uid')::uuid),true);
 insert into public.materials(company_id,name,unit_id) select current_setting('test.company')::uuid,'__review__',id from public.measurement_units where company_id=current_setting('test.company')::uuid limit 1 returning set_config('test.material',id::text,true);
 insert into public.bags(company_id,name) values(current_setting('test.company')::uuid,'__review__') returning set_config('test.bag',id::text,true);

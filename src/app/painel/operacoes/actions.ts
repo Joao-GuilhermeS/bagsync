@@ -1,4 +1,5 @@
 "use server";
+import {hasFeature} from "@/lib/auth/features";
 import {revalidatePath} from "next/cache";
 import {requireAccess} from "@/lib/auth/context";
 import {createClient} from "@/lib/supabase/server";
@@ -12,8 +13,8 @@ export async function submitTransaction(_previous:TransactionState,form:FormData
  if(task!=="order"&&task!=="operation")return fail("Ação inválida.");
  let order:ReturnType<typeof parseOrder>|undefined;let operation:ReturnType<typeof parseOperation>|undefined;
  try {
-  if(task==="order"){if(access.role!=="gerente_logistico")return fail("Somente o Gerente Logístico pode criar pedidos.");order=parseOrder(form);}
-  else {operation=parseOperation(form);if(!allowedOperation(access.role,operation.p_kind))return fail("Seu perfil não permite esta operação.");}
+  if(task==="order"){if(!hasFeature(access,"pedidos"))return fail("Somente o Gerente Logístico pode criar pedidos.");order=parseOrder(form);}
+  else {operation=parseOperation(form);if(!allowedOperation(access.role,operation.p_kind)||!hasFeature(access,operation.p_kind==="bag_receipt"?"motorista":operation.p_kind==="material_delivery"?"expedicao":"estoque"))return fail("Seu perfil não permite esta operação.");}
  }catch(error){return fail(error instanceof Error?error.message:"Dados inválidos.");}
  try {
   const client=await createClient();

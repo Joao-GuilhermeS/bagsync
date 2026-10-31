@@ -1,4 +1,5 @@
 "use server";
+import {hasFeature} from "@/lib/auth/features";
 import {revalidatePath} from "next/cache";
 import {requireAccess} from "@/lib/auth/context";
 import {createClient} from "@/lib/supabase/server";
@@ -9,7 +10,7 @@ import type {TransactionState} from "@/lib/operations/types";
 export type ExpeditionState=TransactionState&{kitId?:string;submissionId?:string};
 export async function saveExpedition(_previous:ExpeditionState,form:FormData):Promise<ExpeditionState>{
  const fail=(message:string,uncertain=false,kitId?:string):ExpeditionState=>({success:false,uncertain,message,kitId,warnings:[]});
- const access=await requireAccess();if(!access||access.role!=="gerente_logistico")return fail("Somente o Gerente Logístico pode preparar e emitir remessas.");
+ const access=await requireAccess();if(!access||!hasFeature(access,"expedicao"))return fail("Somente o Gerente Logístico pode preparar e emitir remessas.");
  let input:ReturnType<typeof parseExpedition>;
  try{input=parseExpedition(form);}catch(error){return fail(error instanceof Error?error.message:"Dados inválidos.");}
  let kitId:string|undefined;

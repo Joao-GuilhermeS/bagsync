@@ -13,7 +13,7 @@ const labels={distributions:"Distribuições",receipts:"Recolhimentos",notes:"Ob
 const roles={gerente_logistico:"Gerente Logístico",motorista:"Motorista",gestor:"Gestor"};
 const date=(value:string|null|undefined)=>value?new Date(value).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"}):"—";
 
-export function ProductionDetails({bag,row}:{bag:string;row:ProductionRow}) {
+export function ProductionDetails({bag,row,canNote=true}:{bag:string;row:ProductionRow;canNote?:boolean}) {
  const [opened,setOpened]=useState(false),[kind,setKind]=useState<HistoryKind>("distributions");
  const [data,setData]=useState<ProductionHistory|null>(null),[pending,setPending]=useState(false),[error,setError]=useState("");
  const controller=useRef<AbortController|null>(null);
@@ -45,7 +45,7 @@ export function ProductionDetails({bag,row}:{bag:string;row:ProductionRow}) {
     </article></li>)}</ol>
     <div className="flex flex-wrap items-center justify-between gap-3"><button type="button" disabled={data.page<=1} onClick={()=>void load(kind,data.page-1)} className="btn-secondary text-xs">Anterior</button><span className="text-xs text-slate-500" role="status">Página {data.page} · {data.count} registro(s)</span><button type="button" disabled={data.page*25>=data.count} onClick={()=>void load(kind,data.page+1)} className="btn-secondary text-xs">Próxima</button></div>
    </div>}
-   {kind==="notes"&&<ProductionNoteForm order={row.order_id} workshop={row.workshop_id} onSaved={()=>void load("notes",1)}/>}
+   {canNote&&kind==="notes"&&<ProductionNoteForm order={row.order_id} workshop={row.workshop_id} onSaved={()=>void load("notes",1)}/>}
   </div>}
  </FormDrawer>;
 }

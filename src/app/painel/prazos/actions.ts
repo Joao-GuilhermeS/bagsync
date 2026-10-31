@@ -1,4 +1,5 @@
 "use server";
+import {hasFeature} from "@/lib/auth/features";
 import {revalidatePath} from "next/cache";
 import {requireAccess} from "@/lib/auth/context";
 import {createClient} from "@/lib/supabase/server";
@@ -6,7 +7,7 @@ import {parseDeadlineExtension} from "@/lib/deadlines/validation";
 import type {TransactionState} from "@/lib/operations/types";
 export async function extendDeadline(_previous:TransactionState,form:FormData):Promise<TransactionState>{
  const fail=(message:string,uncertain=false):TransactionState=>({success:false,uncertain,message,warnings:[]});
- const access=await requireAccess();if(!access||access.role!=="gerente_logistico")return fail("Somente o Gerente Logístico pode prorrogar prazos.");
+ const access=await requireAccess();if(!access||!hasFeature(access,"prazos"))return fail("Somente o Gerente Logístico pode prorrogar prazos.");
  let input:ReturnType<typeof parseDeadlineExtension>;try{input=parseDeadlineExtension(form);}catch(reason){return fail(reason instanceof Error?reason.message:"Dados inválidos.");}
  try{
   const client=await createClient();const {data,error}=await client.rpc("extend_shipment_deadline",input);

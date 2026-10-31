@@ -2,7 +2,7 @@ import {exportAccess,ExportError,exportFailure,downloadHeaders} from "@/lib/expo
 import {parseTrackingHistory} from "@/lib/production/tracking-validation";
 export async function GET(request:Request){
  try{
-  const client=await exportAccess();let filters:ReturnType<typeof parseTrackingHistory>;
+  const client=await exportAccess("observacoes");let filters:ReturnType<typeof parseTrackingHistory>;
   try{filters=parseTrackingHistory(new URL(request.url).searchParams);}catch{throw new ExportError("Consulta de histórico inválida.",400);}
   const {data,error}=await client.rpc("production_tracking_history",filters);
   if(error)throw new ExportError("Não foi possível consultar o histórico.",503);

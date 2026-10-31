@@ -1,3 +1,4 @@
+import {hasFeature} from "@/lib/auth/features";
 import {Suspense} from "react";
 import {notFound} from "next/navigation";
 import Link from "next/link";
@@ -13,6 +14,6 @@ async function Content({searchParams}:Props){
  const {access,client}=await workspace();const search=await searchParams;
  if((search.pedido&&!isUuid(search.pedido))||(search.faccao&&!isUuid(search.faccao)))notFound();
  const cards=await expeditionCards(client,access.companyId);
- return <section><PageHeader title="Expedição" description="Prepare os kits, confira os materiais e envie os romaneios ao motorista." actions={access.role==="gerente_logistico"&&<Link href="/painel/expedicao/nova" className="btn-primary"><Icon name="plus"/>Nova Remessa</Link>}/><ExpeditionList cards={cards} manager={access.role==="gerente_logistico"} order={search.pedido} workshop={search.faccao}/></section>;
+ return <section><PageHeader title="Expedição" description="Prepare os kits, confira os materiais e envie os romaneios ao motorista." actions={hasFeature(access,"expedicao")&&<Link href="/painel/expedicao/nova" className="btn-primary"><Icon name="plus"/>Nova Remessa</Link>}/><ExpeditionList cards={cards} manager={hasFeature(access,"expedicao")} order={search.pedido} workshop={search.faccao}/></section>;
 }
 export default function ExpeditionPage(props:Props){return <Suspense fallback={<ExpeditionSkeleton/>}><Content {...props}/></Suspense>;}

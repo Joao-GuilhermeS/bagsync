@@ -55,3 +55,7 @@ Executar `npm run dev -- --hostname 0.0.0.0` no ambiente de desenvolvimento e at
 
 ## Expedição compacta — 29/10/2026
 Migration 20261029194628_shipment_kit_manual_review aplicada com autorização somente no BagSync. Ativa revisões manuais e a RPC submit_shipment_checklist_review, mantendo APIs anteriores e saldos. Dez suítes SQL locais e nova suíte remota com rollback aprovadas. Consultar docs/expedicao-compacta.md.
+
+## Administração de contas — aplicada com autorização em 31/10/2026
+
+Migration 20261031162328_account_permissions.sql aplicada e Edge Function create-account versão 1 ACTIVE publicadas com autorização exclusivamente no BagSync ppgeveafuhgoymtvvrya. Onze suítes SQL remotas aprovadas com rollback, principal preservada e chamada anônima da função negada (401). Aplicativo Next.js ainda não publicado. Preservar a principal e todas as migrations anteriores. Variáveis administrativas somente nas variáveis padrão do runtime da Edge, nunca NEXT_PUBLIC ou arquivos versionados. A função valida o JWT explicitamente em Auth; autorização é revalidada nas RPCs. Nenhuma conta real de teste criada. [Procedimento, testes e limitações](administracao-acessos.md).

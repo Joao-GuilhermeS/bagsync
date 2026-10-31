@@ -58,3 +58,13 @@ Adicionados shipment_kits.due_on, shipment_deadline_events (histórico com autor
 
 ## Revisões manuais de kits
 Migration 20261029194628_shipment_kit_manual_review adiciona shipment_kit_review_events: FK composta empresa/remessa, autor, flag incomplete, nota, data, sequência e chave idempotente por empresa. Histórico imutável com RLS. shipment_kit_status combina saldo quantitativo com último alerta. Consulte expedicao-compacta.md para transações e permissões.
+
+## Administração de contas — migration aplicada 20261031162328
+
+- account_principals: uma principal por empresa; user_id único e FK composta para o vínculo.
+- account_settings: nome, permissões individuais, active e updated_at; PK usuário e FK composta empresa/usuário.
+- account_role_limits: PK empresa/perfil; permissions limita uso, grant_permissions limita concessão.
+- account_access_events: autor, alvo, operação, payload sem senha, data e request_key único por empresa; histórico sem escrita direta.
+- bagsync_private.account_provision_requests: intenção de criação, ator/empresa, dados normalizados, fingerprint HMAC, lease e identidade concluída. Sem acesso de usuários às solicitações privadas.
+
+Tabelas administrativas públicas com RLS, sem escrita direta. Leitura/alteração somente por RPC autorizada. Permissões efetivas intersectam perfil aprovado, limite da empresa e seleção individual; conta inativa perde acesso. [RPCs, segurança e situação da aplicação](administracao-acessos.md).

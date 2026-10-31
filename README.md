@@ -83,3 +83,4 @@ Menu por função, painel com indicadores reais, navegação mobile e formulári
 Migrações aplicadas são preservadas. Validar incrementos e apresentar checkpoint antes de commit/push; não executar versionamento automaticamente.
 
 - [Interface do acompanhamento de produção](docs/ux-acompanhamento-producao.md).
+- [Administração de contas e permissões](docs/administracao-acessos.md).

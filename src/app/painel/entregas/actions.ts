@@ -1,4 +1,5 @@
 "use server";
+import {hasFeature} from "@/lib/auth/features";
 import {revalidatePath} from "next/cache";
 import {requireAccess} from "@/lib/auth/context";
 import {createClient} from "@/lib/supabase/server";
@@ -8,7 +9,7 @@ import type {TransactionState} from "@/lib/operations/types";
 export async function confirmDelivery(_previous:TransactionState,form:FormData):Promise<TransactionState> {
  const fail=(message:string,uncertain=false):TransactionState=>({success:false,message,uncertain,warnings:[]});
  const access=await requireAccess();
- if(!access||!["gerente_logistico","motorista"].includes(access.role))return fail("Seu perfil não permite confirmar entregas.");
+ if(!access||!hasFeature(access,"motorista"))return fail("Seu perfil não permite confirmar entregas.");
  let input:ReturnType<typeof parseDeliveryConfirmation>;
  try{input=parseDeliveryConfirmation(form);}catch(error){return fail(error instanceof Error?error.message:"Dados inválidos.");}
  try{

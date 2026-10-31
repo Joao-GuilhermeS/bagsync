@@ -2,12 +2,15 @@ import {createClient} from "@/lib/supabase/server";
 import {roles} from "@/lib/auth/authorization";
 import type {ExportResult} from "./types";
 export class ExportError extends Error {constructor(message:string,public status:number){super(message);}}
-export async function exportAccess(){
+export async function exportAccess(alternative="consultas"){
  const client=await createClient();const {data:{user},error}=await client.auth.getUser();
  if(error||!user)throw new ExportError("Entre no sistema para exportar.",401);
  const membership=await client.from("company_users").select("company_id,role").eq("user_id",user.id).maybeSingle();
  if(membership.error)throw new ExportError("Não foi possível validar o acesso.",503);
  if(!membership.data||!roles.includes(membership.data.role))throw new ExportError("Acesso à empresa não configurado.",403);
+ const permissions=await client.rpc("get_access_context");
+ if(!permissions.error){const available=permissions.data?.permissions;if(!permissions.data?.active||!Array.isArray(available)||(!available.includes("consultas")&&!available.includes(alternative)))throw new ExportError("Consulta não autorizada.",403);}
+ else if(!["PGRST202","42883"].includes(permissions.error.code))throw new ExportError("Não foi possível validar suas permissões.",503);
  return client;
 }
 export async function exportData(client:Awaited<ReturnType<typeof exportAccess>>,filters:Record<string,string|null>):Promise<ExportResult>{

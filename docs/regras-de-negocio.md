@@ -60,3 +60,7 @@ Novas remessas exigem prazo em dias corridos/Brasília. Gerente Logístico defin
 
 ## Alerta manual de kit — confirmado em 29/10/2026
 O Gerente Logístico pode sinalizar Kit Incompleto mesmo sem falta quantitativa. Corrigir remove o alerta; Kit Completo exige também ausência de materiais pendentes. Revisões ficam no histórico e não movimentam estoque. Complementos continuam lançamentos adicionais, sem editar saídas já registradas.
+
+## Contas e permissões — confirmado em 31/10/2026
+
+A conta principal rlbolsas@gmail.com define limites de uso e concessão por perfil. Gestor e Gestor Logístico podem criar contas e personalizar acessos dentro desses limites, sem alterar a principal ou a própria conta. Gestor mantém consultas, observações e rotas; Motorista mantém início, consultas, entregas/recolhimentos e observações já aprovadas. Rotas continuam como módulo futuro. Cadastro direto com senha inicial definida pelo administrador, sem convite ou confirmação por e-mail. Não alterar a senha da principal. [Contrato, permissões e implantação](administracao-acessos.md).

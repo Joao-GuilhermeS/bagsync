@@ -1,3 +1,4 @@
+import {hasFeature} from "@/lib/auth/features";
 import {PageSkeleton} from "@/components/ui/skeleton";
 import Link from "next/link";
 import {Suspense} from "react";
@@ -11,7 +12,7 @@ async function Fill({params}:{params:Promise<{id:string}>}) {
  const {access,client}=await workspace();const {id}=await params;if(!isUuid(id))notFound();
  const kit=await client.from("shipment_kits").select("id,order_id,workshop_id").eq("company_id",access.companyId).eq("id",id).maybeSingle();
  if(kit.error)throw new Error("Não foi possível consultar a remessa.");if(!kit.data)notFound();
- if(access.role!=="gerente_logistico")return <p>A saída é preenchida na Expedição pelo Gerente Logístico. Seu perfil permite consultar o romaneio. <Link className="underline" href={`/painel/expedicao/${id}`}>Consultar remessa</Link></p>;
+ if(!hasFeature(access,"expedicao"))return <p>A saída é preenchida na Expedição pelo Gerente Logístico. Seu perfil permite consultar o romaneio. <Link className="underline" href={`/painel/expedicao/${id}`}>Consultar remessa</Link></p>;
  const [items,workshop,order,review]=await Promise.all([
   shipmentAnswerItems(client,access.companyId,id),
   client.from("workshops").select("name").eq("company_id",access.companyId).eq("id",kit.data.workshop_id).maybeSingle(),
