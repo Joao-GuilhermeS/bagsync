@@ -168,3 +168,7 @@ módulos operacionais antes da definição dos requisitos.
 - Criação direta com senha inicial na interface, sem convite ou confirmação por e-mail, via Edge Function autenticada. Nunca usar user_metadata como autorização, registrar senhas ou expor chave administrativa. Limite de concessão não pode ser ampliado por criar outro administrador.
 - Migration e função remotas dependem de autorização explícita. Testes de provisionamento não podem deixar contas reais de teste.
 - Migration 20261031162328_account_permissions aplicada e Edge Function create-account versão 1 publicada com autorização em 31/10/2026 apenas no BagSync. Onze suítes SQL locais/remotas aprovadas com rollback. Testes operacionais usam identidade transacional própria; nunca trocar perfil/vínculo da principal para simular outro usuário. Criação real/login de nova conta seguem como aceite pela interface.
+
+## Dados demonstrativos autorizados em 02/11/2026
+- Exceção explícita do responsável: todos os registros atuais da RL Bolsas foram confirmados como testes, com autorização para criar facções/pedidos e atualizar sua produção com dados fictícios. Carga aplicada somente no BagSync e na RL Bolsas; detalhes em docs/dados-demonstracao-20261102.md e roteiro em supabase/demo/20261102_visual_demo.sql.
+- Preservar prefixos TESTE e notas da carga. Essa exceção não autoriza novas cargas genéricas, limpeza destrutiva ou dados fictícios em outras empresas. Não misturar o conjunto com produção real sem decisão do responsável.
