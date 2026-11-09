@@ -1,4 +1,4 @@
-# BagSync — RL Bolsas
+# BagSync — LIRA SERVICES
 
 Aplicação SaaS para fabricação e logística de bolsas. Desenvolvimento incremental, com isolamento por empresa e documentação em pt-BR.
 

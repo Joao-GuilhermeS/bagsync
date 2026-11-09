@@ -6,7 +6,7 @@ Layout do PDF da emissão em `/painel/expedicao/[id]/preenchimentos/[submission]
 
 ## Documento
 
-- Marca da empresa autenticada com o sufixo Produção & Logística. Para a RL Bolsas, o cabeçalho usa RL Bolsas - Produção & Logística; não se fixa a marca de uma empresa para os demais tenants.
+- Marca da empresa autenticada com o sufixo Produção & Logística. Para a LIRA SERVICES, o cabeçalho usa LIRA SERVICES - Produção & Logística; não se fixa a marca de uma empresa para os demais tenants.
 - Título ROMANEIO DE EXPEDIÇÃO DE MATERIAIS, UUID completo do romaneio e da remessa, data/hora original da emissão em America/Sao_Paulo.
 - Bloco delimitado com nome da facção, telefone, rua, número, complemento, bairro, cidade, UF e CEP, além de pedido, modelo e quantidade de bolsas.
 - Tabela de material, unidade, previsto da remessa, enviado nesta emissão e caixa OK/Pendente. Quantidades permanecem textuais e exatas; unidades distintas não são somadas.

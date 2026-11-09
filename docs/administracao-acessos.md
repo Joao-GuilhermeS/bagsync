@@ -2,7 +2,7 @@
 
 ## Regras aprovadas em 31/10/2026
 
-- Conta principal RL Bolsas: rlbolsas@gmail.com. Proteção por UUID aeaa0519-cad6-453f-ae6a-0787dd527120 e empresa abd23955-cf67-4354-8d67-ae0b7dbec40f; nunca por e-mail enviado pelo navegador.
+- Conta principal LIRA SERVICES: rlbolsas@gmail.com (login preservado após a mudança de marca). Proteção por UUID aeaa0519-cad6-453f-ae6a-0787dd527120 e empresa abd23955-cf67-4354-8d67-ae0b7dbec40f; nunca por e-mail enviado pelo navegador.
 - Apenas a principal define limites por perfil. Gestor e Gestor Logístico criam contas e personalizam permissões dentro desses limites. Não podem alterar a principal ou a própria conta.
 - Gestor Logístico tem como base todas as operações existentes. Gestor mantém consultas, observações e atribuição de rotas, acrescentando administração limitada de contas. Motorista mantém início, consultas, entregas/recolhimentos e a observação de produção já aprovada anteriormente.
 - Cadastro direto na interface: nome, e-mail, senha inicial definida por quem cria, perfil e funcionalidades. Não enviar convite nem exigir confirmação por e-mail. Não alterar senha, vínculo ou credenciais da conta principal.

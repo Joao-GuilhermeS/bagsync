@@ -25,7 +25,10 @@ export default function LoginPage(props: {searchParams: Promise<{erro?: string}>
   </aside>
   <section className="flex min-w-0 flex-col items-center justify-center px-6 py-10 sm:px-12 lg:px-10 xl:px-16" aria-labelledby="login-title">
    <div className="w-full max-w-sm">
-    <Image src="/images/login/rl-bolsas.png" alt="RL Bolsas. Sua produção conectada, do início à entrega." width={2009} height={783} sizes="(max-width: 480px) 75vw, 320px" preload className="mb-8 h-auto w-72 max-w-full sm:w-80"/>
+    <div className="mb-8 border-l-4 border-primary pl-4">
+     <p className="text-3xl font-bold leading-tight tracking-tight text-primary sm:text-4xl">LIRA SERVICES</p>
+     <p className="mt-2 text-xs leading-5 text-slate-500">Sua produção conectada, do início à entrega.</p>
+    </div>
     <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-olive">Bem-vindo ao BagSync</p>
     <h1 id="login-title" className="text-2xl font-semibold tracking-tight sm:text-3xl">Acesse sua empresa</h1><p className="mt-3 mb-8 text-sm leading-6 text-slate-500">Entre com seu e-mail e senha para acompanhar sua operação.</p>
     <Suspense fallback={<div role="status" aria-busy="true" className="space-y-5"><span className="sr-only">Carregando formulário de acesso…</span>{[0,1,2].map(item=><div key={item} className="h-16 animate-pulse rounded-xl bg-slate-100"/>)}</div>}><LoginForm {...props} /></Suspense>

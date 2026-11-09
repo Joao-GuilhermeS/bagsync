@@ -12,7 +12,7 @@ export async function saveChecklist(_previous:ChecklistState,form:FormData):Prom
  if(!access||!hasFeature(access,"cadastros"))return {success:false,message:"Somente o Gerente Logístico pode alterar o checklist."};
  let input:ReturnType<typeof parseChecklist>;
  try{input=parseChecklist(form);}catch(error){return {success:false,message:error instanceof Error?error.message:"Dados inválidos."};}
- const {operation,...item}=input;
+ const {operation,...item}=input;   
  try{
   const client=await createClient();
   const {data:material,error:materialError}=await client.from("materials").select("name").eq("company_id",access.companyId).eq("id",item.material_id).maybeSingle();

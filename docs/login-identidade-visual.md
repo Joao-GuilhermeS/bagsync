@@ -7,3 +7,6 @@ Autenticação, campos, validação no servidor e mensagens genéricas preservad
 Abaixo do formulário: mensagem curta sobre privacidade e direitos previstos na LGPD, sem declarar certificação ou conformidade jurídica avaliada. Não há checkbox de consentimento, aceite de termos ou política de privacidade inventada. Suporte WhatsApp desabilitado e identificado como Em breve, conforme pedido explícito do responsável; o link será definido posteriormente.
 
 Validação em 02/11/2026: npm run lint, npx next build --webpack (40 páginas) e git diff --check aprovados. Teste HTTP: login 200, 36 rotas protegidas, quatro arquivos e histórico negados sem sessão. Playwright no build local: imagens carregadas, senha mascarada, botão WhatsApp desabilitado e mensagem de erro visível. Desktop 1440×900 e celular 375×812 revisados visualmente; sem overflow horizontal nas larguras 320, 375, 768 e 1366. Nenhuma credencial foi enviada e nenhum novo login real foi executado. Sem alteração remota, commit ou push. PDFs comerciais locais existentes preservados; não fazem parte desta alteração.
+
+## Atualização em 09/11/2026
+A marca passou a LIRA SERVICES, com identificação tipográfica em texto acessível. O PNG antigo foi removido do aplicativo. Layout, ilustração, autenticação e contato preservados. Ver docs/identidade-lira-services.md.
