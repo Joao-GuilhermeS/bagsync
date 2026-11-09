@@ -4,7 +4,7 @@ Em 09/11/2026, o responsável solicitou substituir a identidade visual RL Bolsas
 
 ## Escopo e aceite
 
-- Login: identificação tipográfica LIRA SERVICES, mantendo verde institucional, ilustração e layout responsivo. Sem novo logotipo gráfico fornecido.
+- Login: arte LIRA SERVICES adaptada da marca anterior, preservando letras geométricas com recortes, degradê verde escuro e slogan. Usa PNG transparente em src/assets/brand/lira-services.png com next/image e dimensões intrínsecas; sem barra vertical ou substituição por fonte genérica.
 - Cabeçalho, menu e relatórios: usam o nome do cadastro da empresa autenticada; não substituir nomes de outros tenants.
 - Mesma empresa e mesmos vínculos, conta principal, login, permissões e dados operacionais.
 - BagSync continua sendo o nome do produto. E-mail de login e endereço do site continuam existentes.
@@ -23,6 +23,14 @@ returning id, name;
 ```
 
 ## Validação
+
+### Correção visual solicitada
+
+A identificação simples introduzida inicialmente foi substituída pela arte adaptada da referência local tipografiaRLbolsas. Gerada com a ferramenta integrada de imagem, usando como instrução preservar cores, tipografia geométrica com recortes e slogan, alterando o nome principal para LIRA SERVICES. Arquivo original preservado. Sem alteração de cadastro, autenticação, permissões ou layout estrutural nesta correção.
+
+Validação da correção: lint, build webpack (40 páginas) e git diff --check aprovados. Playwright confirmou carregamento da imagem e ausência de overflow horizontal em 1440, 375 e 320 px. Capturas desktop e celular revisadas visualmente. Sem commit, push ou deploy.
+
+### Validações do incremento inicial
 
 - `npm run lint`: aprovado.
 - `npx next build --webpack`: aprovado, 40 páginas.
